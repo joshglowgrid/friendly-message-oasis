@@ -3,19 +3,15 @@ import NavLink from '@/components/NavLink';
 import Logo from '@/components/Logo';
 import ContactForm from '@/components/ContactForm';
 import { cn } from '@/lib/utils';
-
 const Index = () => {
   const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
     setMounted(true);
-    
     const handleScroll = () => {
       const sections = document.querySelectorAll('section');
       sections.forEach(section => {
         const sectionTop = section.getBoundingClientRect().top;
         const sectionElements = section.querySelectorAll('.animate-on-scroll');
-        
         if (sectionTop < window.innerHeight * 0.8) {
           sectionElements.forEach((el, index) => {
             setTimeout(() => {
@@ -26,23 +22,16 @@ const Index = () => {
         }
       });
     };
-
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Initial check
-    
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   if (!mounted) return null;
-
-  return (
-    <div className="min-h-screen text-white flex flex-col items-center px-4">
+  return <div className="min-h-screen text-white flex flex-col items-center px-4">
       {/* Logo */}
       <div className="w-64 sm:w-72 md:w-80 mt-20 mb-8">
-        <Logo 
-          src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
-          alt="GlowGrid Logo"
-        />
+        <Logo src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" alt="GlowGrid Logo" />
       </div>
 
       {/* Navigation */}
@@ -57,21 +46,30 @@ const Index = () => {
       <section id="about" className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="glass-panel p-8 sm:p-10 md:p-12 space-y-8">
-            <h2 className="text-3xl sm:text-4xl font-semibold text-center animate-on-scroll opacity-0 translate-y-4 transition-all duration-700">
-              About Us
-            </h2>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-center animate-on-scroll opacity-0 translate-y-4 transition-all duration-700">Built to Make Brands Shine</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-4 animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100">
-                <h3 className="text-xl font-medium">Our Mission</h3>
-                <p className="text-white/80 leading-relaxed">
-                  We create digital experiences that elevate brands and engage audiences through thoughtful design and innovative technology.
-                </p>
+                
+                <p className="text-white/80 leading-relaxed">Built to Make Brands Shine
+
+
+
+
+GlowGrid Media is the evolved vision of RLVNT Brand Consulting—reimagined to meet the digital age with precision, creativity, and performance. We’re a boutique digital agency with a deep pulse on the healthcare, wellness, and medical industries.
+
+
+
+
+Our mission? To transform brands into magnetic, memorable, and measurable digital experiences. From social content that converts to SEO blogs that rank, we offer a comprehensive strategy for long-term brand success.
+
+
+
+
+We’re not generalists—we’re specialists who understand HIPAA-compliant storytelling, patient-centric messaging, and the nuanced language of wellness.</p>
               </div>
               <div className="space-y-4 animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-200">
-                <h3 className="text-xl font-medium">Our Approach</h3>
-                <p className="text-white/80 leading-relaxed">
-                  Simplicity, clarity, and purpose guide everything we build. We believe in crafting solutions that are both beautiful and functional.
-                </p>
+                
+                
               </div>
             </div>
           </div>
@@ -84,23 +82,30 @@ const Index = () => {
             Our Services
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { title: "Web Design", description: "Beautiful, intuitive interfaces that engage users and elevate your brand." },
-              { title: "Development", description: "Clean, efficient code that brings your digital products to life." },
-              { title: "Branding", description: "Memorable visual identities that connect with your audience." },
-              { title: "UI/UX Design", description: "User-centered design that creates seamless digital experiences." },
-              { title: "Strategy", description: "Digital roadmaps that align with your business objectives." },
-              { title: "Analytics", description: "Data-driven insights to optimize your digital presence." }
-            ].map((service, index) => (
-              <div 
-                key={index} 
-                className="glass-panel p-6 animate-on-scroll opacity-0 translate-y-4 transition-all duration-700"
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
+            {[{
+            title: "Web Design",
+            description: "Beautiful, intuitive interfaces that engage users and elevate your brand."
+          }, {
+            title: "Development",
+            description: "Clean, efficient code that brings your digital products to life."
+          }, {
+            title: "Branding",
+            description: "Memorable visual identities that connect with your audience."
+          }, {
+            title: "UI/UX Design",
+            description: "User-centered design that creates seamless digital experiences."
+          }, {
+            title: "Strategy",
+            description: "Digital roadmaps that align with your business objectives."
+          }, {
+            title: "Analytics",
+            description: "Data-driven insights to optimize your digital presence."
+          }].map((service, index) => <div key={index} className="glass-panel p-6 animate-on-scroll opacity-0 translate-y-4 transition-all duration-700" style={{
+            transitionDelay: `${index * 100}ms`
+          }}>
                 <h3 className="text-xl font-medium mb-2">{service.title}</h3>
                 <p className="text-white/70">{service.description}</p>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -139,8 +144,6 @@ const Index = () => {
           </p>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
