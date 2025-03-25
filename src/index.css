@@ -80,7 +80,7 @@
 
 @layer components {
   .nav-link {
-    @apply relative inline-block text-white/80 hover:text-white transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-white/70 after:transition-all after:duration-300 hover:after:w-full;
+    @apply relative inline-block text-white hover:text-orange-400 transition-colors duration-300;
   }
   
   .glass-panel {
@@ -88,11 +88,30 @@
   }
   
   .input-field {
-    @apply w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-md text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-white/30 transition-all duration-300;
+    @apply w-full px-4 py-3 bg-white text-black rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400 transition-all duration-300;
   }
   
   .button-primary {
-    @apply px-6 py-3 rounded-md border border-white/20 bg-white/5 backdrop-blur-md text-white transition-all duration-300 hover:bg-white/10 hover:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/30 active:scale-[0.98];
+    @apply px-6 py-3 rounded-md border border-white hover:text-orange-400 hover:border-orange-400 transition-all duration-300 focus:outline-none;
+  }
+
+  .orange-gradient-text {
+    @apply font-blink bg-gradient-to-r from-orange-300 to-orange-500 bg-clip-text text-transparent;
+  }
+}
+
+/* Logo glow wave animation */
+.logo-glow-wave {
+  filter: drop-shadow(0 0 0px rgba(255, 147, 60, 0.5));
+  animation: glowWave 4s ease-in-out infinite;
+}
+
+@keyframes glowWave {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(255, 147, 60, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(255, 147, 60, 1));
   }
 }
 
@@ -124,6 +143,15 @@
 @font-face {
   font-family: 'SF Mono';
   src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/SFMono-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Blink Twice font */
+@font-face {
+  font-family: 'Blink';
+  src: url('https://fonts.cdnfonts.com/s/16391/Blink-jqBp.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

@@ -13,7 +13,7 @@ const NavLink = ({ href, children, className }: NavLinkProps) => {
     <a 
       href={href} 
       className={cn(
-        "nav-link text-sm font-medium tracking-wide uppercase transition-all duration-300", 
+        "nav-link text-lg font-medium tracking-wide uppercase transition-all duration-300", 
         className
       )}
     >

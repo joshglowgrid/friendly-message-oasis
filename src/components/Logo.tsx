@@ -26,7 +26,7 @@ const Logo = ({ src, alt, className }: LogoProps) => {
         <img
           src={src}
           alt={alt}
-          className="w-full h-auto animate-glow-pulse animate-float"
+          className="w-full h-auto logo-glow-wave"
         />
       </div>
     </div>

@@ -39,7 +39,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
     <form 
       onSubmit={handleSubmit}
       className={cn(
-        "w-full max-w-md space-y-5 opacity-0 animate-scale [animation-delay:0.3s]",
+        "w-full max-w-md space-y-5",
         className
       )}
     >
@@ -51,7 +51,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
           onChange={handleChange}
           placeholder="Name"
           required
-          className="input-field opacity-0 animate-fade-in [animation-delay:0.4s]"
+          className="input-field"
         />
         <input
           type="email"
@@ -60,14 +60,14 @@ const ContactForm = ({ className }: ContactFormProps) => {
           onChange={handleChange}
           placeholder="Email"
           required
-          className="input-field opacity-0 animate-fade-in [animation-delay:0.5s]"
+          className="input-field"
         />
         <textarea
           name="message"
           value={formData.message}
           onChange={handleChange}
           placeholder="Message"
-          className="input-field opacity-0 animate-fade-in [animation-delay:0.6s]"
+          className="input-field"
           rows={4}
           required
         ></textarea>
@@ -76,7 +76,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
         type="submit"
         disabled={isSubmitting}
         className={cn(
-          "button-primary w-full opacity-0 animate-fade-in [animation-delay:0.7s]",
+          "px-6 py-3 w-full rounded-md border border-white/20 bg-black text-white transition-all duration-300 hover:border-orange-400 hover:text-orange-400 font-blink",
           isSubmitting && "opacity-70 cursor-not-allowed"
         )}
       >

@@ -23,6 +23,7 @@ export default {
         sans: ["SF Pro Display", "Inter", "system-ui", "sans-serif"],
         serif: ["New York", "Georgia", "serif"],
         mono: ["SF Mono", "monospace"],
+        blink: ["Blink", "sans-serif"],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -92,8 +93,8 @@ export default {
           '100%': { opacity: '1' }
         },
         'glow-pulse': {
-          '0%, 100%': { filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))' },
-          '50%': { filter: 'drop-shadow(0 0 15px rgba(255, 255, 255, 0.9))' }
+          '0%, 100%': { filter: 'drop-shadow(0 0 2px rgba(255, 147, 60, 0.5))' },
+          '50%': { filter: 'drop-shadow(0 0 8px rgba(255, 147, 60, 1))' }
         },
         'float': {
           '0%, 100%': { transform: 'translateY(0)' },

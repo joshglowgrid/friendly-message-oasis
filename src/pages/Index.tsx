@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import NavLink from '@/components/NavLink';
 import Logo from '@/components/Logo';
@@ -37,51 +36,28 @@ const Index = () => {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen text-white">
-      {/* Fixed header with logo */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-6 py-8 flex justify-center items-center backdrop-blur-sm bg-black/5">
-        <div className="w-32 sm:w-40 md:w-48 h-auto">
-          <Logo 
-            src="https://i.ibb.co/zV9HFndj/glowgrid-media.png" 
-            alt="GlowGrid Logo"
-          />
-        </div>
-      </header>
+    <div className="min-h-screen text-white flex flex-col items-center px-4">
+      {/* Logo */}
+      <div className="w-64 sm:w-72 md:w-80 mt-20 mb-8">
+        <Logo 
+          src="https://i.ibb.co/zV9HFndj/glowgrid-media.png" 
+          alt="GlowGrid Logo"
+        />
+      </div>
 
       {/* Navigation */}
-      <nav className={cn(
-        "fixed top-24 sm:top-28 left-0 right-0 z-40 flex justify-center",
-        "py-4 opacity-0 animate-fade-in-slow [animation-delay:300ms]"
-      )}>
-        <div className="flex space-x-8 sm:space-x-12">
-          <NavLink href="#about">About</NavLink>
-          <NavLink href="#services">Services</NavLink>
-          <NavLink href="#contact">Contact</NavLink>
-        </div>
+      <nav className="flex space-x-16 mb-24">
+        <NavLink href="#about">ABOUT</NavLink>
+        <NavLink href="#services">SERVICES</NavLink>
+        <NavLink href="#contact">CONTACT</NavLink>
       </nav>
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20">
-        <div className="max-w-3xl text-center space-y-6 opacity-0 animate-fade-in [animation-delay:600ms]">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight">
-            <span className="block">Crafting Digital</span>
-            <span className="block bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Experiences</span>
-          </h1>
-          <p className="text-lg sm:text-xl text-white/80 max-w-xl mx-auto leading-relaxed">
-            We blend creativity and technology to build stunning digital solutions that captivate your audience.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 pt-4">
-            <a href="#contact" className="button-primary">
-              Get in Touch
-            </a>
-            <a href="#services" className="button-primary">
-              Our Services
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* Main content - only render contact form for now to match screenshot */}
+      <div className="max-w-4xl mx-auto w-full flex flex-col items-center">
+        <ContactForm />
+      </div>
 
-      {/* About Section */}
+      {/* We'll keep the remaining sections hidden for now to match the screenshot */}
       <section id="about" className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="glass-panel p-8 sm:p-10 md:p-12 space-y-8">
@@ -106,7 +82,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Services Section */}
       <section id="services" className="py-20 px-6">
         <div className="max-w-4xl mx-auto space-y-12">
           <h2 className="text-3xl sm:text-4xl font-semibold text-center animate-on-scroll opacity-0 translate-y-4 transition-all duration-700">
@@ -134,7 +109,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
       <section id="contact" className="py-20 px-6 min-h-screen flex flex-col items-center justify-center">
         <div className="max-w-4xl mx-auto w-full space-y-12 text-center">
           <div className="space-y-4">
@@ -151,7 +125,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="py-10 px-6 border-t border-white/10">
         <div className="max-w-4xl mx-auto text-center text-white/60 space-y-4">
           <div className="flex justify-center space-x-6">
