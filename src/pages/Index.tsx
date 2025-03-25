@@ -52,11 +52,7 @@ const Index = () => {
         <NavLink href="#contact">CONTACT</NavLink>
       </nav>
 
-      {/* Main content - only render contact form for now to match screenshot */}
-      <div className="max-w-4xl mx-auto w-full flex flex-col items-center">
-        <ContactForm />
-      </div>
-
+  
       {/* We'll keep the remaining sections hidden for now to match the screenshot */}
       <section id="about" className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
