@@ -40,7 +40,7 @@ const Index = () => {
       {/* Logo */}
       <div className="w-64 sm:w-72 md:w-80 mt-20 mb-8">
         <Logo 
-          src="https://i.ibb.co/zV9HFndj/glowgrid-media.png" 
+          src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
           alt="GlowGrid Logo"
         />
       </div>
