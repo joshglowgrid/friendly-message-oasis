@@ -36,7 +36,7 @@ const Header = ({ scrolled }: HeaderProps) => {
     const handleScroll = () => {
       if (isHomePage) {
         // Show header after hero section
-        const heroSection = document.querySelector('section:first-of-type');
+        const heroSection = document.querySelector('#hero');
         if (heroSection) {
           const heroBottom = heroSection.getBoundingClientRect().bottom;
           setHeaderVisible(heroBottom <= 0);
