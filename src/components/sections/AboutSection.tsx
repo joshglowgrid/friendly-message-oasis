@@ -34,11 +34,11 @@ const serviceItems = [
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-20 px-6 bg-black/50">
+    <section id="about" className="py-20 px-6 bg-black/50 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <div className="relative mb-10">
           <img
-            src="/lovable-uploads/7700263e-d0df-4380-9146-59971accd865.png"
+            src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/GlowGrid%20Media%20-%20LA%20Medical%20Marketing%20Agency.png?raw=true"
             alt="Healthcare digital marketing strategy"
             className="w-full object-cover rounded-2xl animate-on-scroll opacity-0 translate-y-4 transition-all duration-700"
           />

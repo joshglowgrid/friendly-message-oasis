@@ -49,7 +49,7 @@ const Index = () => {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen text-white flex flex-col items-center">
+    <div className="min-h-screen text-white flex flex-col items-center overflow-hidden">
       <Hero />
       
       <div id="content" className="w-full">

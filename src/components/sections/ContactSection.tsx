@@ -4,7 +4,7 @@ import ContactForm from '@/components/ContactForm';
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="py-20 px-6 min-h-screen flex flex-col items-center justify-center">
+    <section id="contact" className="py-20 px-6 min-h-screen flex flex-col items-center justify-center overflow-hidden">
       <div className="max-w-4xl mx-auto w-full space-y-12 text-center">
         <div className="space-y-4">
           <h2 className="text-2xl sm:text-3xl font-blink orange-gradient-text animate-on-scroll opacity-0 translate-y-4 transition-all duration-700">
