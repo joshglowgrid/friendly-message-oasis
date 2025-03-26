@@ -10,7 +10,7 @@ const IntroSection = () => {
   };
 
   return (
-    <section className="py-12 px-6 text-center relative overflow-hidden">
+    <section className="py-8 px-6 text-center relative overflow-hidden">
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/10 backdrop-blur-sm z-0"></div>
       

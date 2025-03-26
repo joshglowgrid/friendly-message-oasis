@@ -23,7 +23,7 @@ export const PhoneMockup = () => {
         "Social-first creative direction",
         "Branded template system"
       ],
-      serviceImage: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=800&auto=format&fit=crop"
+      serviceImage: "/lovable-uploads/94dadbd9-14d0-4012-9ec1-9fc74a95fb8f.png"
     },
     {
       title: "Social Media Management",
@@ -34,7 +34,7 @@ export const PhoneMockup = () => {
         "Analytics & performance tracking",
         "Trend monitoring & adaptation"
       ],
-      serviceImage: "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?q=80&w=800&auto=format&fit=crop"
+      serviceImage: "/lovable-uploads/c0d2a5c5-0f7d-4f32-bacf-1707f0cf878f.png"
     },
     {
       title: "Email Marketing",
@@ -45,7 +45,7 @@ export const PhoneMockup = () => {
         "A/B testing optimization",
         "Segmentation & personalization"
       ],
-      serviceImage: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?q=80&w=800&auto=format&fit=crop"
+      serviceImage: "/lovable-uploads/980ee74c-a6c5-47b5-a04e-6988a9081a69.png"
     }
   ];
   
@@ -92,7 +92,7 @@ export const PhoneMockup = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative py-32 md:py-48 px-4 overflow-hidden"
+      className="relative py-16 md:py-24 px-4 overflow-hidden"
       id="mobile-services"
     >
       <div className="max-w-7xl mx-auto">
@@ -156,7 +156,7 @@ export const PhoneMockup = () => {
             {screens.map((screen, i) => (
               <motion.div 
                 key={i}
-                className="relative w-full h-full aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"
+                className="relative w-full h-full aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl"
                 initial={{ opacity: 0 }}
                 animate={{ 
                   opacity: activeTab === i ? 1 : 0,

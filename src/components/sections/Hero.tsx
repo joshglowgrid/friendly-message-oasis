@@ -79,7 +79,7 @@ const Hero = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1.1 }}
-        className="mb-12"
+        className="mb-12 hero-cta-button"
       >
         <Button 
           variant="gradient" 

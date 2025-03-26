@@ -17,6 +17,7 @@ const Header = ({ scrolled }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(false);
   const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -33,16 +34,15 @@ const Header = ({ scrolled }: HeaderProps) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Check for the arrow indicator element
-      const arrowElement = document.querySelector('.arrow-indicator');
-      
-      if (arrowElement) {
-        // Get the position of the arrow element
-        const arrowPosition = arrowElement.getBoundingClientRect().bottom;
-        // Show header only after scrolling past the arrow
-        setHeaderVisible(arrowPosition < 0);
+      if (isHomePage) {
+        // On home page, check for hero section visibility
+        const heroButton = document.querySelector('.hero-cta-button');
+        if (heroButton) {
+          const buttonPosition = heroButton.getBoundingClientRect().bottom;
+          setHeaderVisible(buttonPosition < 0);
+        }
       } else {
-        // If arrow not found (on other pages besides home), always show header
+        // On other pages, always show header
         setHeaderVisible(true);
       }
     };
@@ -51,17 +51,17 @@ const Header = ({ scrolled }: HeaderProps) => {
     handleScroll(); // Initial check
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHomePage]);
   
   return (
     <motion.nav 
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
-        headerVisible ? "py-2 md:py-3 bg-black shadow-md" : "py-4 md:py-5 bg-transparent -translate-y-full"
+        headerVisible ? "py-2 md:py-3 bg-black/90 backdrop-blur-sm shadow-md" : "py-4 md:py-5 bg-transparent -translate-y-full"
       )}
       initial={{ y: -100 }}
       animate={{ y: headerVisible ? 0 : -100 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3 }}
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
         <div className="flex w-full md:w-auto justify-between items-center">
@@ -91,7 +91,7 @@ const Header = ({ scrolled }: HeaderProps) => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
-            className="md:hidden absolute top-full left-0 w-full bg-black py-4 border-t border-orange-400/20"
+            className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm py-4 border-t border-orange-400/20"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}

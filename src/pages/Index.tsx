@@ -61,6 +61,7 @@ const Index = () => {
       
       <div id="content" className="w-full">
         <Hero />
+        {/* Removed space between sections by adjusting padding in each component */}
         <IntroSection />
         <ServiceCards />
         <PhoneMockup />
