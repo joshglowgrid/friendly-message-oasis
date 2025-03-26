@@ -4,18 +4,43 @@ import NavLink from '@/components/NavLink';
 import Logo from '@/components/Logo';
 import ContactForm from '@/components/ContactForm';
 import { cn } from '@/lib/utils';
-import { ArrowDown, Menu, X } from 'lucide-react';
+import { 
+  ArrowDown, 
+  Menu, 
+  X, 
+  CheckCircle,
+  BarChart2,
+  Users,
+  Layers,
+  TrendingUp,
+  Smile,
+  Sparkles,
+  HeartPulse,
+  Droplets,
+  FlaskConical,
+  Pills
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const isMobile = useIsMobile();
   
   useEffect(() => {
     setMounted(true);
+    
     const handleScroll = () => {
+      // Check if page is scrolled for sticky header styling
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+      
+      // Animation on scroll
       const sections = document.querySelectorAll('section');
       sections.forEach(section => {
         const sectionTop = section.getBoundingClientRect().top;
@@ -30,6 +55,7 @@ const Index = () => {
         }
       });
     };
+    
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Initial check
 
@@ -63,16 +89,40 @@ const Index = () => {
       
       {/* Main Content */}
       <div id="content" className="w-full">
-        {/* Mobile Navigation */}
-        <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-sm py-4 px-4 w-full">
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex justify-end">
-            <button
-              onClick={toggleMobileMenu}
-              className="p-2 text-white focus:outline-none"
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+        {/* Sticky Navigation */}
+        <nav className={cn(
+          "sticky top-0 z-50 bg-black/80 backdrop-blur-sm w-full transition-all duration-300",
+          scrolled ? "py-2" : "py-4"
+        )}>
+          <div className="container mx-auto px-4 flex items-center justify-between">
+            {/* Logo */}
+            <div className="flex items-center">
+              <div className="w-32 md:w-36">
+                <Logo 
+                  src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
+                  alt="GlowGrid Logo"
+                />
+              </div>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button
+                onClick={toggleMobileMenu}
+                className="p-2 text-white focus:outline-none"
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+              <NavLink href="#about">ABOUT</NavLink>
+              <NavLink href="#services">SERVICES</NavLink>
+              <NavLink href="#why-us">WHY US</NavLink>
+              <NavLink href="#industries">INDUSTRIES</NavLink>
+              <NavLink href="#contact" variant="button">CONTACT</NavLink>
+            </div>
           </div>
 
           {/* Mobile Menu */}
@@ -83,21 +133,10 @@ const Index = () => {
                 <NavLink href="#services" onClick={() => setMobileMenuOpen(false)}>SERVICES</NavLink>
                 <NavLink href="#why-us" onClick={() => setMobileMenuOpen(false)}>WHY US</NavLink>
                 <NavLink href="#industries" onClick={() => setMobileMenuOpen(false)}>INDUSTRIES</NavLink>
-                <NavLink href="#contact" onClick={() => setMobileMenuOpen(false)}>CONTACT</NavLink>
+                <NavLink href="#contact" onClick={() => setMobileMenuOpen(false)} variant="button">CONTACT</NavLink>
               </div>
             </div>
           )}
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex justify-center">
-            <div className="flex space-x-8 sm:space-x-16">
-              <NavLink href="#about">ABOUT</NavLink>
-              <NavLink href="#services">SERVICES</NavLink>
-              <NavLink href="#why-us">WHY US</NavLink>
-              <NavLink href="#industries">INDUSTRIES</NavLink>
-              <NavLink href="#contact">CONTACT</NavLink>
-            </div>
-          </div>
         </nav>
 
         {/* Hero Content */}
@@ -110,7 +149,8 @@ const Index = () => {
               We don't just post—we build ecosystems. Welcome to the new era of brand growth.
             </p>
             <Button 
-              className="orange-gradient-bg text-base sm:text-lg px-6 py-3 h-auto rounded-md shadow-lg hover:shadow-orange-400/20 transition-all duration-300" 
+              variant="gradient"
+              className="text-base sm:text-lg px-6 py-3 h-auto rounded-md" 
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Let's Grow Together → Start Your Strategy Session
@@ -130,58 +170,45 @@ const Index = () => {
                   At GlowGrid Media, every service is engineered for growth and grounded in data. We don't guess—we analyze, test, and tailor.
                 </p>
                 
-                <h3 className="text-xl font-semibold mb-4">Our Core Services Include:</h3>
-                <ul className="space-y-4">
-                  <li className="flex">
-                    <span className="font-bold mr-2">•</span>
-                    <div>
-                      <span className="font-medium">Social Media Management & Content Creation</span>
-                      <p className="text-white/70">Visually compelling, algorithm-friendly, and brand-aligned.</p>
+                <h3 className="text-xl font-semibold mb-4 text-center">Our Core Services Include:</h3>
+                
+                <div className="grid md:grid-cols-2 gap-8">
+                  {[
+                    {
+                      title: "Social Media Management & Content Creation",
+                      description: "Visually compelling, algorithm-friendly, and brand-aligned."
+                    },
+                    {
+                      title: "Email Marketing & Automation",
+                      description: "Nurture your audience with timely, effective messaging that converts."
+                    },
+                    {
+                      title: "SEO & Content Marketing",
+                      description: "Rank higher, reach further, and speak with authority."
+                    },
+                    {
+                      title: "Custom Landing Pages & Website Strategy",
+                      description: "Designed for performance—whether you're capturing leads or scheduling patients."
+                    },
+                    {
+                      title: "E-Commerce Optimization & Digital Merchandising",
+                      description: "Maximize your store's potential with strategic UX and conversion funnels."
+                    },
+                    {
+                      title: "Brand Identity & Visual Redesigns",
+                      description: "Elevate your look to match the excellence you deliver."
+                    },
+                    {
+                      title: "Advanced Analytics & Performance Insights",
+                      description: "Know what's working, improve what's not—down to the last click."
+                    }
+                  ].map((service, index) => (
+                    <div key={index} className="glass-panel p-5 hover:bg-white/10 transition-all duration-300">
+                      <h4 className="text-lg font-medium mb-2 orange-gradient-text">{service.title}</h4>
+                      <p className="text-white/70">{service.description}</p>
                     </div>
-                  </li>
-                  <li className="flex">
-                    <span className="font-bold mr-2">•</span>
-                    <div>
-                      <span className="font-medium">Email Marketing & Automation</span>
-                      <p className="text-white/70">Nurture your audience with timely, effective messaging that converts.</p>
-                    </div>
-                  </li>
-                  <li className="flex">
-                    <span className="font-bold mr-2">•</span>
-                    <div>
-                      <span className="font-medium">SEO & Content Marketing</span>
-                      <p className="text-white/70">Rank higher, reach further, and speak with authority.</p>
-                    </div>
-                  </li>
-                  <li className="flex">
-                    <span className="font-bold mr-2">•</span>
-                    <div>
-                      <span className="font-medium">Custom Landing Pages & Website Strategy</span>
-                      <p className="text-white/70">Designed for performance—whether you're capturing leads or scheduling patients.</p>
-                    </div>
-                  </li>
-                  <li className="flex">
-                    <span className="font-bold mr-2">•</span>
-                    <div>
-                      <span className="font-medium">E-Commerce Optimization & Digital Merchandising</span>
-                      <p className="text-white/70">Maximize your store's potential with strategic UX and conversion funnels.</p>
-                    </div>
-                  </li>
-                  <li className="flex">
-                    <span className="font-bold mr-2">•</span>
-                    <div>
-                      <span className="font-medium">Brand Identity & Visual Redesigns</span>
-                      <p className="text-white/70">Elevate your look to match the excellence you deliver.</p>
-                    </div>
-                  </li>
-                  <li className="flex">
-                    <span className="font-bold mr-2">•</span>
-                    <div>
-                      <span className="font-medium">Advanced Analytics & Performance Insights</span>
-                      <p className="text-white/70">Know what's working, improve what's not—down to the last click.</p>
-                    </div>
-                  </li>
-                </ul>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -200,23 +227,28 @@ const Index = () => {
               {[
                 {
                   title: "Industry Expertise",
-                  description: "Deep knowledge in dental, aesthetic, skincare, and wellness markets."
+                  description: "Deep knowledge in dental, aesthetic, skincare, and wellness markets.",
+                  icon: Sparkles
                 },
                 {
                   title: "Data-Driven Execution",
-                  description: "We track everything—and use those insights to sharpen your edge."
+                  description: "We track everything—and use those insights to sharpen your edge.",
+                  icon: BarChart2
                 },
                 {
                   title: "High-Touch Partnerships",
-                  description: "You're not just another account. You're a brand we invest in."
+                  description: "You're not just another account. You're a brand we invest in.",
+                  icon: Users
                 },
                 {
                   title: "Scalable Solutions",
-                  description: "Whether you're starting up or scaling fast, we build to grow with you."
+                  description: "Whether you're starting up or scaling fast, we build to grow with you.",
+                  icon: Layers
                 },
                 {
                   title: "Proven Results",
-                  description: "+115% Instagram growth, increased engagement, and higher conversion rates across our managed accounts."
+                  description: "+115% Instagram growth, increased engagement, and higher conversion rates across our managed accounts.",
+                  icon: TrendingUp
                 }
               ].map((item, index) => (
                 <div 
@@ -225,7 +257,9 @@ const Index = () => {
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   <div className="flex items-center mb-3">
-                    <span className="text-green-400 mr-2">✅</span>
+                    <div className="mr-3 orange-gradient-bg p-2 rounded-full">
+                      <item.icon className="w-5 h-5 text-white" />
+                    </div>
                     <h3 className="text-xl font-medium">{item.title}</h3>
                   </div>
                   <p className="text-white/70">{item.description}</p>
@@ -251,27 +285,27 @@ const Index = () => {
             <div className="grid md:grid-cols-2 gap-8">
               {[
                 {
-                  icon: "📍",
+                  icon: Smile,
                   title: "Dental Practices",
                   description: "From cosmetic dentistry to general oral care, we help practices grow visibility, credibility, and patient loyalty."
                 },
                 {
-                  icon: "📍",
+                  icon: Sparkles,
                   title: "Skincare & Aesthetics",
                   description: "We craft elevated digital identities for medspas, dermatology clinics, and skincare experts that demand distinction."
                 },
                 {
-                  icon: "📍",
+                  icon: HeartPulse,
                   title: "Wellness & Health Clinics",
                   description: "Functional medicine, hormone therapy, IV lounges, and holistic wellness centers—our strategies speak your language."
                 },
                 {
-                  icon: "📍",
+                  icon: Pills,
                   title: "RX & Medical Retail",
                   description: "We bring bold clarity to complex offerings like prescription skincare, supplements, and telehealth-based retail."
                 },
                 {
-                  icon: "📍",
+                  icon: FlaskConical,
                   title: "Boutique Health Brands",
                   description: "Emerging health & wellness products get a strategy-driven push to gain traction, credibility, and loyal followers."
                 }
@@ -281,8 +315,10 @@ const Index = () => {
                   className="glass-panel p-6 animate-on-scroll opacity-0 translate-y-4 transition-all duration-700" 
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
-                  <div className="flex items-start mb-3">
-                    <span className="text-2xl mr-3">{industry.icon}</span>
+                  <div className="flex items-start">
+                    <div className="orange-gradient-bg p-2 rounded-full mr-3 mt-1">
+                      <industry.icon className="w-5 h-5 text-white" />
+                    </div>
                     <div>
                       <h3 className="text-xl font-medium mb-2">{industry.title}</h3>
                       <p className="text-white/70">{industry.description}</p>

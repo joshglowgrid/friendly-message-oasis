@@ -6,15 +6,17 @@ interface NavLinkProps {
   href: string;
   children: React.ReactNode;
   className?: string;
-  onClick?: () => void; // Added onClick property
+  onClick?: () => void;
+  variant?: 'default' | 'button';
 }
 
-const NavLink = ({ href, children, className, onClick }: NavLinkProps) => {
+const NavLink = ({ href, children, className, onClick, variant = 'default' }: NavLinkProps) => {
   return (
     <a 
       href={href} 
       className={cn(
-        "nav-link text-lg font-medium tracking-wide uppercase transition-all duration-300", 
+        "nav-link text-lg font-medium tracking-wide uppercase transition-all duration-300",
+        variant === 'button' && "orange-gradient-bg px-4 py-2 rounded-md shadow-lg hover:shadow-orange-500/30",
         className
       )}
       onClick={onClick}
