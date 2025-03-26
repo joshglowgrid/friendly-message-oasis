@@ -7,6 +7,7 @@ import { MegaMenu } from '@/components/navigation/MegaMenu';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
+import { scrollToSection } from '@/components/navigation/navUtils';
 
 interface HeaderProps {
   scrolled: boolean;
@@ -23,15 +24,6 @@ const Header = ({ scrolled }: HeaderProps) => {
 
   const handleLinkClick = () => {
     setMobileMenuOpen(false);
-  };
-
-  // Smooth scroll to section
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setMobileMenuOpen(false);
-    }
   };
 
   // Check if path is active
@@ -53,7 +45,7 @@ const Header = ({ scrolled }: HeaderProps) => {
   return (
     <motion.nav 
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
         isAtTop ? "py-4 md:py-5" : "py-2 md:py-3 shadow-md",
         scrolled || !isAtTop ? "bg-black/90 backdrop-blur-md" : "bg-transparent"
       )}

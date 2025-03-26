@@ -56,10 +56,11 @@ const Index = () => {
     <div className="min-h-screen text-white flex flex-col items-center overflow-hidden">
       <IntroAnimation />
       <FloatingCTA />
-      <Hero />
+      <Header scrolled={scrolled} />
       
-      <div id="content" className="w-full">
-        <Header scrolled={scrolled} />
+      {/* Add padding-top to push content below fixed header */}
+      <div id="content" className="w-full pt-20 md:pt-24">
+        <Hero />
         <IntroSection />
         <ServiceCards />
         <PhoneMockup />

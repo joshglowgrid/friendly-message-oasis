@@ -1,9 +1,8 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Send } from 'lucide-react';
-import ReCAPTCHA from 'react-google-recaptcha';
 
 interface ContactFormProps {
   className?: string;
@@ -14,27 +13,29 @@ const ContactForm = ({ className }: ContactFormProps) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
+    website: '' // honeypot field
   });
-  const [captchaVerified, setCaptchaVerified] = useState(false);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCaptchaChange = (token: string | null) => {
-    setCaptchaVerified(!!token);
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!captchaVerified) {
-      toast.error("Please verify you're human", {
-        duration: 3000,
+    // If honeypot field is filled, silently reject the submission
+    if (formData.website) {
+      console.log('Spam submission detected and blocked');
+      
+      // Show success message to avoid alerting bots
+      toast.success("Message sent successfully", {
+        description: "We'll get back to you as soon as possible.",
+        duration: 5000,
       });
+      
+      setFormData({ name: '', email: '', message: '', website: '' });
       return;
     }
     
@@ -48,19 +49,13 @@ const ContactForm = ({ className }: ContactFormProps) => {
     data.append('_recipient', 'hello@glowgridmedia.com');
     
     // Simulate form submission
-    // In a real implementation, you would send this to a server endpoint
-    // that handles the email forwarding with proper spam protection
     setTimeout(() => {
       toast.success("Message sent successfully", {
         description: "We'll get back to you as soon as possible.",
         duration: 5000,
       });
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: '', email: '', message: '', website: '' });
       setIsSubmitting(false);
-      setCaptchaVerified(false);
-      if (recaptchaRef.current) {
-        recaptchaRef.current.reset();
-      }
     }, 1500);
   };
 
@@ -100,16 +95,18 @@ const ContactForm = ({ className }: ContactFormProps) => {
           rows={4}
           required
         ></textarea>
-      </div>
-      
-      <div className="flex justify-center opacity-70 scale-75 transform transition-all hover:opacity-90">
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" // This is a test key - replace with your actual key in production
-          onChange={handleCaptchaChange}
-          theme="dark"
-          size="compact"
-        />
+        
+        {/* Honeypot field - hidden from real users but visible to bots */}
+        <div className="sr-only" aria-hidden="true">
+          <input
+            type="text"
+            name="website"
+            value={formData.website}
+            onChange={handleChange}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
       </div>
       
       <button
