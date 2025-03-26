@@ -31,8 +31,6 @@ const App = () => (
           <Route path="/work/:projectId" element={<NotFound />} />
           <Route path="/resources" element={<NotFound />} />
           <Route path="/resources/:resourceId" element={<NotFound />} />
-          <Route path="/team" element={<NotFound />} />
-          <Route path="/contact" element={<NotFound />} />
           
           {/* Catch-all route */}
           <Route path="*" element={<NotFound />} />

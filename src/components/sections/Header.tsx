@@ -140,7 +140,10 @@ const Header = ({ scrolled }: HeaderProps) => {
               </a>
               <a 
                 href="#contact" 
-                onClick={() => scrollToSection('contact')} 
+                onClick={() => {
+                  scrollToSection('contact');
+                  handleLinkClick();
+                }} 
                 className="text-sm md:text-base font-medium tracking-wide uppercase hover:text-orange-400 transition-colors"
               >
                 Contact
@@ -149,7 +152,10 @@ const Header = ({ scrolled }: HeaderProps) => {
               <Button 
                 variant="gradient" 
                 className="w-full justify-center mt-2 py-2"
-                onClick={() => scrollToSection('contact')}
+                onClick={() => {
+                  scrollToSection('contact');
+                  handleLinkClick();
+                }}
               >
                 Book a Call
               </Button>

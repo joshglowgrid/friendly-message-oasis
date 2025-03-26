@@ -11,6 +11,8 @@ import { PhoneMockup } from '@/components/sections/PhoneMockup';
 import { EnhancedContactSection } from '@/components/sections/EnhancedContactSection';
 import { IntroAnimation } from '@/components/sections/IntroAnimation';
 import { FloatingCTA } from '@/components/navigation/FloatingCTA';
+import WhyUsSection from '@/components/sections/WhyUsSection';
+import IndustriesSection from '@/components/sections/IndustriesSection';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -62,6 +64,8 @@ const Index = () => {
         <IntroSection />
         <ServiceCards />
         <PhoneMockup />
+        <WhyUsSection />
+        <IndustriesSection />
         <EnhancedContactSection />
         <Footer />
       </div>
