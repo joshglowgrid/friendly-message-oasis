@@ -1,5 +1,8 @@
+
 import React from 'react';
 import { Smile, Sparkles, HeartPulse, Pill, FlaskConical } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+
 const industryItems = [{
   icon: Smile,
   title: "Dental Practices",
@@ -21,7 +24,37 @@ const industryItems = [{
   title: "Boutique Health Brands",
   description: "Emerging health & wellness products get a strategy-driven push to gain traction, credibility, and loyal followers."
 }];
+
 const IndustriesSection = () => {
-  return;
+  return (
+    <section className="py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4">Industries We Serve</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            We specialize in healthcare and wellness verticals where high-touch service meets luxury experiences.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {industryItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <Card key={index} className="border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <CardContent className="p-6">
+                  <div className="mb-4 text-teal-600">
+                    <Icon size={36} />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                  <p className="text-gray-600">{item.description}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 };
+
 export default IndustriesSection;
