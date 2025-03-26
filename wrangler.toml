@@ -1,3 +1,11 @@
-# wrangler.toml
 name = "glowgridmedia"
 compatibility_date = "2025-03-26"
+
+[build]
+command = "npm run build"
+cwd = "."
+watch_dir = "."
+
+[build.upload]
+format = "directory"
+dir = "dist"
