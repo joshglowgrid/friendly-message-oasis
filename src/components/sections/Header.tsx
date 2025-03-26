@@ -15,7 +15,7 @@ interface HeaderProps {
 
 const Header = ({ scrolled }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isSticky, setIsSticky] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(false);
   const location = useLocation();
 
   const toggleMobileMenu = () => {
@@ -33,11 +33,12 @@ const Header = ({ scrolled }: HeaderProps) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Get hero section height to determine when to make header sticky
+      // Get hero section to determine when to show header
       const heroSection = document.querySelector('section') as HTMLElement;
       if (heroSection) {
         const heroHeight = heroSection.offsetHeight;
-        setIsSticky(window.scrollY > heroHeight - 100);
+        // Show header only after scrolling past hero section
+        setHeaderVisible(window.scrollY > heroHeight * 0.8);
       }
     };
 
@@ -50,11 +51,11 @@ const Header = ({ scrolled }: HeaderProps) => {
   return (
     <motion.nav 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
-        isSticky ? "py-2 md:py-3 bg-black shadow-md" : "py-4 md:py-5 bg-transparent",
+        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
+        headerVisible ? "py-2 md:py-3 bg-black/95 shadow-md translate-y-0" : "py-4 md:py-5 bg-transparent -translate-y-full"
       )}
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
+      animate={{ y: headerVisible ? 0 : -100 }}
       transition={{ duration: 0.5 }}
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">

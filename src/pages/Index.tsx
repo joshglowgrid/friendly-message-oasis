@@ -27,6 +27,7 @@ const Index = () => {
         setScrolled(false);
       }
       
+      // Animate sections on scroll
       const sections = document.querySelectorAll('section');
       sections.forEach(section => {
         const sectionTop = section.getBoundingClientRect().top;
@@ -56,8 +57,7 @@ const Index = () => {
       <FloatingCTA />
       <Header scrolled={scrolled} />
       
-      {/* Add padding-top to push content below fixed header */}
-      <div id="content" className="w-full pt-20 md:pt-24">
+      <div id="content" className="w-full">
         <Hero />
         <IntroSection />
         <ServiceCards />
