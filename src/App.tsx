@@ -7,9 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-// Add Calendly dependency
-<lov-add-dependency>react-calendly@4.3.0</lov-add-dependency>
-
 const queryClient = new QueryClient();
 
 const App = () => (

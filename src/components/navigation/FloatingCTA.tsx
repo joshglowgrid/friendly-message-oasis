@@ -17,6 +17,21 @@ export const FloatingCTA = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    const tabTrigger = document.querySelector('[data-state="inactive"][value="call"]') as HTMLElement;
+    
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+      // Allow time for scroll before clicking the tab
+      setTimeout(() => {
+        if (tabTrigger) {
+          tabTrigger.click();
+        }
+      }, 800);
+    }
+  };
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -31,7 +46,7 @@ export const FloatingCTA = () => {
             variant="gradient" 
             size="lg"
             className="rounded-full shadow-lg shadow-orange-500/20"
-            onClick={() => window.open('https://calendly.com/glowgridmedia/30min', '_blank')}
+            onClick={scrollToContact}
           >
             Start a Project <ArrowRight className="ml-2 h-4 w-4" />
           </Button>

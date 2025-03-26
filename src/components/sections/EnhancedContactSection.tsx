@@ -1,29 +1,13 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
-import { toast } from 'sonner';
 import ContactForm from '@/components/ContactForm';
-import { InlineWidget } from 'react-calendly';
+import RequestCallForm from '@/components/RequestCallForm';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Mail, Calendar } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 
 export const EnhancedContactSection = () => {
-  const [calendlyLoaded, setCalendlyLoaded] = useState(false);
-
-  useEffect(() => {
-    // Add Calendly script
-    const script = document.createElement('script');
-    script.src = 'https://assets.calendly.com/assets/external/widget.js';
-    script.async = true;
-    script.onload = () => setCalendlyLoaded(true);
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   return (
     <section id="contact" className="py-16 md:py-24 px-4 orange-gradient-bg">
       <div className="max-w-7xl mx-auto">
@@ -81,10 +65,10 @@ export const EnhancedContactSection = () => {
             <Tabs defaultValue="form" className="w-full">
               <TabsList className="w-full mb-6 bg-black/20">
                 <TabsTrigger value="form" className="w-full data-[state=active]:bg-black/30">
-                  <Mail className="mr-2 h-4 w-4" /> Contact Form
+                  <Mail className="mr-2 h-4 w-4" /> Contact Us
                 </TabsTrigger>
-                <TabsTrigger value="calendar" className="w-full data-[state=active]:bg-black/30">
-                  <Calendar className="mr-2 h-4 w-4" /> Book a Call
+                <TabsTrigger value="call" className="w-full data-[state=active]:bg-black/30">
+                  <Phone className="mr-2 h-4 w-4" /> Request a Call
                 </TabsTrigger>
               </TabsList>
               
@@ -92,15 +76,8 @@ export const EnhancedContactSection = () => {
                 <ContactForm />
               </TabsContent>
               
-              <TabsContent value="calendar" className="mt-0">
-                <div className="calendly-inline-widget h-[500px] w-full">
-                  {calendlyLoaded && (
-                    <InlineWidget 
-                      url="https://calendly.com/glowgridmedia/30min" 
-                      styles={{ height: '100%', width: '100%' }}
-                    />
-                  )}
-                </div>
+              <TabsContent value="call" className="mt-0">
+                <RequestCallForm />
               </TabsContent>
             </Tabs>
           </div>
