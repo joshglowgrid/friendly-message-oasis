@@ -12,9 +12,7 @@ const IntroSection = () => {
         <p className="text-lg sm:text-xl md:text-2xl text-white/80 mb-10 max-w-3xl mx-auto">
           We don't just post—we build ecosystems. Welcome to the new era of brand growth.
         </p>
-        <Button variant="gradient" className="text-base sm:text-lg px-6 py-3 h-auto rounded-md" onClick={scrollToContact}>
-          Let's Grow Together → Start Your Strategy Session
-        </Button>
+        <Button variant="gradient" onClick={scrollToContact} className="text-base sm:text-lg py-3 h-auto rounded-md text-center px-[20px]">Let's Grow Together → </Button>
       </div>
     </section>;
 };
