@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import NavLink from '@/components/NavLink';
 import Logo from '@/components/Logo';
@@ -18,7 +17,7 @@ import {
   HeartPulse,
   Droplets,
   FlaskConical,
-  Pills
+  Pill
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -33,14 +32,12 @@ const Index = () => {
     setMounted(true);
     
     const handleScroll = () => {
-      // Check if page is scrolled for sticky header styling
       if (window.scrollY > 50) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
       
-      // Animation on scroll
       const sections = document.querySelectorAll('section');
       sections.forEach(section => {
         const sectionTop = section.getBoundingClientRect().top;
@@ -74,7 +71,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen text-white flex flex-col items-center">
-      {/* Hero Section - Fullscreen Logo */}
       <section className="h-screen w-full flex flex-col items-center justify-center relative px-4">
         <div className="w-3/4 sm:w-2/3 md:w-1/2 lg:w-2/5">
           <Logo 
@@ -87,15 +83,12 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Main Content */}
       <div id="content" className="w-full">
-        {/* Sticky Navigation */}
         <nav className={cn(
           "sticky top-0 z-50 bg-black/80 backdrop-blur-sm w-full transition-all duration-300",
           scrolled ? "py-2" : "py-4"
         )}>
           <div className="container mx-auto px-4 flex items-center justify-between">
-            {/* Logo */}
             <div className="flex items-center">
               <div className="w-32 md:w-36">
                 <Logo 
@@ -105,7 +98,6 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
             <div className="md:hidden">
               <button
                 onClick={toggleMobileMenu}
@@ -115,7 +107,6 @@ const Index = () => {
               </button>
             </div>
 
-            {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
               <NavLink href="#about">ABOUT</NavLink>
               <NavLink href="#services">SERVICES</NavLink>
@@ -125,21 +116,17 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Mobile Menu */}
-          {isMobile && mobileMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-md py-4">
-              <div className="flex flex-col items-center space-y-4">
-                <NavLink href="#about" onClick={() => setMobileMenuOpen(false)}>ABOUT</NavLink>
-                <NavLink href="#services" onClick={() => setMobileMenuOpen(false)}>SERVICES</NavLink>
-                <NavLink href="#why-us" onClick={() => setMobileMenuOpen(false)}>WHY US</NavLink>
-                <NavLink href="#industries" onClick={() => setMobileMenuOpen(false)}>INDUSTRIES</NavLink>
-                <NavLink href="#contact" onClick={() => setMobileMenuOpen(false)} variant="button">CONTACT</NavLink>
-              </div>
+          <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-md py-4">
+            <div className="flex flex-col items-center space-y-4">
+              <NavLink href="#about" onClick={() => setMobileMenuOpen(false)}>ABOUT</NavLink>
+              <NavLink href="#services" onClick={() => setMobileMenuOpen(false)}>SERVICES</NavLink>
+              <NavLink href="#why-us" onClick={() => setMobileMenuOpen(false)}>WHY US</NavLink>
+              <NavLink href="#industries" onClick={() => setMobileMenuOpen(false)}>INDUSTRIES</NavLink>
+              <NavLink href="#contact" onClick={() => setMobileMenuOpen(false)} variant="button">CONTACT</NavLink>
             </div>
-          )}
+          </div>
         </nav>
 
-        {/* Hero Content */}
         <section className="py-12 px-6 text-center">
           <div className="max-w-5xl mx-auto">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-blink orange-gradient-text mb-6 leading-tight">
@@ -158,7 +145,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* About Section */}
         <section id="about" className="py-20 px-6 bg-black/50">
           <div className="max-w-5xl mx-auto">
             <div className="glass-panel p-8 sm:p-10 md:p-12 space-y-8">
@@ -214,7 +200,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Why Choose Us Section */}
         <section id="why-us" className="py-20 px-6">
           <div className="max-w-5xl mx-auto space-y-12">
             <h2 className="text-2xl sm:text-3xl font-blink orange-gradient-text text-center animate-on-scroll opacity-0 translate-y-4 transition-all duration-700">
@@ -272,7 +257,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Industries Section */}
         <section id="industries" className="py-20 px-6 bg-black/50">
           <div className="max-w-5xl mx-auto space-y-12">
             <h2 className="text-2xl sm:text-3xl font-blink orange-gradient-text text-center animate-on-scroll opacity-0 translate-y-4 transition-all duration-700">
@@ -300,7 +284,7 @@ const Index = () => {
                   description: "Functional medicine, hormone therapy, IV lounges, and holistic wellness centers—our strategies speak your language."
                 },
                 {
-                  icon: Pills,
+                  icon: Pill,
                   title: "RX & Medical Retail",
                   description: "We bring bold clarity to complex offerings like prescription skincare, supplements, and telehealth-based retail."
                 },
@@ -330,7 +314,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Contact Section */}
         <section id="contact" className="py-20 px-6 min-h-screen flex flex-col items-center justify-center">
           <div className="max-w-4xl mx-auto w-full space-y-12 text-center">
             <div className="space-y-4">
@@ -347,7 +330,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Footer Section */}
         <footer className="py-10 px-6 border-t border-white/10">
           <div className="max-w-4xl mx-auto text-center text-white/60 space-y-4">
             <div className="w-32 mx-auto mb-6">
