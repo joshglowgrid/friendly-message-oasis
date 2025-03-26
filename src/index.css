@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -54,7 +55,22 @@
   
   body {
     @apply bg-[#0D0D0D] text-[#FAFAFA] antialiased leading-relaxed tracking-wide;
-    background-image: radial-gradient(circle at center, rgba(50, 50, 50, 0.03) 0%, rgba(0, 0, 0, 0) 70%);
+    background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #151515, #0d0d0d);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+  }
+  
+  /* Animated gradient background */
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
   
   /* Custom scrollbar */
@@ -96,6 +112,10 @@
 
   .orange-gradient-text {
     @apply font-blink bg-gradient-to-r from-orange-300 to-orange-500 bg-clip-text text-transparent;
+  }
+  
+  .orange-gradient-bg {
+    @apply bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white transition-all duration-300;
   }
 }
 

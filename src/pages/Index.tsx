@@ -4,11 +4,14 @@ import NavLink from '@/components/NavLink';
 import Logo from '@/components/Logo';
 import ContactForm from '@/components/ContactForm';
 import { cn } from '@/lib/utils';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
   
   useEffect(() => {
     setMounted(true);
@@ -39,6 +42,10 @@ const Index = () => {
     document.getElementById('content')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <div className="min-h-screen text-white flex flex-col items-center">
       {/* Hero Section - Fullscreen Logo */}
@@ -56,14 +63,40 @@ const Index = () => {
       
       {/* Main Content */}
       <div id="content" className="w-full">
-        {/* Navigation */}
-        <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-sm py-4 px-4 flex justify-center mb-12">
-          <div className="flex space-x-8 sm:space-x-16">
-            <NavLink href="#about">ABOUT</NavLink>
-            <NavLink href="#services">SERVICES</NavLink>
-            <NavLink href="#why-us">WHY US</NavLink>
-            <NavLink href="#industries">INDUSTRIES</NavLink>
-            <NavLink href="#contact">CONTACT</NavLink>
+        {/* Mobile Navigation */}
+        <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-sm py-4 px-4 w-full">
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex justify-end">
+            <button
+              onClick={toggleMobileMenu}
+              className="p-2 text-white focus:outline-none"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          {isMobile && mobileMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-md py-4">
+              <div className="flex flex-col items-center space-y-4">
+                <NavLink href="#about" onClick={() => setMobileMenuOpen(false)}>ABOUT</NavLink>
+                <NavLink href="#services" onClick={() => setMobileMenuOpen(false)}>SERVICES</NavLink>
+                <NavLink href="#why-us" onClick={() => setMobileMenuOpen(false)}>WHY US</NavLink>
+                <NavLink href="#industries" onClick={() => setMobileMenuOpen(false)}>INDUSTRIES</NavLink>
+                <NavLink href="#contact" onClick={() => setMobileMenuOpen(false)}>CONTACT</NavLink>
+              </div>
+            </div>
+          )}
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex justify-center">
+            <div className="flex space-x-8 sm:space-x-16">
+              <NavLink href="#about">ABOUT</NavLink>
+              <NavLink href="#services">SERVICES</NavLink>
+              <NavLink href="#why-us">WHY US</NavLink>
+              <NavLink href="#industries">INDUSTRIES</NavLink>
+              <NavLink href="#contact">CONTACT</NavLink>
+            </div>
           </div>
         </nav>
 
@@ -77,8 +110,7 @@ const Index = () => {
               We don't just post—we build ecosystems. Welcome to the new era of brand growth.
             </p>
             <Button 
-              className="text-lg px-8 py-6 h-auto border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black transition-all duration-300" 
-              variant="outline"
+              className="orange-gradient-bg text-base sm:text-lg px-6 py-3 h-auto rounded-md shadow-lg hover:shadow-orange-400/20 transition-all duration-300" 
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Let's Grow Together → Start Your Strategy Session
