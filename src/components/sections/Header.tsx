@@ -51,7 +51,7 @@ const Header = ({ scrolled }: HeaderProps) => {
           <NavLink href="#services">SERVICES</NavLink>
           <NavLink href="#why-us">WHY US</NavLink>
           <NavLink href="#industries">INDUSTRIES</NavLink>
-          <NavLink href="#contact" variant="button">CONTACT</NavLink>
+          <NavLink href="#contact" variant="contact-button">CONTACT</NavLink>
         </div>
       </div>
 
@@ -62,7 +62,7 @@ const Header = ({ scrolled }: HeaderProps) => {
             <NavLink href="#services" onClick={handleLinkClick}>SERVICES</NavLink>
             <NavLink href="#why-us" onClick={handleLinkClick}>WHY US</NavLink>
             <NavLink href="#industries" onClick={handleLinkClick}>INDUSTRIES</NavLink>
-            <NavLink href="#contact" onClick={handleLinkClick} variant="button">CONTACT</NavLink>
+            <NavLink href="#contact" onClick={handleLinkClick} variant="contact-button">CONTACT</NavLink>
           </div>
         </div>
       )}

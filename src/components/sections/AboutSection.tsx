@@ -36,13 +36,24 @@ const AboutSection = () => {
   return (
     <section id="about" className="py-20 px-6 bg-black/50">
       <div className="max-w-5xl mx-auto">
+        <div className="relative mb-10">
+          <img
+            src="/lovable-uploads/7700263e-d0df-4380-9146-59971accd865.png"
+            alt="Healthcare digital marketing strategy"
+            className="w-full object-cover rounded-2xl animate-on-scroll opacity-0 translate-y-4 transition-all duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl"></div>
+        </div>
+        
         <div className="glass-panel p-8 sm:p-10 md:p-12 space-y-8">
           <h2 className="text-2xl sm:text-3xl font-blink orange-gradient-text text-center animate-on-scroll opacity-0 translate-y-4 transition-all duration-700">
             Full-Spectrum Digital Strategy, Custom-Crafted for Healthcare & Wellness Brands
           </h2>
           <div className="space-y-6 animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100">
             <p className="text-white/80 leading-relaxed text-center mb-8">
-              At GlowGrid Media, every service is engineered for growth and grounded in data. We don't guess—we analyze, test, and tailor.
+              At GlowGrid Media, every service is engineered for growth and grounded in data. 
+              We don't guess—we analyze, test, and tailor. Serving Los Angeles, The San Gabriel Valley, 
+              the surrounding areas and businesses across the United States.
             </p>
             
             <h3 className="text-xl font-semibold mb-4 text-center">Our Core Services Include:</h3>
