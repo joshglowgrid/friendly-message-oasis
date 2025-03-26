@@ -32,7 +32,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
     e.preventDefault();
     
     if (!captchaVerified) {
-      toast.error("Please verify that you're not a robot", {
+      toast.error("Please verify you're human", {
         duration: 3000,
       });
       return;
@@ -102,11 +102,13 @@ const ContactForm = ({ className }: ContactFormProps) => {
         ></textarea>
       </div>
       
-      <div className="flex justify-center mb-4">
+      <div className="flex justify-center opacity-70 scale-75 transform transition-all hover:opacity-90">
         <ReCAPTCHA
           ref={recaptchaRef}
           sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" // This is a test key - replace with your actual key in production
           onChange={handleCaptchaChange}
+          theme="dark"
+          size="compact"
         />
       </div>
       

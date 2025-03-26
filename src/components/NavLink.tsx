@@ -15,7 +15,7 @@ const NavLink = ({ href, children, className, onClick, variant = 'default' }: Na
     <a 
       href={href} 
       className={cn(
-        "nav-link text-lg font-medium tracking-wide uppercase transition-all duration-300",
+        "nav-link text-lg font-medium tracking-wide uppercase transition-all duration-150",
         variant === 'button' && "orange-gradient-bg px-4 py-2 rounded-md shadow-lg hover:shadow-orange-500/30",
         variant === 'contact-button' && "orange-gradient-bg px-4 py-2 rounded-md shadow-lg hover:shadow-orange-500/50 text-white",
         className

@@ -47,8 +47,17 @@ const Header = ({ scrolled }: HeaderProps) => {
           </div>
         </div>
 
-        <div className="hidden md:block">
-          <NavHeader />
+        <div className="hidden md:flex items-center gap-4">
+          <div className="mr-4">
+            <NavHeader />
+          </div>
+          <NavLink 
+            href="#contact" 
+            className="transition-colors duration-150 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-white hover:to-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-orange-400 hover:to-orange-500"
+            variant="contact-button"
+          >
+            CONTACT
+          </NavLink>
         </div>
       </div>
 

@@ -36,11 +36,11 @@ const AboutSection = () => {
   return (
     <section id="about" className="py-20 px-6 bg-black/50 overflow-hidden">
       <div className="max-w-5xl mx-auto">
-        <div className="relative mb-10">
+        <div className="relative mb-10 h-64 sm:h-80 md:h-96">
           <img
             src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/GlowGrid%20Media%20-%20LA%20Medical%20Marketing%20Agency.png?raw=true"
             alt="Healthcare digital marketing strategy"
-            className="w-full object-cover rounded-2xl animate-on-scroll opacity-0 translate-y-4 transition-all duration-700"
+            className="w-full h-full object-cover rounded-2xl animate-on-scroll opacity-0 translate-y-4 transition-all duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl"></div>
         </div>
@@ -60,7 +60,7 @@ const AboutSection = () => {
             
             <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
               {serviceItems.map((service, index) => (
-                <div key={index} className="glass-panel p-5 hover:bg-white/10 transition-all duration-300">
+                <div key={index} className="glass-panel p-5 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm">
                   <h4 className="text-lg font-medium mb-2 orange-gradient-text">{service.title}</h4>
                   <p className="text-white/70 text-sm sm:text-base">{service.description}</p>
                 </div>
