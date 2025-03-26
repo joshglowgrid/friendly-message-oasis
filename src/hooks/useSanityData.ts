@@ -47,7 +47,7 @@ export function useBlogPosts(limit?: number) {
     mainImage
   }`;
   
-  return useSanityData(['blogPosts', limit], query);
+  return useSanityData(['blogPosts', limit ? limit.toString() : undefined], query);
 }
 
 export function useBlogPost(slug: string) {
