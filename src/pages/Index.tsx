@@ -76,6 +76,7 @@ const Index = () => {
           <Logo 
             src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
             alt="GlowGrid Logo" 
+            url="https://glowgridmedia.com"
           />
         </div>
         <div className="absolute bottom-10 animate-bounce cursor-pointer" onClick={scrollToContent}>
@@ -94,6 +95,7 @@ const Index = () => {
                 <Logo 
                   src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
                   alt="GlowGrid Logo"
+                  url="https://glowgridmedia.com"
                 />
               </div>
             </div>
@@ -116,15 +118,17 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-md py-4">
-            <div className="flex flex-col items-center space-y-4">
-              <NavLink href="#about" onClick={() => setMobileMenuOpen(false)}>ABOUT</NavLink>
-              <NavLink href="#services" onClick={() => setMobileMenuOpen(false)}>SERVICES</NavLink>
-              <NavLink href="#why-us" onClick={() => setMobileMenuOpen(false)}>WHY US</NavLink>
-              <NavLink href="#industries" onClick={() => setMobileMenuOpen(false)}>INDUSTRIES</NavLink>
-              <NavLink href="#contact" onClick={() => setMobileMenuOpen(false)} variant="button">CONTACT</NavLink>
+          {mobileMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-md py-4">
+              <div className="flex flex-col items-center space-y-4">
+                <NavLink href="#about" onClick={() => setMobileMenuOpen(false)}>ABOUT</NavLink>
+                <NavLink href="#services" onClick={() => setMobileMenuOpen(false)}>SERVICES</NavLink>
+                <NavLink href="#why-us" onClick={() => setMobileMenuOpen(false)}>WHY US</NavLink>
+                <NavLink href="#industries" onClick={() => setMobileMenuOpen(false)}>INDUSTRIES</NavLink>
+                <NavLink href="#contact" onClick={() => setMobileMenuOpen(false)} variant="button">CONTACT</NavLink>
+              </div>
             </div>
-          </div>
+          )}
         </nav>
 
         <section className="py-12 px-6 text-center">
@@ -158,7 +162,7 @@ const Index = () => {
                 
                 <h3 className="text-xl font-semibold mb-4 text-center">Our Core Services Include:</h3>
                 
-                <div className="grid md:grid-cols-2 gap-8">
+                <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
                   {[
                     {
                       title: "Social Media Management & Content Creation",
@@ -191,7 +195,7 @@ const Index = () => {
                   ].map((service, index) => (
                     <div key={index} className="glass-panel p-5 hover:bg-white/10 transition-all duration-300">
                       <h4 className="text-lg font-medium mb-2 orange-gradient-text">{service.title}</h4>
-                      <p className="text-white/70">{service.description}</p>
+                      <p className="text-white/70 text-sm sm:text-base">{service.description}</p>
                     </div>
                   ))}
                 </div>
@@ -336,16 +340,17 @@ const Index = () => {
               <Logo 
                 src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
                 alt="GlowGrid Logo"
+                url="https://glowgridmedia.com"
               />
             </div>
             <div className="flex justify-center space-x-6">
-              <NavLink href="#" className="text-white/60 hover:text-white/90">
+              <NavLink href="https://twitter.com/glowgridmedia" className="text-white/60 hover:text-white/90">
                 Twitter
               </NavLink>
-              <NavLink href="#" className="text-white/60 hover:text-white/90">
+              <NavLink href="https://instagram.com/glowgridmedia" className="text-white/60 hover:text-white/90">
                 Instagram
               </NavLink>
-              <NavLink href="#" className="text-white/60 hover:text-white/90">
+              <NavLink href="https://linkedin.com/company/glowgridmedia" className="text-white/60 hover:text-white/90">
                 LinkedIn
               </NavLink>
             </div>
