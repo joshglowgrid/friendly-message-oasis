@@ -6,9 +6,10 @@ interface NavLinkProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void; // Added onClick property
 }
 
-const NavLink = ({ href, children, className }: NavLinkProps) => {
+const NavLink = ({ href, children, className, onClick }: NavLinkProps) => {
   return (
     <a 
       href={href} 
@@ -16,6 +17,7 @@ const NavLink = ({ href, children, className }: NavLinkProps) => {
         "nav-link text-lg font-medium tracking-wide uppercase transition-all duration-300", 
         className
       )}
+      onClick={onClick}
     >
       {children}
     </a>
