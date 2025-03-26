@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { Send } from 'lucide-react';
+import { Send, Mail } from 'lucide-react';
 
 interface ContactFormProps {
   className?: string;
@@ -41,7 +41,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
     
     setIsSubmitting(true);
     
-    // Build form data with hidden recipient
+    // Build form data with recipient
     const data = new FormData();
     data.append('name', formData.name);
     data.append('email', formData.email);
@@ -121,9 +121,17 @@ const ContactForm = ({ className }: ContactFormProps) => {
         {!isSubmitting && <Send size={18} />}
       </button>
       
-      <p className="text-xs text-white/60 text-center">
-        Serving Los Angeles, The San Gabriel Valley, the surrounding areas and businesses across the United States.
-      </p>
+      <div className="text-center space-y-2">
+        <p className="text-xs text-white/60">
+          Serving Los Angeles, The San Gabriel Valley, the surrounding areas and businesses across the United States.
+        </p>
+        <p className="flex items-center justify-center gap-2 text-sm text-white/80">
+          <Mail size={16} className="text-orange-400" />
+          <a href="mailto:hello@glowgridmedia.com" className="hover:text-orange-400 transition-colors">
+            hello@glowgridmedia.com
+          </a>
+        </p>
+      </div>
     </form>
   );
 };

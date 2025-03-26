@@ -48,9 +48,4 @@ export const getResourcesData = () => [
     description: "Client success stories and results",
     link: "/resources/case-studies",
   },
-  { 
-    title: "Webinars", 
-    description: "Educational videos and presentations",
-    link: "/resources/webinars",
-  },
 ];

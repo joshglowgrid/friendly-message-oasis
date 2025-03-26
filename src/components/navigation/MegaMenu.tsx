@@ -68,16 +68,6 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
         onClose={handleCloseMenu}
       />
       
-      <Link 
-        to="/team" 
-        className={cn(
-          "px-3 py-2 text-sm font-medium uppercase tracking-wide relative transition-colors after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150 hover:after:scale-x-100 hover:after:origin-bottom-left",
-          isActive('/team') ? "text-orange-400 after:scale-x-100" : "text-white hover:text-white"
-        )}
-      >
-        Team
-      </Link>
-      
       <a 
         href="#contact"
         onClick={(e) => {

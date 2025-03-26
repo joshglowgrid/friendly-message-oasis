@@ -96,7 +96,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.5 }}
-        className="absolute bottom-10 animate-bounce cursor-pointer" 
+        className="absolute bottom-10 animate-bounce cursor-pointer arrow-indicator" 
         onClick={scrollToContent}
       >
         <ArrowDown size={32} className="text-white/80 hover:text-orange-400 transition-colors" />

@@ -62,7 +62,6 @@ const Index = () => {
         <IntroSection />
         <ServiceCards />
         <PhoneMockup />
-        <AboutSection />
         <EnhancedContactSection />
         <Footer />
       </div>

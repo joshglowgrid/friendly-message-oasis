@@ -3,13 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Clock, User } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 
 export interface BlogPost {
   id: string;
   title: string;
   excerpt: string;
-  author: string;
+  author: string; // keeping this in the type for backward compatibility
   date: string;
   readTime: string;
   category: string;
@@ -45,10 +45,6 @@ export const BlogList: React.FC<BlogListProps> = ({ posts, className }) => {
               </Link>
             </CardTitle>
             <CardDescription className="flex items-center gap-4 text-white/60 mt-2">
-              <span className="flex items-center gap-1">
-                <User size={14} />
-                {post.author}
-              </span>
               <span className="flex items-center gap-1">
                 <Clock size={14} />
                 {post.readTime}

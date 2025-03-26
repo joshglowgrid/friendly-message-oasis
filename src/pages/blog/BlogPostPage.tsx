@@ -5,10 +5,9 @@ import Header from '@/components/sections/Header';
 import Footer from '@/components/sections/Footer';
 import { FloatingCTA } from '@/components/navigation/FloatingCTA';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, Clock, Share2, User } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Share2 } from 'lucide-react';
 import { getBlogPostById, getRelatedPosts } from '@/data/blogData';
 import { BlogList, BlogPost } from '@/components/blog/BlogList';
-import { Separator } from '@/components/ui/separator';
 
 const BlogPostPage = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -116,10 +115,6 @@ const BlogPostPage = () => {
             <h1 className="text-2xl md:text-4xl font-bold mb-4">{post.title}</h1>
             
             <div className="flex flex-wrap items-center gap-4 text-white/60 mb-6">
-              <span className="flex items-center gap-1">
-                <User size={16} />
-                {post.author}
-              </span>
               <span className="flex items-center gap-1">
                 <Calendar size={16} />
                 {post.date}

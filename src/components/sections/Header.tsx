@@ -15,7 +15,7 @@ interface HeaderProps {
 
 const Header = ({ scrolled }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [headerVisible, setHeaderVisible] = useState(true); // Changed to true to ensure navbar is visible
+  const [headerVisible, setHeaderVisible] = useState(false);
   const location = useLocation();
 
   const toggleMobileMenu = () => {
@@ -35,10 +35,19 @@ const Header = ({ scrolled }: HeaderProps) => {
     const handleScroll = () => {
       // Get hero section to determine when to show header
       const heroSection = document.querySelector('section') as HTMLElement;
-      if (heroSection) {
+      const arrowElement = document.querySelector('.arrow-indicator') as HTMLElement;
+      
+      if (arrowElement) {
+        // Show header only after scrolling past the arrow
+        const arrowPosition = arrowElement.getBoundingClientRect().bottom;
+        setHeaderVisible(arrowPosition < 0);
+      } else if (heroSection) {
+        // Fallback if arrow not found
         const heroHeight = heroSection.offsetHeight;
-        // Show header only after scrolling past hero section
-        setHeaderVisible(window.scrollY > heroHeight * 0.5 || window.scrollY < 10);
+        setHeaderVisible(window.scrollY > heroHeight * 0.8);
+      } else {
+        // Default behavior for non-home pages
+        setHeaderVisible(true);
       }
     };
 
@@ -52,11 +61,9 @@ const Header = ({ scrolled }: HeaderProps) => {
     <motion.nav 
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
-        headerVisible ? 
-          (window.scrollY > 10 ? "py-2 md:py-3 bg-black/95 shadow-md" : "py-4 md:py-5 bg-transparent") 
-          : "py-4 md:py-5 bg-transparent -translate-y-full"
+        headerVisible ? "py-2 md:py-3 bg-black shadow-md" : "py-4 md:py-5 bg-transparent -translate-y-full"
       )}
-      initial={{ y: 0 }}
+      initial={{ y: -100 }}
       animate={{ y: headerVisible ? 0 : -100 }}
       transition={{ duration: 0.5 }}
     >
@@ -134,16 +141,6 @@ const Header = ({ scrolled }: HeaderProps) => {
                 )}
               >
                 Resources
-              </a>
-              <a 
-                href="/team" 
-                onClick={handleLinkClick} 
-                className={cn(
-                  "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
-                  isActivePath('/team') ? "text-orange-400" : "text-white hover:text-orange-400"
-                )}
-              >
-                Team
               </a>
               <a 
                 href="#contact" 
