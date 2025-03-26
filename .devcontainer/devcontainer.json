@@ -1,0 +1,5 @@
+{
+  "name": "GlowGrid Media",
+  "appPort": 3333,
+  "appPortAutoForward": true
+}
