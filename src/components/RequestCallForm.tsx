@@ -1,200 +1,220 @@
 
 import React, { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { toast } from 'sonner';
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Phone, Send } from 'lucide-react';
-import ReCAPTCHA from 'react-google-recaptcha';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
-const callRequestSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  email: z.string().email({ message: "Please enter a valid email address" }),
+const formSchema = z.object({
+  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
+  email: z.string().email({ message: 'Please enter a valid email address.' }),
   phone: z.string().optional(),
-  callTime: z.string().min(2, { message: "Please provide a preferred call time" }),
-  message: z.string().optional(),
+  preferredTime: z.string().optional(),
+  message: z.string().min(5, { message: 'Message must be at least 5 characters.' }),
+  // Honeypot field - should remain empty
+  website: z.string().max(0, { message: 'This field should be empty.' }).optional(),
 });
 
-type CallRequestFormValues = z.infer<typeof callRequestSchema>;
+type FormData = z.infer<typeof formSchema>;
 
-interface RequestCallFormProps {
-  className?: string;
-}
-
-const RequestCallForm = ({ className }: RequestCallFormProps) => {
+const RequestCallForm = () => {
+  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [captchaVerified, setCaptchaVerified] = useState(false);
-  const recaptchaRef = React.useRef<ReCAPTCHA>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const form = useForm<CallRequestFormValues>({
-    resolver: zodResolver(callRequestSchema),
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
       email: '',
       phone: '',
-      callTime: '',
+      preferredTime: '',
       message: '',
+      website: '', // Honeypot field
     },
   });
 
-  const handleCaptchaChange = (token: string | null) => {
-    setCaptchaVerified(!!token);
-  };
-
-  const onSubmit = (data: CallRequestFormValues) => {
-    if (!captchaVerified) {
-      toast.error("Please verify you're human", {
-        duration: 3000,
+  const onSubmit = async (data: FormData) => {
+    // Check if honeypot field is filled (bot detection)
+    if (data.website && data.website.length > 0) {
+      console.log('Bot detected. Form not submitted.');
+      // Fake success to avoid bot detection
+      toast({
+        title: 'Message sent!',
+        description: 'We will contact you soon.',
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      toast.success("Call request received!", {
-        description: "We'll be in touch soon to schedule a time that works for you.",
-        duration: 5000,
+
+    try {
+      // In a real implementation, you'd send the data to your backend
+      // For demo purposes, we're simulating a successful submission
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      
+      console.log('Form submitted:', data);
+      
+      // Show success message
+      setIsSuccess(true);
+      toast({
+        title: 'Message sent!',
+        description: 'We will contact you soon.',
       });
       
-      form.reset();
+      // Reset form after successful submission
+      reset();
+      
+      // Reset success state after a delay
+      setTimeout(() => setIsSuccess(false), 5000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: 'Error',
+        description: 'There was an error sending your message. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
       setIsSubmitting(false);
-      setCaptchaVerified(false);
-      if (recaptchaRef.current) {
-        recaptchaRef.current.reset();
-      }
-    }, 1500);
+    }
   };
 
   return (
-    <Form {...form}>
-      <form 
-        onSubmit={form.handleSubmit(onSubmit)}
-        className={cn(
-          "w-full space-y-5",
-          className
-        )}
-      >
-        <div className="space-y-3">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder="Full Name"
-                    className="input-field"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-red-400 text-xs" />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder="Email"
-                    type="email"
-                    className="input-field"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-red-400 text-xs" />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder="Phone (optional)"
-                    type="tel"
-                    className="input-field"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-red-400 text-xs" />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="callTime"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder="Preferred Call Time (e.g. Weekdays 2-5pm PST)"
-                    className="input-field"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-red-400 text-xs" />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Textarea
-                    placeholder="Any specific topics you'd like to discuss? (optional)"
-                    className="input-field min-h-[80px]"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-red-400 text-xs" />
-              </FormItem>
-            )}
-          />
+    <div className="w-full max-w-lg mx-auto">
+      {isSuccess ? (
+        <div className="glass-panel p-8 text-center animate-fade-in">
+          <div className="orange-gradient-text text-4xl mb-4">✓</div>
+          <h3 className="text-2xl font-semibold mb-2">Thank You!</h3>
+          <p className="text-white/80 mb-4">
+            We've received your request and will get back to you shortly.
+          </p>
+          <Button
+            variant="outline"
+            onClick={() => setIsSuccess(false)}
+            className="mt-4"
+          >
+            Send Another Message
+          </Button>
         </div>
-        
-        <div className="flex justify-center opacity-70 scale-75 transform transition-all hover:opacity-90">
-          <ReCAPTCHA
-            ref={recaptchaRef}
-            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" // Test key - replace with actual key in production
-            onChange={handleCaptchaChange}
-            theme="dark"
-            size="compact"
-          />
-        </div>
-        
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          variant="gradient"
-          className="w-full flex items-center justify-center gap-2"
-        >
-          {isSubmitting ? "Submitting..." : "Request a Call"}
-          {!isSubmitting && <Phone size={18} />}
-        </Button>
-        
-        <p className="text-xs text-white/60 text-center">
-          We typically respond within 24-48 hours to schedule your consultation.
-        </p>
-      </form>
-    </Form>
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium mb-1">
+              Full Name <span className="text-orange-400">*</span>
+            </label>
+            <input
+              id="name"
+              type="text"
+              {...register('name')}
+              className={cn(
+                'w-full px-4 py-2 bg-white/10 border rounded-md focus:outline-none focus:ring-2 transition-all duration-300',
+                errors.name
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-white/20 focus:ring-orange-400'
+              )}
+            />
+            {errors.name && (
+              <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-1">
+              Email Address <span className="text-orange-400">*</span>
+            </label>
+            <input
+              id="email"
+              type="email"
+              {...register('email')}
+              className={cn(
+                'w-full px-4 py-2 bg-white/10 border rounded-md focus:outline-none focus:ring-2 transition-all duration-300',
+                errors.email
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-white/20 focus:ring-orange-400'
+              )}
+            />
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium mb-1">
+              Phone Number (Optional)
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              {...register('phone')}
+              className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all duration-300"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="preferredTime" className="block text-sm font-medium mb-1">
+              Preferred Call Time (Optional)
+            </label>
+            <input
+              id="preferredTime"
+              type="text"
+              placeholder="e.g., Weekdays 2-5pm PST"
+              {...register('preferredTime')}
+              className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all duration-300"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium mb-1">
+              Message <span className="text-orange-400">*</span>
+            </label>
+            <textarea
+              id="message"
+              rows={4}
+              {...register('message')}
+              className={cn(
+                'w-full px-4 py-2 bg-white/10 border rounded-md focus:outline-none focus:ring-2 transition-all duration-300',
+                errors.message
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-white/20 focus:ring-orange-400'
+              )}
+            />
+            {errors.message && (
+              <p className="mt-1 text-sm text-red-400">{errors.message.message}</p>
+            )}
+          </div>
+
+          {/* Honeypot field - hidden from users, only bots will fill this */}
+          <div className="hidden">
+            <label htmlFor="website">Website</label>
+            <input
+              id="website"
+              type="text"
+              {...register('website')}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
+          <div className="pt-4">
+            <Button
+              type="submit"
+              variant="gradient"
+              disabled={isSubmitting}
+              className="w-full py-3 h-auto"
+            >
+              {isSubmitting ? 'Sending...' : 'Request a Call'}
+            </Button>
+          </div>
+        </form>
+      )}
+    </div>
   );
 };
 

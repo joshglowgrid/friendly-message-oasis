@@ -3,7 +3,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Phone, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const menuVariants = {
@@ -39,6 +39,9 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
   onOpen,
   onClose
 }) => {
+  const location = useLocation();
+  const isActive = items.some(item => location.pathname === item.link);
+  
   return (
     <div 
       className="relative" 
@@ -46,7 +49,12 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
       onMouseLeave={onClose}
     >
       <button 
-        className="flex items-center justify-center px-3 py-2 text-sm font-medium uppercase tracking-wide text-white hover:after:scale-x-100 hover:after:origin-bottom-left after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150"
+        className={cn(
+          "flex items-center justify-center px-3 py-2 text-sm font-medium uppercase tracking-wide transition-colors after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150",
+          isActive 
+            ? "text-orange-400 after:scale-x-100" 
+            : "text-white hover:text-white hover:after:scale-x-100 hover:after:origin-bottom-left"
+        )}
       >
         {title} <ChevronDown className="ml-1 h-3 w-3" />
       </button>
@@ -65,7 +73,10 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
                 <Link
                   key={i}
                   to={item.link}
-                  className="group flex flex-col gap-2 rounded-lg p-3 transition-colors hover:bg-white/5"
+                  className={cn(
+                    "group flex flex-col gap-2 rounded-lg p-3 transition-colors hover:bg-white/5",
+                    location.pathname === item.link ? "bg-white/10" : ""
+                  )}
                 >
                   {item.icon && (
                     <div className="orange-gradient-bg flex h-10 w-10 items-center justify-center rounded-full">
@@ -73,7 +84,12 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
                     </div>
                   )}
                   <div>
-                    <div className="font-medium text-white group-hover:text-orange-400">{item.title}</div>
+                    <div className={cn(
+                      "font-medium group-hover:text-orange-400 transition-colors",
+                      location.pathname === item.link ? "text-orange-400" : "text-white"
+                    )}>
+                      {item.title}
+                    </div>
                     {item.description && (
                       <div className="text-sm text-white/70">{item.description}</div>
                     )}
@@ -90,6 +106,11 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
                 <Button 
                   variant="outline" 
                   className="bg-white text-transparent hover:bg-black hover:text-white hover:border-white bg-clip-text bg-gradient-to-r from-orange-400 to-orange-500 transition-all duration-300"
+                  onClick={() => {
+                    document.getElementById('contact')?.scrollIntoView({
+                      behavior: 'smooth'
+                    });
+                  }}
                 >
                   Book a Call <Phone className="ml-2 h-4 w-4" />
                 </Button>
@@ -108,6 +129,7 @@ interface MegaMenuProps {
 
 export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
   const [openMenu, setOpenMenu] = React.useState<string | null>(null);
+  const location = useLocation();
 
   const services = [
     { 
@@ -173,6 +195,17 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
     setOpenMenu(null);
   };
 
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav className={cn("flex items-center space-x-1", className)}>
       <MegaMenuItem 
@@ -183,11 +216,23 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
         onClose={handleCloseMenu}
       />
       
-      <Link to="/work" className="px-3 py-2 text-sm font-medium uppercase tracking-wide text-white relative hover:after:scale-x-100 hover:after:origin-bottom-left after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150">
+      <Link 
+        to="/work" 
+        className={cn(
+          "px-3 py-2 text-sm font-medium uppercase tracking-wide relative transition-colors after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150 hover:after:scale-x-100 hover:after:origin-bottom-left",
+          isActive('/work') ? "text-orange-400 after:scale-x-100" : "text-white hover:text-white"
+        )}
+      >
         Work
       </Link>
       
-      <Link to="/blog" className="px-3 py-2 text-sm font-medium uppercase tracking-wide text-white relative hover:after:scale-x-100 hover:after:origin-bottom-left after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150">
+      <Link 
+        to="/blog" 
+        className={cn(
+          "px-3 py-2 text-sm font-medium uppercase tracking-wide relative transition-colors after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150 hover:after:scale-x-100 hover:after:origin-bottom-left",
+          isActive('/blog') ? "text-orange-400 after:scale-x-100" : "text-white hover:text-white"
+        )}
+      >
         Blog
       </Link>
       
@@ -199,18 +244,28 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
         onClose={handleCloseMenu}
       />
       
-      <Link to="/team" className="px-3 py-2 text-sm font-medium uppercase tracking-wide text-white relative hover:after:scale-x-100 hover:after:origin-bottom-left after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150">
+      <Link 
+        to="/team" 
+        className={cn(
+          "px-3 py-2 text-sm font-medium uppercase tracking-wide relative transition-colors after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150 hover:after:scale-x-100 hover:after:origin-bottom-left",
+          isActive('/team') ? "text-orange-400 after:scale-x-100" : "text-white hover:text-white"
+        )}
+      >
         Team
       </Link>
       
-      <Link to="/contact" className="px-3 py-2 text-sm font-medium uppercase tracking-wide text-white relative hover:after:scale-x-100 hover:after:origin-bottom-left after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150">
+      <a 
+        href="#contact"
+        onClick={() => scrollToSection('contact')}
+        className="px-3 py-2 text-sm font-medium uppercase tracking-wide text-white relative hover:text-white hover:after:scale-x-100 hover:after:origin-bottom-left after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150"
+      >
         Contact
-      </Link>
+      </a>
       
       <Button 
         variant="gradient" 
         className="ml-4 text-sm font-medium"
-        onClick={() => window.open('https://calendly.com/glowgridmedia/30min', '_blank')}
+        onClick={() => scrollToSection('contact')}
       >
         Book a Call <ArrowRight className="ml-1 h-4 w-4" />
       </Button>

@@ -1,11 +1,13 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 export const PhoneMockup = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const phoneRef = useRef<HTMLDivElement>(null);
-  const [screenIndex, setScreenIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -16,17 +18,35 @@ export const PhoneMockup = () => {
     {
       image: "https://framerusercontent.com/images/wJINOk3BFAbg3J9JjJkqJ1YY0.png",
       title: "Content Creation",
-      description: "Eye-catching reels, photos, and videos that showcase your brand."
+      description: "Eye-catching reels, photos, and videos that showcase your brand.",
+      features: [
+        "Strategic video content planning",
+        "High-quality photo production",
+        "Social-first creative direction",
+        "Branded template system"
+      ]
     },
     {
       image: "https://framerusercontent.com/images/1YybfM1vJoYjE7EbieJ4Z1smbI.png",
       title: "Social Media Management",
-      description: "Strategic content planning and community growth."
+      description: "Strategic content planning and community growth.",
+      features: [
+        "Platform-specific strategy",
+        "Engagement & community building",
+        "Analytics & performance tracking",
+        "Trend monitoring & adaptation"
+      ]
     },
     {
       image: "https://framerusercontent.com/images/eVmEWxrjusxPcr9FiWiADXCMhvk.png",
       title: "Email Marketing",
-      description: "Targeted campaigns and automated flows that convert."
+      description: "Targeted campaigns and automated flows that convert.",
+      features: [
+        "Customer journey mapping",
+        "Automated nurture sequences",
+        "A/B testing optimization",
+        "Segmentation & personalization"
+      ]
     }
   ];
   
@@ -38,27 +58,49 @@ export const PhoneMockup = () => {
     const updateScreenIndex = () => {
       const progress = scrollYProgress.get();
       if (progress < 0.33) {
-        setScreenIndex(0);
+        setActiveTab(0);
       } else if (progress < 0.66) {
-        setScreenIndex(1);
+        setActiveTab(1);
       } else {
-        setScreenIndex(2);
+        setActiveTab(2);
       }
     };
     
     const unsubscribe = scrollYProgress.on('change', updateScreenIndex);
     return () => unsubscribe();
   }, [scrollYProgress]);
+
+  // Handle manual tab switching
+  const handleTabClick = (index: number) => {
+    setActiveTab(index);
+    
+    // Optional: Scroll to the corresponding position
+    if (sectionRef.current) {
+      const sectionHeight = sectionRef.current.offsetHeight;
+      const scrollTarget = sectionRef.current.offsetTop + (sectionHeight * (index + 1) / 4);
+      window.scrollTo({
+        top: scrollTarget,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({
+      behavior: 'smooth'
+    });
+  };
   
   return (
     <section 
       ref={sectionRef}
       className="relative py-32 md:py-48 px-4 overflow-hidden"
+      id="mobile-services"
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl orange-gradient-text font-blink mb-4">Mobile-First Marketing</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl orange-gradient-text font-blink mb-6">Mobile-First Marketing</h2>
             <p className="text-white/80 max-w-xl mb-8">
               We create content that connects with audiences on the devices they use most. Our mobile-first approach ensures your brand stands out on every screen.
             </p>
@@ -68,24 +110,59 @@ export const PhoneMockup = () => {
                 <motion.div 
                   key={i}
                   className={cn(
-                    "p-4 rounded-lg border transition-all duration-300", 
-                    screenIndex === i 
+                    "p-4 rounded-lg border transition-all duration-300 cursor-pointer", 
+                    activeTab === i 
                       ? "border-orange-400 bg-black/30" 
-                      : "border-white/10 bg-transparent"
+                      : "border-white/10 bg-transparent hover:border-white/30"
                   )}
                   animate={{ 
-                    opacity: screenIndex === i ? 1 : 0.6,
-                    scale: screenIndex === i ? 1 : 0.98
+                    opacity: activeTab === i ? 1 : 0.6,
+                    scale: activeTab === i ? 1 : 0.98
                   }}
+                  onClick={() => handleTabClick(i)}
                 >
                   <h3 className="text-xl font-semibold">{screen.title}</h3>
-                  <p className="text-white/70">{screen.description}</p>
+                  <p className="text-white/70 mb-2">{screen.description}</p>
+                  
+                  {activeTab === i && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ul className="space-y-1 mt-3 text-sm text-white/60">
+                        {screen.features.map((feature, index) => (
+                          <li key={index} className="flex items-center">
+                            <span className="w-1.5 h-1.5 rounded-full bg-orange-400 mr-2"></span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      
+                      <Button 
+                        variant="outline" 
+                        className="mt-4 text-sm border-orange-400/50 text-orange-400 hover:bg-orange-400/10"
+                        onClick={scrollToContact}
+                      >
+                        Request a Quote
+                      </Button>
+                    </motion.div>
+                  )}
                 </motion.div>
               ))}
             </div>
           </div>
           
           <div className="relative flex justify-center">
+            {/* Decorative image */}
+            <div className="absolute -z-10 bottom-0 right-0 opacity-10 animate-pulse">
+              <img 
+                src="https://framerusercontent.com/images/2SpLYSbjgIcs7RJ1W8c5qFtxvWI.png" 
+                alt="Social media icons" 
+                className="w-96 h-96 object-contain mix-blend-screen"
+              />
+            </div>
+            
             <motion.div
               ref={phoneRef}
               style={{ 
@@ -119,12 +196,12 @@ export const PhoneMockup = () => {
                       key={i}
                       initial={{ opacity: 0 }}
                       animate={{ 
-                        opacity: screenIndex === i ? 1 : 0,
-                        scale: screenIndex === i ? 1 : 1.1
+                        opacity: activeTab === i ? 1 : 0,
+                        scale: activeTab === i ? 1 : 1.1
                       }}
                       transition={{ duration: 0.5 }}
                       className="absolute inset-0"
-                      style={{ display: screenIndex === i ? 'block' : 'none' }}
+                      style={{ display: activeTab === i ? 'block' : 'none' }}
                     >
                       <img 
                         src={screen.image} 
@@ -148,7 +225,3 @@ export const PhoneMockup = () => {
     </section>
   );
 };
-
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(' ');
-}

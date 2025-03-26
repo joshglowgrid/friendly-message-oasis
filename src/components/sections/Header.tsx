@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { MegaMenu } from '@/components/navigation/MegaMenu';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 interface HeaderProps {
   scrolled: boolean;
@@ -14,6 +15,7 @@ interface HeaderProps {
 const Header = ({ scrolled }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
+  const location = useLocation();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -21,6 +23,20 @@ const Header = ({ scrolled }: HeaderProps) => {
 
   const handleLinkClick = () => {
     setMobileMenuOpen(false);
+  };
+
+  // Smooth scroll to section
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setMobileMenuOpen(false);
+    }
+  };
+
+  // Check if path is active
+  const isActivePath = (path: string) => {
+    return location.pathname.includes(path);
   };
 
   useEffect(() => {
@@ -51,7 +67,7 @@ const Header = ({ scrolled }: HeaderProps) => {
             <Logo 
               src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
               alt="GlowGrid Logo"
-              url="https://glowgridmedia.com"
+              url="/"
             />
           </div>
           
@@ -80,17 +96,68 @@ const Header = ({ scrolled }: HeaderProps) => {
             transition={{ duration: 0.3 }}
           >
             <div className="flex flex-col items-center space-y-4 px-4">
-              <a href="#services" onClick={handleLinkClick} className="text-sm md:text-base font-medium tracking-wide uppercase hover:text-orange-400 transition-colors">Services</a>
-              <a href="#work" onClick={handleLinkClick} className="text-sm md:text-base font-medium tracking-wide uppercase hover:text-orange-400 transition-colors">Work</a>
-              <a href="#blog" onClick={handleLinkClick} className="text-sm md:text-base font-medium tracking-wide uppercase hover:text-orange-400 transition-colors">Blog</a>
-              <a href="#resources" onClick={handleLinkClick} className="text-sm md:text-base font-medium tracking-wide uppercase hover:text-orange-400 transition-colors">Resources</a>
-              <a href="#team" onClick={handleLinkClick} className="text-sm md:text-base font-medium tracking-wide uppercase hover:text-orange-400 transition-colors">Team</a>
-              <a href="#contact" onClick={handleLinkClick} className="text-sm md:text-base font-medium tracking-wide uppercase hover:text-orange-400 transition-colors">Contact</a>
+              <a 
+                href="/services" 
+                onClick={handleLinkClick} 
+                className={cn(
+                  "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
+                  isActivePath('/services') ? "text-orange-400" : "text-white hover:text-orange-400"
+                )}
+              >
+                Services
+              </a>
+              <a 
+                href="/work" 
+                onClick={handleLinkClick} 
+                className={cn(
+                  "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
+                  isActivePath('/work') ? "text-orange-400" : "text-white hover:text-orange-400"
+                )}
+              >
+                Work
+              </a>
+              <a 
+                href="/blog" 
+                onClick={handleLinkClick} 
+                className={cn(
+                  "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
+                  isActivePath('/blog') ? "text-orange-400" : "text-white hover:text-orange-400"
+                )}
+              >
+                Blog
+              </a>
+              <a 
+                href="/resources" 
+                onClick={handleLinkClick} 
+                className={cn(
+                  "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
+                  isActivePath('/resources') ? "text-orange-400" : "text-white hover:text-orange-400"
+                )}
+              >
+                Resources
+              </a>
+              <a 
+                href="/team" 
+                onClick={handleLinkClick} 
+                className={cn(
+                  "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
+                  isActivePath('/team') ? "text-orange-400" : "text-white hover:text-orange-400"
+                )}
+              >
+                Team
+              </a>
+              <a 
+                href="#contact" 
+                onClick={() => scrollToSection('contact')} 
+                className="text-sm md:text-base font-medium tracking-wide uppercase hover:text-orange-400 transition-colors"
+              >
+                Contact
+              </a>
               
               <Button 
                 variant="gradient" 
                 className="w-full justify-center mt-2 py-2"
-                onClick={() => window.open('https://calendly.com/glowgridmedia/30min', '_blank')}
+                onClick={() => scrollToSection('contact')}
               >
                 Book a Call
               </Button>
