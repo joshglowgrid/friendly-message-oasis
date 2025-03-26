@@ -5,10 +5,14 @@ import Hero from '@/components/sections/Hero';
 import Header from '@/components/sections/Header';
 import IntroSection from '@/components/sections/IntroSection';
 import AboutSection from '@/components/sections/AboutSection';
-import WhyUsSection from '@/components/sections/WhyUsSection';
-import IndustriesSection from '@/components/sections/IndustriesSection';
-import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/sections/Footer';
+import { ServiceCards } from '@/components/sections/ServiceCards';
+import { Testimonials } from '@/components/sections/Testimonials';
+import { WorkSlider } from '@/components/sections/WorkSlider';
+import { PhoneMockup } from '@/components/sections/PhoneMockup';
+import { EnhancedContactSection } from '@/components/sections/EnhancedContactSection';
+import { IntroAnimation } from '@/components/sections/IntroAnimation';
+import { FloatingCTA } from '@/components/navigation/FloatingCTA';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -50,15 +54,19 @@ const Index = () => {
 
   return (
     <div className="min-h-screen text-white flex flex-col items-center overflow-hidden">
+      <IntroAnimation />
+      <FloatingCTA />
       <Hero />
       
       <div id="content" className="w-full">
         <Header scrolled={scrolled} />
         <IntroSection />
+        <ServiceCards />
+        <PhoneMockup />
         <AboutSection />
-        <WhyUsSection />
-        <IndustriesSection />
-        <ContactSection />
+        <Testimonials />
+        <WorkSlider />
+        <EnhancedContactSection />
         <Footer />
       </div>
     </div>
