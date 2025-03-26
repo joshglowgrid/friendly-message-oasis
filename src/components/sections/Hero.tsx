@@ -28,7 +28,7 @@ const Hero = () => {
     <section 
       ref={heroRef}
       onMouseMove={handleMouseMove}
-      className="h-screen w-full flex flex-col items-center justify-center relative px-4 overflow-hidden pointer-events-auto"
+      className="h-screen w-full flex flex-col items-center justify-center relative px-4 overflow-visible pointer-events-auto"
     >
       {/* Floating logo */}
       <motion.div
@@ -96,7 +96,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.5 }}
-        className="absolute bottom-10 animate-bounce cursor-pointer arrow-indicator" 
+        className="absolute bottom-10 animate-bounce cursor-pointer arrow-indicator z-30" 
         onClick={scrollToContent}
       >
         <ArrowDown size={32} className="text-white/80 hover:text-orange-400 transition-colors" />

@@ -92,7 +92,7 @@ export const PhoneMockup = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative py-16 md:py-24 px-4 overflow-hidden"
+      className="relative py-16 md:py-20 px-4 overflow-hidden pb-8"
       id="mobile-services"
     >
       <div className="max-w-7xl mx-auto">

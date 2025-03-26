@@ -58,11 +58,17 @@ export const EnhancedContactSection = () => {
           
           <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 lg:p-8 border border-white/10">
             <Tabs defaultValue="form" className="w-full">
-              <TabsList className="w-full mb-6 bg-black/20">
-                <TabsTrigger value="form" className="w-full data-[state=active]:bg-black/30">
+              <TabsList className="w-full mb-6 orange-gradient-bg bg-opacity-90 border-2 border-orange-400/30">
+                <TabsTrigger 
+                  value="form" 
+                  className="w-full text-white font-medium data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200"
+                >
                   <Mail className="mr-2 h-4 w-4" /> Contact Us
                 </TabsTrigger>
-                <TabsTrigger value="call" className="w-full data-[state=active]:bg-black/30">
+                <TabsTrigger 
+                  value="call" 
+                  className="w-full text-white font-medium data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200"
+                >
                   <Phone className="mr-2 h-4 w-4" /> Request a Call
                 </TabsTrigger>
               </TabsList>
