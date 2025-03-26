@@ -1,5 +1,6 @@
 name = "glowgridmedia"
 compatibility_date = "2025-03-26"
+pages_build_output_dir = "./dist"
 
 [build]
 command = "npm run build"
