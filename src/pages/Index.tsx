@@ -7,8 +7,6 @@ import IntroSection from '@/components/sections/IntroSection';
 import AboutSection from '@/components/sections/AboutSection';
 import Footer from '@/components/sections/Footer';
 import { ServiceCards } from '@/components/sections/ServiceCards';
-import { Testimonials } from '@/components/sections/Testimonials';
-import { WorkSlider } from '@/components/sections/WorkSlider';
 import { PhoneMockup } from '@/components/sections/PhoneMockup';
 import { EnhancedContactSection } from '@/components/sections/EnhancedContactSection';
 import { IntroAnimation } from '@/components/sections/IntroAnimation';
@@ -65,8 +63,6 @@ const Index = () => {
         <ServiceCards />
         <PhoneMockup />
         <AboutSection />
-        <Testimonials />
-        <WorkSlider />
         <EnhancedContactSection />
         <Footer />
       </div>

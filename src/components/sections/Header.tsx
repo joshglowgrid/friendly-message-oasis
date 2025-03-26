@@ -15,7 +15,7 @@ interface HeaderProps {
 
 const Header = ({ scrolled }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isAtTop, setIsAtTop] = useState(true);
+  const [isSticky, setIsSticky] = useState(false);
   const location = useLocation();
 
   const toggleMobileMenu = () => {
@@ -33,7 +33,12 @@ const Header = ({ scrolled }: HeaderProps) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsAtTop(window.scrollY < 10);
+      // Get hero section height to determine when to make header sticky
+      const heroSection = document.querySelector('section') as HTMLElement;
+      if (heroSection) {
+        const heroHeight = heroSection.offsetHeight;
+        setIsSticky(window.scrollY > heroHeight - 100);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -46,8 +51,7 @@ const Header = ({ scrolled }: HeaderProps) => {
     <motion.nav 
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
-        isAtTop ? "py-4 md:py-5" : "py-2 md:py-3 shadow-md",
-        scrolled || !isAtTop ? "bg-black/90 backdrop-blur-md" : "bg-transparent"
+        isSticky ? "py-2 md:py-3 bg-black shadow-md" : "py-4 md:py-5 bg-transparent",
       )}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -81,7 +85,7 @@ const Header = ({ scrolled }: HeaderProps) => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
-            className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-md py-4 border-t border-orange-400/20"
+            className="md:hidden absolute top-full left-0 w-full bg-black py-4 border-t border-orange-400/20"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}

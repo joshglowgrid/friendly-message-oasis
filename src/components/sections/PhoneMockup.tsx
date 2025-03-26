@@ -24,7 +24,8 @@ export const PhoneMockup = () => {
         "High-quality photo production",
         "Social-first creative direction",
         "Branded template system"
-      ]
+      ],
+      serviceImage: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=800&auto=format&fit=crop"
     },
     {
       image: "https://framerusercontent.com/images/1YybfM1vJoYjE7EbieJ4Z1smbI.png",
@@ -35,7 +36,8 @@ export const PhoneMockup = () => {
         "Engagement & community building",
         "Analytics & performance tracking",
         "Trend monitoring & adaptation"
-      ]
+      ],
+      serviceImage: "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?q=80&w=800&auto=format&fit=crop"
     },
     {
       image: "https://framerusercontent.com/images/eVmEWxrjusxPcr9FiWiADXCMhvk.png",
@@ -46,7 +48,8 @@ export const PhoneMockup = () => {
         "Automated nurture sequences",
         "A/B testing optimization",
         "Segmentation & personalization"
-      ]
+      ],
+      serviceImage: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?q=80&w=800&auto=format&fit=crop"
     }
   ];
   
@@ -154,14 +157,27 @@ export const PhoneMockup = () => {
           </div>
           
           <div className="relative flex justify-center">
-            {/* Decorative image */}
-            <div className="absolute -z-10 bottom-0 right-0 opacity-10 animate-pulse">
-              <img 
-                src="https://framerusercontent.com/images/2SpLYSbjgIcs7RJ1W8c5qFtxvWI.png" 
-                alt="Social media icons" 
-                className="w-96 h-96 object-contain mix-blend-screen"
-              />
-            </div>
+            {/* Service images */}
+            {screens.map((screen, i) => (
+              <motion.div 
+                key={i}
+                className="absolute inset-0 flex items-center justify-center rounded-2xl overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ 
+                  opacity: activeTab === i ? 1 : 0,
+                  scale: activeTab === i ? 1 : 0.9
+                }}
+                transition={{ duration: 0.5 }}
+                style={{ display: activeTab === i ? 'flex' : 'none' }}
+              >
+                <img 
+                  src={screen.serviceImage} 
+                  alt={screen.title}
+                  className="w-full h-full object-cover rounded-2xl opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+              </motion.div>
+            ))}
             
             <motion.div
               ref={phoneRef}
@@ -170,7 +186,7 @@ export const PhoneMockup = () => {
                 scale: phoneScale,
                 y: phoneY
               }}
-              className="relative w-60 h-auto"
+              className="relative w-60 h-auto z-10"
             >
               {/* Phone frame */}
               <div className="relative">
