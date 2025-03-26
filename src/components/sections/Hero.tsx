@@ -28,7 +28,7 @@ const Hero = () => {
     <section 
       ref={heroRef}
       onMouseMove={handleMouseMove}
-      className="h-screen w-full flex flex-col items-center justify-center relative px-4 overflow-hidden"
+      className="h-screen w-full flex flex-col items-center justify-center relative px-4 overflow-hidden pointer-events-auto"
     >
       {/* Floating logo */}
       <motion.div

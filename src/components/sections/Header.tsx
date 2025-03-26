@@ -35,7 +35,7 @@ const Header = ({ scrolled }: HeaderProps) => {
   useEffect(() => {
     const handleScroll = () => {
       if (isHomePage) {
-        // On home page, check for hero section visibility
+        // On home page, check for hero CTA button visibility
         const heroButton = document.querySelector('.hero-cta-button');
         if (heroButton) {
           const buttonPosition = heroButton.getBoundingClientRect().bottom;
@@ -57,10 +57,12 @@ const Header = ({ scrolled }: HeaderProps) => {
     <motion.nav 
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
-        headerVisible ? "py-2 md:py-3 bg-black/90 backdrop-blur-sm shadow-md" : "py-4 md:py-5 bg-transparent -translate-y-full"
+        headerVisible || scrolled 
+          ? "py-2 md:py-3 bg-black/90 backdrop-blur-sm shadow-md" 
+          : "py-4 md:py-5 bg-transparent"
       )}
       initial={{ y: -100 }}
-      animate={{ y: headerVisible ? 0 : -100 }}
+      animate={{ y: headerVisible || scrolled ? 0 : -100 }}
       transition={{ duration: 0.3 }}
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">

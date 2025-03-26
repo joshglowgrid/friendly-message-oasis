@@ -34,7 +34,7 @@ export const PhoneMockup = () => {
         "Analytics & performance tracking",
         "Trend monitoring & adaptation"
       ],
-      serviceImage: "/lovable-uploads/c0d2a5c5-0f7d-4f32-bacf-1707f0cf878f.png"
+      serviceImage: "/lovable-uploads/b86bc91f-c813-4cb6-8b9e-0fc6fc8172ab.png"
     },
     {
       title: "Email Marketing",

@@ -59,9 +59,9 @@ const Index = () => {
       <FloatingCTA />
       <Header scrolled={scrolled} />
       
+      <Hero />
+      
       <div id="content" className="w-full">
-        <Hero />
-        {/* Removed space between sections by adjusting padding in each component */}
         <IntroSection />
         <ServiceCards />
         <PhoneMockup />
