@@ -35,11 +35,11 @@ const Header = ({ scrolled }: HeaderProps) => {
   useEffect(() => {
     const handleScroll = () => {
       if (isHomePage) {
-        // On home page, specifically check for hero CTA visibility
-        const heroButton = document.querySelector('.hero-cta-button');
-        if (heroButton) {
-          const buttonRect = heroButton.getBoundingClientRect();
-          setHeaderVisible(buttonRect.bottom < 0);
+        // Show header after hero section
+        const heroSection = document.querySelector('section:first-of-type');
+        if (heroSection) {
+          const heroBottom = heroSection.getBoundingClientRect().bottom;
+          setHeaderVisible(heroBottom <= 0);
         }
       } else {
         // On other pages, always show header

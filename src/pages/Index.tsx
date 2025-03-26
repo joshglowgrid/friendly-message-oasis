@@ -4,8 +4,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import Hero from '@/components/sections/Hero';
 import Header from '@/components/sections/Header';
 import IntroSection from '@/components/sections/IntroSection';
-import AboutSection from '@/components/sections/AboutSection';
-import Footer from '@/components/sections/Footer';
 import { ServiceCards } from '@/components/sections/ServiceCards';
 import { PhoneMockup } from '@/components/sections/PhoneMockup';
 import { EnhancedContactSection } from '@/components/sections/EnhancedContactSection';
@@ -68,7 +66,6 @@ const Index = () => {
         <WhyUsSection />
         <IndustriesSection />
         <EnhancedContactSection />
-        <Footer />
       </div>
     </div>
   );
