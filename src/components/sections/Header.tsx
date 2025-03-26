@@ -33,20 +33,16 @@ const Header = ({ scrolled }: HeaderProps) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Get hero section to determine when to show header
-      const heroSection = document.querySelector('section') as HTMLElement;
-      const arrowElement = document.querySelector('.arrow-indicator') as HTMLElement;
+      // Check for the arrow indicator element
+      const arrowElement = document.querySelector('.arrow-indicator');
       
       if (arrowElement) {
-        // Show header only after scrolling past the arrow
+        // Get the position of the arrow element
         const arrowPosition = arrowElement.getBoundingClientRect().bottom;
+        // Show header only after scrolling past the arrow
         setHeaderVisible(arrowPosition < 0);
-      } else if (heroSection) {
-        // Fallback if arrow not found
-        const heroHeight = heroSection.offsetHeight;
-        setHeaderVisible(window.scrollY > heroHeight * 0.8);
       } else {
-        // Default behavior for non-home pages
+        // If arrow not found (on other pages besides home), always show header
         setHeaderVisible(true);
       }
     };
