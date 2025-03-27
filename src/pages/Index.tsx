@@ -11,6 +11,7 @@ import { IntroAnimation } from '@/components/sections/IntroAnimation';
 import { FloatingCTA } from '@/components/navigation/FloatingCTA';
 import WhyUsSection from '@/components/sections/WhyUsSection';
 import IndustriesSection from '@/components/sections/IndustriesSection';
+import Footer from '@/components/sections/Footer';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -60,13 +61,14 @@ const Index = () => {
       
       <Hero />
       
-      <div id="content" className="w-full">
+      <div id="content" className="w-full bg-[#0D0D0D]">
         <IntroSection />
         <ServiceCards />
         <PhoneMockup />
         <WhyUsSection />
         <IndustriesSection />
         <EnhancedContactSection />
+        <Footer />
       </div>
     </div>
   );

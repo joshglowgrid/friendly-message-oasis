@@ -57,6 +57,10 @@ const Header = ({ scrolled }: HeaderProps) => {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   
   return (
     <motion.nav 
@@ -75,11 +79,10 @@ const Header = ({ scrolled }: HeaderProps) => {
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
         <div className="flex w-full md:w-auto justify-between items-center">
-          <a href="#top" className="w-28 md:w-32" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <a onClick={scrollToTop} className="w-28 md:w-32 cursor-pointer">
             <Logo 
               src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
               alt="GlowGrid Logo"
-              url="/"
             />
           </a>
           
