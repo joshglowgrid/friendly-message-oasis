@@ -34,23 +34,19 @@ const Header = ({ scrolled }: HeaderProps) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (isHomePage) {
-        // Show header after hero section or CTA button
-        const heroSection = document.querySelector('#hero');
-        const heroButton = document.querySelector('.hero-cta-button');
-        
-        if (heroSection && heroButton) {
-          const buttonBottom = heroButton.getBoundingClientRect().bottom;
-          setHeaderVisible(buttonBottom <= 0);
-        } else {
-          // Fallback if elements are not found
-          setHeaderVisible(window.scrollY > window.innerHeight * 0.5);
-        }
-      } else {
-        // On other pages, always show header
-        setHeaderVisible(true);
-      }
-    };
+  if (isHomePage) {
+    const triggerElement = document.querySelector('.hero-cta-button') || document.querySelector('#content');
+
+    if (triggerElement) {
+      const triggerBottom = triggerElement.getBoundingClientRect().bottom;
+      setHeaderVisible(triggerBottom <= 0);
+    } else {
+      setHeaderVisible(window.scrollY > window.innerHeight * 0.5);
+    }
+  } else {
+    setHeaderVisible(true);
+  }
+};
 
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Initial check
