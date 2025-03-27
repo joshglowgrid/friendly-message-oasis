@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Logo from '@/components/Logo';
 import { cn } from '@/lib/utils';
-import { NavLink } from '@/components/NavLink';
+import NavLink from '@/components/NavLink';
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
