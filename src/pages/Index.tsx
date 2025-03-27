@@ -23,10 +23,14 @@ const Index = () => {
     
     const handleScroll = () => {
       // Track scroll position for sticky header
-      if (window.scrollY > 50) {
-        setScrolled(true);
+      const heroSection = document.querySelector('#hero');
+      const heroButton = document.querySelector('.hero-cta-button');
+      
+      if (heroSection && heroButton) {
+        const buttonBottom = heroButton.getBoundingClientRect().bottom;
+        setScrolled(buttonBottom <= 0);
       } else {
-        setScrolled(false);
+        setScrolled(window.scrollY > window.innerHeight * 0.5);
       }
       
       // Animate sections on scroll

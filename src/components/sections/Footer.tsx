@@ -1,7 +1,8 @@
 
 import React from 'react';
 import Logo from '@/components/Logo';
-import { Instagram, Twitter, ArrowUp } from 'lucide-react';
+import { Instagram, Linkedin, ArrowUp } from 'lucide-react';
+import { TikTok } from '@/components/icons/TikTok';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -9,7 +10,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="py-8 md:py-10 px-4 md:px-6 border-t border-white/10">
+    <footer className="py-8 md:py-10 px-4 md:px-6 border-t border-white/10 bg-[#0D0D0D]">
       <div className="max-w-4xl mx-auto text-white/60 space-y-3">
         <div className="flex flex-col md:flex-row items-center justify-between mb-3 md:mb-4">
           <div className="w-48 sm:w-56 md:w-64 mb-3 md:mb-0">
@@ -23,9 +24,13 @@ const Footer = () => {
               <Instagram size={24} />
               <span className="sr-only">Instagram</span>
             </a>
-            <a href="https://twitter.com/glowgridmedia" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-orange-400 transition-colors">
-              <Twitter size={24} />
-              <span className="sr-only">Twitter</span>
+            <a href="https://tiktok.com/@glowgridmedia" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-orange-400 transition-colors">
+              <TikTok className="w-6 h-6" />
+              <span className="sr-only">TikTok</span>
+            </a>
+            <a href="https://linkedin.com/company/glowgridmedia" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-orange-400 transition-colors">
+              <Linkedin size={24} />
+              <span className="sr-only">LinkedIn</span>
             </a>
             <button 
               onClick={scrollToTop}
