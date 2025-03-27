@@ -1,0 +1,21 @@
+
+{
+  "collectionName": "components_sections_intro_sections",
+  "info": {
+    "displayName": "Intro Section",
+    "description": "Introduction section with heading and content"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "subheading": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

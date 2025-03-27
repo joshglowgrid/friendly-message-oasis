@@ -1,0 +1,24 @@
+
+{
+  "collectionName": "components_sections_industries",
+  "info": {
+    "displayName": "Industries Section",
+    "description": "Section showcasing industry specializations"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "subheading": {
+      "type": "string"
+    },
+    "industries": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.industry-item",
+      "min": 1
+    }
+  }
+}

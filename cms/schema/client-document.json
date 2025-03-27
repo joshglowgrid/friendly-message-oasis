@@ -1,0 +1,50 @@
+
+{
+  "kind": "collectionType",
+  "collectionName": "client_documents",
+  "info": {
+    "singularName": "client-document",
+    "pluralName": "client-documents",
+    "displayName": "Client Document"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "documentType": {
+      "type": "enumeration",
+      "enum": [
+        "brief",
+        "report",
+        "contract",
+        "design",
+        "other"
+      ],
+      "default": "other"
+    },
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "files",
+        "images",
+        "videos",
+        "audios"
+      ]
+    },
+    "client": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::client.client",
+      "inversedBy": "documents"
+    }
+  }
+}

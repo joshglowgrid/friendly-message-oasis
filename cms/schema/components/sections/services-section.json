@@ -1,0 +1,23 @@
+
+{
+  "collectionName": "components_sections_services_sections",
+  "info": {
+    "displayName": "Services Section",
+    "description": "Section showcasing services offered"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "subheading": {
+      "type": "string"
+    },
+    "serviceItems": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    }
+  }
+}

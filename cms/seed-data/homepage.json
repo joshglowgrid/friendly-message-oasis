@@ -1,0 +1,70 @@
+
+{
+  "hero": {
+    "title": "Digital Marketing for Healthcare & Wellness Brands",
+    "subtitle": "We build high-converting brand ecosystems that attract ideal patients and grow your practice",
+    "cta": "Book a Strategy Call",
+    "ctaLink": "/contact"
+  },
+  "intro": {
+    "heading": "Your Complete Digital Partnership",
+    "subheading": "Healthcare and wellness marketing specialists based in Los Angeles",
+    "content": "GlowGrid Media is a next-generation digital marketing studio specializing in high-conversion brand ecosystems for healthcare, aesthetics, and wellness businesses. We blend content, strategy, and tech to help brands dominate their niche—online and offline.\n\nUnlike generalist agencies, we understand the unique challenges of marketing in regulated industries and create strategies that balance compliance with creativity."
+  },
+  "services": {
+    "heading": "Our Core Services",
+    "subheading": "Everything your practice needs to thrive online"
+  },
+  "whyUs": {
+    "heading": "Why Choose GlowGrid Media?",
+    "subheading": "Your practice deserves a marketing partner who understands your industry",
+    "reasons": [
+      {
+        "title": "Healthcare Industry Expertise",
+        "description": "We understand the unique challenges and regulations in healthcare marketing",
+        "icon": "stethoscope"
+      },
+      {
+        "title": "Data-Driven Strategy",
+        "description": "Every decision is backed by analytics and performance metrics",
+        "icon": "bar-chart"
+      },
+      {
+        "title": "Creative Excellence",
+        "description": "Stand out with premium design and compelling content",
+        "icon": "palette"
+      },
+      {
+        "title": "Full-Service Capabilities",
+        "description": "One team for all your digital marketing needs",
+        "icon": "layers"
+      }
+    ]
+  },
+  "industries": {
+    "heading": "Industries We Serve",
+    "subheading": "Specialized expertise for healthcare and wellness practitioners",
+    "industries": [
+      {
+        "name": "Medical Spas & Aesthetics",
+        "description": "Marketing for medspa treatments, injectables, and cosmetic procedures",
+        "icon": "sparkles"
+      },
+      {
+        "name": "Dental Practices",
+        "description": "Patient acquisition for general, cosmetic, and specialized dentistry",
+        "icon": "smile"
+      },
+      {
+        "name": "Wellness Centers",
+        "description": "Promotion for holistic health, nutrition, and alternative therapies",
+        "icon": "leaf"
+      },
+      {
+        "name": "Healthcare Specialists",
+        "description": "Targeted marketing for specialty medical practices and clinics",
+        "icon": "activity"
+      }
+    ]
+  }
+}

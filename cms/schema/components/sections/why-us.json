@@ -1,0 +1,24 @@
+
+{
+  "collectionName": "components_sections_why_us",
+  "info": {
+    "displayName": "Why Us Section",
+    "description": "Section explaining company advantages"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "subheading": {
+      "type": "string"
+    },
+    "reasons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.reason-item",
+      "min": 1
+    }
+  }
+}

@@ -1,0 +1,27 @@
+
+{
+  "collectionName": "components_elements_industry_items",
+  "info": {
+    "displayName": "Industry Item",
+    "description": "Individual industry for Industries section"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

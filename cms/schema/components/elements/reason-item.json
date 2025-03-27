@@ -1,0 +1,21 @@
+
+{
+  "collectionName": "components_elements_reason_items",
+  "info": {
+    "displayName": "Reason Item",
+    "description": "Individual reason for Why Us section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "type": "string"
+    }
+  }
+}

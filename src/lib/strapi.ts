@@ -1,9 +1,8 @@
-
 import axios from 'axios';
 import qs from 'qs';
 
-// Strapi API URLs - Update with your actual Strapi URL
-export const STRAPI_URL = 'https://strapi.glowgridmedia.com'; // Replace with your actual URL
+// Strapi API URLs - Local development server
+export const STRAPI_URL = 'http://localhost:1337'; // Local development server
 export const STRAPI_API_URL = `${STRAPI_URL}/api`;
 
 // Strapi API client
