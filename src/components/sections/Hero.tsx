@@ -50,7 +50,7 @@ const Hero = () => {
         <Logo 
           src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
           alt="GlowGrid Logo" 
-          url="https://glowgridmedia.com" 
+          url="/"
         />
         
         {/* Glow effect that follows mouse */}

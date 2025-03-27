@@ -21,6 +21,7 @@ const Index = () => {
     setMounted(true);
     
     const handleScroll = () => {
+      // Track scroll position for sticky header
       if (window.scrollY > 50) {
         setScrolled(true);
       } else {
