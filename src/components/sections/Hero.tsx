@@ -1,64 +1,122 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Logo from '@/components/Logo';
-import { cn } from '@/lib/utils';
-import { NavLink } from '@/components/NavLink';
+import { ArrowDown } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
-const Header = () => {
-  const [isSticky, setIsSticky] = useState(false);
+const Hero = () => {
+  const scrollToContent = () => {
+    document.getElementById('content')?.scrollIntoView({
+      behavior: 'smooth'
+    });
+  };
 
-  useEffect(() => {
-    const hero = document.getElementById('hero');
-    const heroHeight = hero?.offsetHeight ?? 0;
-    const heroButton = document.querySelector('.hero-cta-button');
-
-    const handleScroll = () => {
-      // Check if we've scrolled past the hero section or hero button
-      if (heroButton) {
-        const buttonBottom = heroButton.getBoundingClientRect().bottom;
-        setIsSticky(buttonBottom <= 0);
-      } else if (window.scrollY > heroHeight - 100) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    // Initial check to set correct state on load
-    handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Mouse position effect for gradient follow
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = React.useState({
+    x: 0,
+    y: 0
+  });
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect();
+      setMousePosition({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      });
+    }
   };
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 w-full z-50 px-4 transition-all duration-300 flex justify-between items-center',
-        isSticky ? 'bg-black shadow-md' : 'bg-transparent'
-      )}
-      style={{ paddingTop: 'env(safe-area-inset-top)' }}
+    <section 
+      ref={heroRef} 
+      onMouseMove={handleMouseMove} 
+      className="relative h-screen w-full flex flex-col items-center justify-center px-4 overflow-visible z-0"
+      id="hero"
     >
-      <div className="py-4 cursor-pointer" onClick={scrollToTop}>
+      <div id="top"></div> {/* Anchor for scroll to top */}
+      
+      {/* Full screen background overlay to blend with mobile status bar */}
+      <div className="absolute inset-0 -z-20 bg-gradient-to-b from-black to-transparent"></div>
+      
+      {/* Floating logo */}
+      <motion.div 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.5, type: "spring", stiffness: 100 }}
+        className="w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/3 mb-12 relative"
+      >
         <Logo 
           src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
-          alt="GlowGrid Logo"
-          url="/"
+          alt="GlowGrid Logo" 
+          url="https://glowgridmedia.com" 
         />
+        
+        {/* Glow effect that follows mouse */}
+        <div 
+          className="absolute -inset-10 opacity-20 blur-xl rounded-full pointer-events-none" 
+          style={{
+            background: 'radial-gradient(circle, rgba(255,131,89,0.8) 0%, rgba(255,78,135,0.8) 100%)',
+            left: `${mousePosition.x - 100}px`,
+            top: `${mousePosition.y - 100}px`,
+            width: '200px',
+            height: '200px',
+            transition: 'left 0.3s ease-out, top 0.3s ease-out',
+            filter: 'blur(80px)'
+          }} 
+        />
+      </motion.div>
+      
+      {/* Tagline */}
+      <motion.h1 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.8 }}
+        className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-6 max-w-3xl"
+      >
+        Digital Marketing That Moves the Needle for 
+        <span className="orange-gradient-text font-blink ml-2">Healthcare & Wellness Brands</span>
+      </motion.h1>
+      
+      {/* CTA Button */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.1 }}
+        className="mb-12 hero-cta-button"
+      >
+        <Button 
+          variant="gradient" 
+          size="lg" 
+          onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} 
+          className="text-base px-8 py-6 h-auto"
+        >
+          Get to know us!
+        </Button>
+      </motion.div>
+      
+      {/* Scroll indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
+        className="absolute bottom-10 animate-bounce cursor-pointer arrow-indicator z-30" 
+        onClick={scrollToContent}
+      >
+        <ArrowDown size={32} className="text-white/80 hover:text-orange-400 transition-colors" />
+      </motion.div>
+      
+      {/* Background elements */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute w-full h-full bg-black/50 backdrop-blur-sm" />
+        
+        {/* Gradient circles */}
+        <div className="absolute top-1/4 left-1/5 w-64 h-64 rounded-full bg-orange-500/10 blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 rounded-full bg-pink-500/10 blur-3xl" />
       </div>
-
-      <nav className="hidden md:flex space-x-6">
-        <NavLink href="/">Home</NavLink>
-        <NavLink href="#services">Services</NavLink>
-        <NavLink href="#contact">Contact</NavLink>
-        <NavLink href="/blog">Blog</NavLink>
-      </nav>
-    </header>
+    </section>
   );
 };
 
-export default Header;
+export default Hero;

@@ -33,50 +33,44 @@ const Header = ({ scrolled }: HeaderProps) => {
   };
 
   useEffect(() => {
-    // Ensure header is visible from start if not on homepage
-    if (!isHomePage) {
-      setHeaderVisible(true);
-    }
-    
     const handleScroll = () => {
       if (isHomePage) {
-        // Look for the hero CTA button first as the trigger element
-        const triggerElement = document.querySelector('.hero-cta-button') || document.querySelector('#content');
+        // Show header after hero section or CTA button
+        const heroSection = document.querySelector('#hero');
+        const heroButton = document.querySelector('.hero-cta-button');
         
-        if (triggerElement) {
-          const triggerRect = triggerElement.getBoundingClientRect();
-          // Make header visible as soon as the trigger element starts to go off screen
-          setHeaderVisible(triggerRect.bottom <= 0);
+        if (heroSection && heroButton) {
+          const buttonBottom = heroButton.getBoundingClientRect().bottom;
+          setHeaderVisible(buttonBottom <= 0);
         } else {
-          // Fallback if neither element is found
-          setHeaderVisible(window.scrollY > 100);
+          // Fallback if elements are not found
+          setHeaderVisible(window.scrollY > window.innerHeight * 0.5);
         }
+      } else {
+        // On other pages, always show header
+        setHeaderVisible(true);
       }
     };
-    
+
     window.addEventListener('scroll', handleScroll);
-    // Initial check to set correct state on page load
-    handleScroll();
-    
+    handleScroll(); // Initial check
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
-  
-  // Always show header if scrolled is true (passed from parent) or headerVisible is true (from scroll detection)
-  const showHeader = scrolled || headerVisible;
   
   return (
     <motion.nav 
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
-        showHeader
+        (headerVisible || scrolled)
           ? "py-2 md:py-3 bg-black/90 backdrop-blur-sm shadow-md" 
           : "py-4 md:py-5 bg-transparent"
       )}
-      initial={{ y: isHomePage ? -100 : 0 }}
-      animate={{ y: showHeader ? 0 : (isHomePage ? -100 : 0) }}
+      initial={{ y: -100 }}
+      animate={{ y: (headerVisible || scrolled) ? 0 : -100 }}
       transition={{ duration: 0.3 }}
       style={{
-        paddingTop: `calc(env(safe-area-inset-top) + ${showHeader ? '0.5rem' : '1rem'})`,
+        paddingTop: `calc(env(safe-area-inset-top) + ${(headerVisible || scrolled) ? '0.5rem' : '1rem'})`,
       }}
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">

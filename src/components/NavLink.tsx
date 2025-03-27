@@ -10,7 +10,7 @@ interface NavLinkProps {
   variant?: 'default' | 'button' | 'contact-button';
 }
 
-export const NavLink = ({ href, children, className, onClick, variant = 'default' }: NavLinkProps) => {
+const NavLink = ({ href, children, className, onClick, variant = 'default' }: NavLinkProps) => {
   return (
     <a 
       href={href} 
@@ -27,5 +27,4 @@ export const NavLink = ({ href, children, className, onClick, variant = 'default
   );
 };
 
-// Also provide default export for backward compatibility
 export default NavLink;
