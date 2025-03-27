@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Logo from '@/components/Logo';
-import { Instagram, Pinterest, ArrowUp } from 'lucide-react';
+import { Instagram, Twitter, ArrowUp } from 'lucide-react';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -23,9 +23,9 @@ const Footer = () => {
               <Instagram size={24} />
               <span className="sr-only">Instagram</span>
             </a>
-            <a href="https://pinterest.com/glowgridmedia" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-orange-400 transition-colors">
-              <Pinterest size={24} />
-              <span className="sr-only">Pinterest</span>
+            <a href="https://twitter.com/glowgridmedia" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-orange-400 transition-colors">
+              <Twitter size={24} />
+              <span className="sr-only">Twitter</span>
             </a>
             <button 
               onClick={scrollToTop}
