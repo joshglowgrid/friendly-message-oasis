@@ -27,4 +27,5 @@ export const NavLink = ({ href, children, className, onClick, variant = 'default
   );
 };
 
+// Also provide default export for backward compatibility
 export default NavLink;

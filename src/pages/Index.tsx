@@ -21,7 +21,8 @@ const Index = () => {
     setMounted(true);
     
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      // Simplified scroll detection - we just need to know if user has scrolled at all
+      if (window.scrollY > 10) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -44,7 +45,8 @@ const Index = () => {
     };
     
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    // Initial check
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);

@@ -29,4 +29,5 @@ export const NavMenuLink: React.FC<NavMenuLinkProps> = ({ to, children, onClick 
   );
 };
 
+// Also provide default export for backward compatibility
 export default NavMenuLink;
