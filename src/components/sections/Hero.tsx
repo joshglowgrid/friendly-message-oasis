@@ -35,6 +35,11 @@ const Hero = () => {
       className="relative h-screen w-full flex flex-col items-center justify-center px-4 overflow-visible z-0"
       id="hero"
     >
+      <div id="top"></div> {/* Anchor for scroll to top */}
+      
+      {/* Full screen background overlay to blend with mobile status bar */}
+      <div className="absolute inset-0 -z-20 bg-gradient-to-b from-black to-transparent"></div>
+      
       {/* Floating logo */}
       <motion.div 
         initial={{ y: -20, opacity: 0 }}

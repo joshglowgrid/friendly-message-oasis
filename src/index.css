@@ -56,6 +56,7 @@
     height: 100%;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
   }
   
   body {
@@ -64,7 +65,7 @@
     height: 100%;
     overflow-x: hidden;
     margin: 0;
-    padding: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #151515, #0d0d0d);
     background-size: 400% 400%;
     animation: gradientAnimation 15s ease infinite;
@@ -75,6 +76,8 @@
     position: relative;
     overflow-x: hidden;
     width: 100%;
+    min-height: 100vh;
+    padding-top: env(safe-area-inset-top);
   }
 
   /* Animated gradient background */
@@ -133,6 +136,14 @@
   
   .orange-gradient-bg {
     @apply bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white transition-all duration-150 shadow-md hover:shadow-orange-500/25;
+  }
+  
+  .section {
+    @apply py-12 md:py-20 relative overflow-hidden;
+  }
+  
+  .section-bg {
+    @apply absolute inset-0 -z-10 bg-gradient-to-b from-black/30 to-black/10 backdrop-blur-sm;
   }
 }
 

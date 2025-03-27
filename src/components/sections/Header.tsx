@@ -35,11 +35,16 @@ const Header = ({ scrolled }: HeaderProps) => {
   useEffect(() => {
     const handleScroll = () => {
       if (isHomePage) {
-        // Show header after hero section
+        // Show header after hero section or CTA button
         const heroSection = document.querySelector('#hero');
-        if (heroSection) {
-          const heroBottom = heroSection.getBoundingClientRect().bottom;
-          setHeaderVisible(heroBottom <= 0);
+        const heroButton = document.querySelector('.hero-cta-button');
+        
+        if (heroSection && heroButton) {
+          const buttonBottom = heroButton.getBoundingClientRect().bottom;
+          setHeaderVisible(buttonBottom <= 0);
+        } else {
+          // Fallback if elements are not found
+          setHeaderVisible(window.scrollY > window.innerHeight * 0.5);
         }
       } else {
         // On other pages, always show header
@@ -64,16 +69,19 @@ const Header = ({ scrolled }: HeaderProps) => {
       initial={{ y: -100 }}
       animate={{ y: (headerVisible || scrolled) ? 0 : -100 }}
       transition={{ duration: 0.3 }}
+      style={{
+        paddingTop: `calc(env(safe-area-inset-top) + ${(headerVisible || scrolled) ? '0.5rem' : '1rem'})`,
+      }}
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
         <div className="flex w-full md:w-auto justify-between items-center">
-          <div className="w-28 md:w-32">
+          <a href="#top" className="w-28 md:w-32" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <Logo 
               src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
               alt="GlowGrid Logo"
               url="/"
             />
-          </div>
+          </a>
           
           <div className="md:hidden">
             <button

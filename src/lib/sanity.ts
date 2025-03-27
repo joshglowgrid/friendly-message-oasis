@@ -11,7 +11,7 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
+  useCdn: true, // Set to true for better performance in production
 });
 
 // Set up image URL builder
