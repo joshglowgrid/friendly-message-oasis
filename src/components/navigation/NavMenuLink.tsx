@@ -28,3 +28,5 @@ export const NavMenuLink: React.FC<NavMenuLinkProps> = ({ to, children, onClick 
     </Link>
   );
 };
+
+export default NavMenuLink;
