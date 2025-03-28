@@ -36,8 +36,8 @@ const App = () => {
     handleScroll(); // Initial check
     
     // Enable tap-to-top behavior on mobile
-    const handleTapTop = () => {
-      if (window.scrollY > window.innerHeight && event.y < 20) {
+    const handleTapTop = (event: MouseEvent) => {
+      if (window.scrollY > window.innerHeight && event.clientY < 20) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };

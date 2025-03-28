@@ -1,11 +1,29 @@
 
-import React, { useEffect } from 'react';
-import BlogList from '@/components/blog/BlogList';
+import React, { useEffect, useState } from 'react';
+import { BlogList } from '@/components/blog/BlogList';
 import { FloatingCTA } from '@/components/navigation/FloatingCTA';
+import { getBlogPosts } from '@/data/blogData';
+import { BlogPost } from '@/components/blog/BlogList';
 
 const BlogPage = () => {
-  // Use a useEffect hook to update the document title
+  // State for blog posts
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch blog posts
   useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const blogPosts = await getBlogPosts();
+        setPosts(blogPosts);
+      } catch (error) {
+        console.error('Error fetching blog posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
     document.title = 'GlowGrid Media Blog';
   }, []);
 
@@ -20,10 +38,16 @@ const BlogPage = () => {
           Strategic insights for healthcare, aesthetic, and wellness brands looking to elevate their digital presence and drive measurable growth.
         </p>
         
-        <BlogList />
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="bg-black/60 border border-orange-400/20 backdrop-blur-sm h-80 animate-pulse rounded-lg"></div>
+            ))}
+          </div>
+        ) : (
+          <BlogList posts={posts} />
+        )}
       </div>
-      
-      <FloatingCTA />
     </div>
   );
 };
