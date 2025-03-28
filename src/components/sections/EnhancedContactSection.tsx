@@ -17,41 +17,41 @@ export const EnhancedContactSection = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-8">
           <div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-blink mb-4 text-white">Let's Grow Together</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-blink mb-4 text-white">Initiate a Conversation</h2>
             <p className="text-white/80 mb-8 max-w-xl">
-              Ready to elevate your healthcare or wellness brand? Connect with our team to discuss your marketing goals.
+              Ready to elevate your market position? Connect with our strategists to discuss your growth objectives.
             </p>
             
             <div className="mb-8">
-              <h3 className="text-xl font-semibold mb-4 text-white">Our Clients Include:</h3>
+              <h3 className="text-xl font-semibold mb-4 text-white">Partner Categories:</h3>
               <ul className="space-y-2 text-white/80">
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
-                  Dental Practices & DSOs
+                  Progressive Dental Practices & DSOs
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
-                  Medical Spas & Aesthetics
+                  Medical Aesthetics & Dermatology
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
-                  Wellness Centers
+                  Integrative Wellness Centers
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
-                  Healthcare Providers
+                  Healthcare Innovators
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
-                  Fitness & Nutrition Brands
+                  Performance Health & Clinical Nutrition
                 </li>
               </ul>
             </div>
             
             <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl">
-              <h3 className="text-xl font-semibold mb-4 text-white">Serving</h3>
+              <h3 className="text-xl font-semibold mb-4 text-white">Market Presence</h3>
               <p className="text-white/80">
-                Los Angeles, The San Gabriel Valley, Orange County, and businesses across the United States.
+                Los Angeles Metropolitan, San Gabriel Valley, Orange County, and nationwide digital implementation.
               </p>
             </div>
           </div>
@@ -63,13 +63,13 @@ export const EnhancedContactSection = () => {
                   value="form" 
                   className="w-full text-white font-medium data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200"
                 >
-                  <Mail className="mr-2 h-4 w-4" /> Contact Us
+                  <Mail className="mr-2 h-4 w-4" /> Message
                 </TabsTrigger>
                 <TabsTrigger 
                   value="call" 
                   className="w-full text-white font-medium data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200"
                 >
-                  <Phone className="mr-2 h-4 w-4" /> Request a Call
+                  <Phone className="mr-2 h-4 w-4" /> Schedule Consultation
                 </TabsTrigger>
               </TabsList>
               

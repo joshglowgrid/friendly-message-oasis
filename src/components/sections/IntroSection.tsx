@@ -20,17 +20,17 @@ const IntroSection = () => {
       
       <div className="max-w-5xl mx-auto relative z-10">
         <h1 className="sm:text-4xl md:text-5xl lg:text-6xl font-blink orange-gradient-text mb-4 leading-tight px-[5px] font-semibold text-3xl">
-          Where Strategy Meets Aesthetic—Digital Marketing That Moves the Needle.
+          Strategic Execution Meets Aesthetic Intelligence
         </h1>
         <p className="text-lg sm:text-xl md:text-2xl text-white/80 mb-8 max-w-3xl mx-auto">
-          We don't just post—we build ecosystems. Welcome to the new era of brand growth.
+          We craft performance-driven digital ecosystems that transform visibility into measurable growth.
         </p>
         <Button 
           variant="gradient" 
           onClick={scrollToContact} 
           className="text-base sm:text-lg py-3 h-auto rounded-md text-center px-[20px] shadow-lg hover:shadow-orange-500/30 transition-all duration-300"
         >
-          Let's Grow Together → 
+          Initiate a Consultation →
         </Button>
       </div>
     </section>

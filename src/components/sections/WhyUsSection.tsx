@@ -1,34 +1,37 @@
+
 import React from 'react';
 import { Sparkles, BarChart2, Users, Layers, TrendingUp } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+
 const whyUsItems = [{
-  title: "Industry Expertise",
-  description: "Deep knowledge in dental, aesthetic, skincare, and wellness markets.",
+  title: "Vertical Expertise",
+  description: "Specialized domain knowledge in aesthetic medicine, dental, skincare, and wellness markets.",
   icon: Sparkles
 }, {
-  title: "Data-Driven Execution",
-  description: "We track everything—and use those insights to sharpen your edge.",
+  title: "Metric-Driven Framework",
+  description: "Performance intelligence that transforms raw data into actionable growth directives.",
   icon: BarChart2
 }, {
-  title: "High-Touch Partnerships",
-  description: "You're not just another account. You're a brand we invest in.",
+  title: "Strategic Partnerships",
+  description: "Collaborative approach that integrates your expertise with our systematic execution.",
   icon: Users
 }, {
-  title: "Scalable Solutions",
-  description: "Whether you're starting up or scaling fast, we build to grow with you.",
+  title: "Scalable Architecture",
+  description: "Systems designed for seamless expansion—from initial launch to market dominance.",
   icon: Layers
 }, {
-  title: "Proven Results",
-  description: "+115% Instagram growth, increased engagement, and higher conversion rates across our managed accounts.",
+  title: "Verified Performance",
+  description: "Benchmarked engagement increases of 115%+ and conversion improvements across managed accounts.",
   icon: TrendingUp
 }];
+
 const WhyUsSection = () => {
   return <section className="py-20 bg-stone-950">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Why Choose GlowGrid</h2>
+          <h2 className="text-4xl font-bold mb-4">The GlowGrid Difference</h2>
           <p className="text-xl max-w-3xl mx-auto text-stone-50">
-            We don't just create content—we build data-backed brand ecosystems that generate real growth.
+            We construct evidence-based digital ecosystems that generate quantifiable return on investment.
           </p>
         </div>
         
@@ -49,4 +52,5 @@ const WhyUsSection = () => {
       </div>
     </section>;
 };
+
 export default WhyUsSection;

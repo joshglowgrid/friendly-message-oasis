@@ -5,24 +5,24 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const industryItems = [{
   icon: Smile,
-  title: "Dental Practices",
-  description: "From cosmetic dentistry to general oral care, we help practices grow visibility, credibility, and patient loyalty."
+  title: "Dental & Orthodontic",
+  description: "Elevating clinical excellence through strategic digital positioning that drives qualified patient acquisition."
 }, {
   icon: Sparkles,
-  title: "Skincare & Aesthetics",
-  description: "We craft elevated digital identities for medspas, dermatology clinics, and skincare experts that demand distinction."
+  title: "Medical Aesthetics",
+  description: "Sophisticated visual narratives and targeted acquisition systems for discerning clientele."
 }, {
   icon: HeartPulse,
-  title: "Wellness & Health Clinics",
-  description: "Functional medicine, hormone therapy, IV lounges, and holistic wellness centers—our strategies speak your language."
+  title: "Integrative Health",
+  description: "Articulating complex methodologies with clarity that positions practitioners as category authorities."
 }, {
   icon: Pill,
-  title: "RX & Medical Retail",
-  description: "We bring bold clarity to complex offerings like prescription skincare, supplements, and telehealth-based retail."
+  title: "Clinical Commerce",
+  description: "Conversion architecture for prescription skincare, nutraceuticals, and telehealth product ecosystems."
 }, {
   icon: FlaskConical,
-  title: "Boutique Health Brands",
-  description: "Emerging health & wellness products get a strategy-driven push to gain traction, credibility, and loyal followers."
+  title: "Emerging Health Innovations",
+  description: "Market-entry strategies for novel wellness solutions seeking rapid adoption and category leadership."
 }];
 
 const IndustriesSection = () => {
@@ -30,9 +30,9 @@ const IndustriesSection = () => {
     <section className="py-20 bg-[#0D0D0D] text-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 orange-gradient-text">Industries We Serve</h2>
+          <h2 className="text-4xl font-bold mb-4 orange-gradient-text">Vertical Specialization</h2>
           <p className="text-xl text-white/80 max-w-3xl mx-auto">
-            We specialize in healthcare and wellness verticals where high-touch service meets luxury experiences.
+            Focused expertise in clinical and wellness categories where premium positioning drives measurable outcomes.
           </p>
         </div>
         
