@@ -14,14 +14,16 @@ const TinaProvider: React.FC<TinaProviderProps> = ({ children }) => {
     return <>{children}</>;
   }
 
-  // Function to redirect to admin panel
-  const handleEditClick = () => {
-    window.location.href = `/admin/#/collections/page/`;
-  };
-
   return (
     <TinaEditProvider
-      editMode={<button onClick={handleEditClick}>Edit</button>}
+      editMode={
+        <button 
+          onClick={() => window.location.href = `/admin/#/collections/page/`}
+          className="fixed bottom-4 right-4 z-50 bg-orange-500 text-white rounded-full p-2"
+        >
+          Edit Content
+        </button>
+      }
       showEditButton={true}
     >
       {children}

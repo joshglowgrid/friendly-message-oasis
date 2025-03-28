@@ -1,10 +1,12 @@
 
 import { createClient } from "tinacms/dist/client";
-import { queries } from "tinacms";
 import { BlogPost } from '@/components/blog/BlogList';
 
-// Create a client for fetching data from TinaCMS
-const client = createClient({ url: "/api/tina" });
+// Create a client for fetching data from TinaCMS with proper configuration
+const client = createClient({
+  url: "/api/tina",
+  queries: {}
+});
 
 // Function to transform TinaCMS blog post to our BlogPost format
 const transformTinaPost = (post: any): BlogPost => {
@@ -25,13 +27,36 @@ const transformTinaPost = (post: any): BlogPost => {
 // Get all blog posts from TinaCMS
 export async function getTinaBlogPosts(): Promise<BlogPost[]> {
   try {
-    const postsResponse = await client.queries.postConnection();
+    // Use proper query syntax for TinaCMS client
+    const postsResponse = await client.request({
+      query: `query {
+        postConnection {
+          edges {
+            node {
+              _sys {
+                filename
+              }
+              title
+              excerpt
+              author
+              date
+              readTime
+              category
+              image
+              featured
+              body
+            }
+          }
+        }
+      }`
+    });
+    
     if (!postsResponse || !postsResponse.data || !postsResponse.data.postConnection) {
       console.error("Failed to fetch posts from TinaCMS");
       return [];
     }
     
-    return postsResponse.data.postConnection.edges.map(edge => 
+    return postsResponse.data.postConnection.edges.map((edge: any) => 
       transformTinaPost(edge.node)
     );
   } catch (error) {
@@ -43,7 +68,27 @@ export async function getTinaBlogPosts(): Promise<BlogPost[]> {
 // Get a single blog post by slug from TinaCMS
 export async function getTinaBlogPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
-    const response = await client.queries.post({ relativePath: `${slug}.md` });
+    // Use proper query syntax for TinaCMS client
+    const response = await client.request({
+      query: `query($relativePath: String!) {
+        post(relativePath: $relativePath) {
+          _sys {
+            filename
+          }
+          title
+          excerpt
+          author
+          date
+          readTime
+          category
+          image
+          featured
+          body
+        }
+      }`,
+      variables: { relativePath: `${slug}.md` }
+    });
+    
     if (!response || !response.data || !response.data.post) {
       return null;
     }
@@ -57,7 +102,30 @@ export async function getTinaBlogPostBySlug(slug: string): Promise<BlogPost | nu
 // Get page content from TinaCMS
 export async function getTinaPage(slug: string = 'home') {
   try {
-    const response = await client.queries.page({ relativePath: `${slug}.json` });
+    // Use proper query syntax for TinaCMS client
+    const response = await client.request({
+      query: `query($relativePath: String!) {
+        page(relativePath: $relativePath) {
+          title
+          description
+          ogImage
+          hero {
+            heading
+            subheading
+            buttonText
+            buttonLink
+            backgroundImage
+          }
+          sections
+        }
+      }`,
+      variables: { relativePath: `${slug}.json` }
+    });
+    
+    if (!response || !response.data || !response.data.page) {
+      return null;
+    }
+    
     return response.data.page;
   } catch (error) {
     console.error(`Error fetching page ${slug} from TinaCMS:`, error);
