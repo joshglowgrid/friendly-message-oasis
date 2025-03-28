@@ -8,36 +8,39 @@ import NotFound from "./pages/NotFound";
 import SocialMediaPage from "./pages/services/SocialMediaPage";
 import BlogPage from "./pages/blog/BlogPage";
 import BlogPostPage from "./pages/blog/BlogPostPage";
+import TinaProvider from "./cms/TinaProvider";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          
-          {/* Services routes */}
-          <Route path="/services/social-media" element={<SocialMediaPage />} />
-          <Route path="/services/*" element={<NotFound />} />
-          
-          {/* Blog routes */}
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:postId" element={<BlogPostPage />} />
-          
-          {/* Other routes */}
-          <Route path="/work" element={<NotFound />} />
-          <Route path="/work/:projectId" element={<NotFound />} />
-          <Route path="/resources" element={<NotFound />} />
-          <Route path="/resources/:resourceId" element={<NotFound />} />
-          
-          {/* Catch-all route */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster />
-      <Sonner />
+      <TinaProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            
+            {/* Services routes */}
+            <Route path="/services/social-media" element={<SocialMediaPage />} />
+            <Route path="/services/*" element={<NotFound />} />
+            
+            {/* Blog routes */}
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:postId" element={<BlogPostPage />} />
+            
+            {/* Other routes */}
+            <Route path="/work" element={<NotFound />} />
+            <Route path="/work/:projectId" element={<NotFound />} />
+            <Route path="/resources" element={<NotFound />} />
+            <Route path="/resources/:resourceId" element={<NotFound />} />
+            
+            {/* Catch-all route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+        <Toaster />
+        <Sonner />
+      </TinaProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
