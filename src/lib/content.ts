@@ -213,20 +213,3 @@ By embracing TikTok's unique format and community-driven approach, wellness bran
 export async function getBlogContent(): Promise<BlogPost[]> {
   return blogPosts;
 }
-
-// Get a single blog post by slug
-export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
-  return blogPosts.find(post => post.id === slug) || null;
-}
-
-// Get related blog posts
-export async function getRelatedBlogPosts(category: string, currentPostId: string): Promise<BlogPost[]> {
-  return blogPosts
-    .filter(post => post.category === category && post.id !== currentPostId)
-    .slice(0, 3);
-}
-
-// Get featured blog posts
-export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
-  return blogPosts.filter(post => post.featured);
-}
