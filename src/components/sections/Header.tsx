@@ -15,10 +15,9 @@ interface HeaderProps {
 
 const Header = ({ scrolled }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [headerVisible, setHeaderVisible] = useState(true); // Changed to true by default
+  const [headerVisible, setHeaderVisible] = useState(true); // Always visible by default
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-  const isBlogPage = location.pathname.includes('/blog');
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -36,7 +35,7 @@ const Header = ({ scrolled }: HeaderProps) => {
   useEffect(() => {
     const handleScroll = () => {
       if (isHomePage) {
-        // Show header after hero section or CTA button
+        // On homepage: Show header after hero section or CTA button
         const heroSection = document.querySelector('#hero');
         const heroButton = document.querySelector('.hero-cta-button');
         
@@ -48,7 +47,7 @@ const Header = ({ scrolled }: HeaderProps) => {
           setHeaderVisible(window.scrollY > window.innerHeight * 0.5);
         }
       } else {
-        // On other pages, always show header
+        // On other pages: always show header
         setHeaderVisible(true);
       }
     };
@@ -66,9 +65,9 @@ const Header = ({ scrolled }: HeaderProps) => {
   return (
     <motion.nav 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
         (headerVisible || scrolled || !isHomePage)
-          ? "py-2 md:py-3 bg-black shadow-md" // Removed backdrop-blur for solid background
+          ? "py-2 md:py-3 bg-black shadow-md" // Solid black background when scrolled 
           : "py-4 md:py-5 bg-transparent"
       )}
       initial={{ y: -100 }}
@@ -80,12 +79,13 @@ const Header = ({ scrolled }: HeaderProps) => {
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
         <div className="flex w-full md:w-auto justify-between items-center">
-          <a onClick={scrollToTop} className="w-28 md:w-32 cursor-pointer">
+          <div className="w-28 md:w-32 cursor-pointer">
             <Logo 
               src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
               alt="GlowGrid Logo"
+              url="/"
             />
-          </a>
+          </div>
           
           <div className="md:hidden">
             <button

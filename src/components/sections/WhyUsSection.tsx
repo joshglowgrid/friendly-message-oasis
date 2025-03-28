@@ -36,23 +36,22 @@ const WhyUsSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {whyUsItems.map((item, index) => {
             const Icon = item.icon;
             return (
               <motion.div
                 key={index}
-                className="relative rounded-xl p-px overflow-hidden h-full"
-                whileHover={{ y: -5 }}
+                className="group relative overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm hover:bg-white/5 transition-all duration-300"
+                whileHover={{ y: -5, scale: 1.02 }}
                 transition={{ duration: 0.2 }}
               >
-                {/* Card content */}
-                <div className="relative rounded-xl bg-black/40 backdrop-blur-sm p-4 sm:p-6 border border-white/10 h-full flex flex-col">
-                  <div className="mb-3 sm:mb-4 orange-gradient-bg w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center text-white">
+                <div className="p-6 flex flex-col h-full">
+                  <div className="mb-4 w-12 h-12 orange-gradient-bg rounded-xl flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
                     <Icon size={24} />
                   </div>
-                  <h3 className="text-base sm:text-lg font-semibold mb-2">{item.title}</h3>
-                  <p className="text-white/80 text-sm sm:text-base">{item.description}</p>
+                  <h3 className="text-lg font-semibold mb-2 group-hover:text-orange-400 transition-colors">{item.title}</h3>
+                  <p className="text-white/80 text-sm">{item.description}</p>
                 </div>
               </motion.div>
             );

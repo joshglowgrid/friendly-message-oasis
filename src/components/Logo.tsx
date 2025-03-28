@@ -14,7 +14,7 @@ const Logo: React.FC<LogoProps> = ({
   src, 
   alt,
   className,
-  url
+  url = "/" // Default to homepage if no URL provided
 }) => {
   const logoImage = (
     <img
@@ -26,13 +26,9 @@ const Logo: React.FC<LogoProps> = ({
 
   return (
     <div className={cn("logo-glow-wave", className)}>
-      {url ? (
-        <Link to={url}>
-          {logoImage}
-        </Link>
-      ) : (
-        logoImage
-      )}
+      <Link to={url}>
+        {logoImage}
+      </Link>
     </div>
   );
 };

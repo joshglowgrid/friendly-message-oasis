@@ -19,6 +19,7 @@ const Footer = () => {
               <Logo 
                 src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
                 alt="GlowGrid Logo"
+                url="/"
               />
             </div>
             <p className="text-sm mb-4 max-w-md">
@@ -44,9 +45,9 @@ const Footer = () => {
             <h3 className="text-white font-medium mb-3 text-sm uppercase tracking-wider">Services</h3>
             <ul className="space-y-2">
               <li><Link to="/services/social-media" className="text-sm hover:text-orange-400 transition-colors">Social Media</Link></li>
-              <li><Link to="/services" className="text-sm hover:text-orange-400 transition-colors">Content Creation</Link></li>
-              <li><Link to="/services" className="text-sm hover:text-orange-400 transition-colors">Email Marketing</Link></li>
-              <li><Link to="/services" className="text-sm hover:text-orange-400 transition-colors">SEO Strategy</Link></li>
+              <li><Link to="/services/content-creation" className="text-sm hover:text-orange-400 transition-colors">Content Creation</Link></li>
+              <li><Link to="/services/email-marketing" className="text-sm hover:text-orange-400 transition-colors">Email Marketing</Link></li>
+              <li><Link to="/services/seo" className="text-sm hover:text-orange-400 transition-colors">SEO Strategy</Link></li>
             </ul>
           </div>
           
@@ -79,8 +80,8 @@ const Footer = () => {
             © {new Date().getFullYear()} GlowGrid Media. All rights reserved.
           </p>
           <div className="mt-4 sm:mt-0 flex space-x-4">
-            <a href="#" className="text-xs sm:text-sm hover:text-orange-400 transition-colors">Privacy Policy</a>
-            <a href="#" className="text-xs sm:text-sm hover:text-orange-400 transition-colors">Terms of Service</a>
+            <Link to="/privacy-policy" className="text-xs sm:text-sm hover:text-orange-400 transition-colors">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="text-xs sm:text-sm hover:text-orange-400 transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

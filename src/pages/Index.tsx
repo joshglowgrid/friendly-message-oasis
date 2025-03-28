@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import Hero from '@/components/sections/Hero';
-import Header from '@/components/sections/Header';
 import IntroSection from '@/components/sections/IntroSection';
 import { ServiceCards } from '@/components/sections/ServiceCards';
 import { PhoneMockup } from '@/components/sections/PhoneMockup';
@@ -11,7 +10,6 @@ import { IntroAnimation } from '@/components/sections/IntroAnimation';
 import { FloatingCTA } from '@/components/navigation/FloatingCTA';
 import WhyUsSection from '@/components/sections/WhyUsSection';
 import IndustriesSection from '@/components/sections/IndustriesSection';
-import Footer from '@/components/sections/Footer';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -50,7 +48,12 @@ const Index = () => {
     };
     
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    // Add initial scroll check
+    setTimeout(() => {
+      handleScroll();
+      // Enable scrolling immediately
+      document.body.style.overflow = "auto";
+    }, 100);
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -60,8 +63,6 @@ const Index = () => {
   return (
     <div className="min-h-screen text-white flex flex-col items-center overflow-hidden">
       <IntroAnimation />
-      <FloatingCTA />
-      <Header scrolled={scrolled} />
       
       <Hero />
       
@@ -72,7 +73,7 @@ const Index = () => {
         <WhyUsSection />
         <IndustriesSection />
         <EnhancedContactSection />
-        <Footer />
+        {/* Footer removed from here, now only rendered once in App.tsx */}
       </div>
     </div>
   );

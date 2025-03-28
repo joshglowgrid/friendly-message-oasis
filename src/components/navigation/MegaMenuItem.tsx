@@ -1,7 +1,7 @@
 
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Phone } from 'lucide-react';
@@ -46,21 +46,27 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
   const location = useLocation();
   const isActive = items.some(item => location.pathname === item.link);
   const [isHovering, setIsHovering] = useState(false);
+  const closeTimeoutRef = useRef<number | null>(null);
   
-  // Add a delay for smoother hover experience
   const handleMouseEnter = () => {
     setIsHovering(true);
     onOpen();
+    
+    // Clear any existing timeout
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
   };
 
   const handleMouseLeave = () => {
     setIsHovering(false);
-    // Delay hiding the menu to allow the user to move to the dropdown
-    setTimeout(() => {
+    // Increase delay to 500ms to allow more time to move to submenu
+    closeTimeoutRef.current = window.setTimeout(() => {
       if (!isHovering) {
         onClose();
       }
-    }, 50);
+    }, 500);
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -93,10 +99,21 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
           exit="hidden"
           variants={menuVariants}
           className="absolute left-1/2 z-50 mt-2 w-screen max-w-4xl -translate-x-1/2 px-4"
-          onMouseEnter={() => setIsHovering(true)}
+          onMouseEnter={() => {
+            setIsHovering(true);
+            // Clear any existing timeout
+            if (closeTimeoutRef.current) {
+              clearTimeout(closeTimeoutRef.current);
+              closeTimeoutRef.current = null;
+            }
+          }}
           onMouseLeave={() => {
             setIsHovering(false);
-            onClose();
+            closeTimeoutRef.current = window.setTimeout(() => {
+              if (!isHovering) {
+                onClose();
+              }
+            }, 300);
           }}
         >
           <div className="overflow-hidden rounded-xl border border-orange-400/20 bg-black shadow-xl">

@@ -19,16 +19,8 @@ export const FloatingCTA = () => {
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
-    const tabTrigger = document.querySelector('[data-state="inactive"][value="call"]') as HTMLElement;
-    
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
-      // Allow time for scroll before clicking the tab
-      setTimeout(() => {
-        if (tabTrigger) {
-          tabTrigger.click();
-        }
-      }, 800);
     }
   };
 
