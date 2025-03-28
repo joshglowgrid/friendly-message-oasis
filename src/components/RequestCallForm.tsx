@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -56,17 +55,47 @@ const RequestCallForm = () => {
     setIsSubmitting(true);
 
     try {
-      // In a real implementation, you'd send the data to your backend
-      // For demo purposes, we're simulating a successful submission
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Create FormData object for submission
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('phone', data.phone || 'Not provided');
+      formData.append('preferredTime', data.preferredTime || 'Not specified');
+      formData.append('message', data.message);
+      formData.append('recipient', 'josh@glowgridmedia.com');
+      formData.append('form_type', 'call_request');
+      formData.append('timestamp', new Date().toISOString());
       
-      console.log('Form submitted:', data);
+      // Store submission in localStorage for record keeping
+      const submissions = JSON.parse(localStorage.getItem('form_submissions') || '[]');
+      submissions.push({
+        type: 'call_request',
+        data: {
+          name: data.name,
+          email: data.email,
+          phone: data.phone || 'Not provided',
+          preferredTime: data.preferredTime || 'Not specified',
+          message: data.message,
+          timestamp: new Date().toISOString()
+        }
+      });
+      localStorage.setItem('form_submissions', JSON.stringify(submissions));
+      
+      // Send email using FormSubmit service
+      const response = await fetch('https://formsubmit.co/josh@glowgridmedia.com', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
       
       // Show success message
       setIsSuccess(true);
       toast({
-        title: 'Message sent!',
-        description: 'We will contact you soon.',
+        title: 'Request sent!',
+        description: 'We will contact you soon to schedule a call.',
       });
       
       // Reset form after successful submission

@@ -1,16 +1,11 @@
-
 import { createClient } from "tinacms/dist/client";
 import { BlogPost } from '@/components/blog/BlogList';
 
 // Create a client for fetching data from TinaCMS with proper configuration
 const client = createClient({
   url: "/api/tina",
-  queries: {
-    // We need to provide an empty function to satisfy the type requirements
-    // but we'll use client.request() for our queries instead
-    __UNUSED__: (_client) => {
-      return {};
-    }
+  queries: (client) => {
+    return {};
   }
 });
 

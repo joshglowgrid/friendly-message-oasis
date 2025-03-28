@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -22,7 +21,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // If honeypot field is filled, silently reject the submission
@@ -41,22 +40,54 @@ const ContactForm = ({ className }: ContactFormProps) => {
     
     setIsSubmitting(true);
     
-    // Build form data with recipient
-    const data = new FormData();
-    data.append('name', formData.name);
-    data.append('email', formData.email);
-    data.append('message', formData.message);
-    data.append('_recipient', 'hello@glowgridmedia.com');
-    
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Build form data with recipient
+      const data = new FormData();
+      data.append('name', formData.name);
+      data.append('email', formData.email);
+      data.append('message', formData.message);
+      data.append('recipient', 'josh@glowgridmedia.com');
+      data.append('form_type', 'contact_form');
+      data.append('timestamp', new Date().toISOString());
+      
+      // Store submission in localStorage for record keeping
+      const submissions = JSON.parse(localStorage.getItem('form_submissions') || '[]');
+      submissions.push({
+        type: 'contact_form',
+        data: {
+          name: formData.name,
+          email: formData.email, 
+          message: formData.message,
+          timestamp: new Date().toISOString()
+        }
+      });
+      localStorage.setItem('form_submissions', JSON.stringify(submissions));
+      
+      // Send email using a service (using FormSubmit service as an example)
+      const response = await fetch('https://formsubmit.co/josh@glowgridmedia.com', {
+        method: 'POST',
+        body: data
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+      
       toast.success("Message sent successfully", {
         description: "We'll get back to you as soon as possible.",
         duration: 5000,
       });
+      
       setFormData({ name: '', email: '', message: '', website: '' });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error("Failed to send message", {
+        description: "Please try again later or contact us directly.",
+        duration: 5000,
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -127,8 +158,8 @@ const ContactForm = ({ className }: ContactFormProps) => {
         </p>
         <p className="flex items-center justify-center gap-2 text-sm text-white/80">
           <Mail size={16} className="text-orange-400" />
-          <a href="mailto:hello@glowgridmedia.com" className="hover:text-orange-400 transition-colors">
-            hello@glowgridmedia.com
+          <a href="mailto:josh@glowgridmedia.com" className="hover:text-orange-400 transition-colors">
+            josh@glowgridmedia.com
           </a>
         </p>
       </div>
