@@ -21,7 +21,7 @@ const TinaProvider: React.FC<TinaProviderProps> = ({ children }) => {
 
   return (
     <TinaEditProvider
-      editMode={handleEditClick}
+      editMode={<button onClick={handleEditClick}>Edit</button>}
       showEditButton={true}
     >
       {children}
