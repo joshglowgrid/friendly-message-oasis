@@ -1,7 +1,8 @@
 
 import { BlogPost } from '@/components/blog/BlogList';
+import { getBlogContent, getBlogPostBySlug, getRelatedBlogPosts, getFeaturedBlogPosts } from '@/lib/content';
 
-// Sample blog post data (fallback if API fails)
+// Sample blog post data (fallback if content loading fails)
 const blogPosts: BlogPost[] = [
   {
     id: "healthcare-social-media-trends-2025",
@@ -12,7 +13,8 @@ const blogPosts: BlogPost[] = [
     readTime: "6 min read",
     category: "Social Media",
     image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop",
-    featured: true
+    featured: true,
+    content: "This is a sample content for the blog post."
   },
   {
     id: "dental-practice-marketing-guide",
@@ -22,7 +24,8 @@ const blogPosts: BlogPost[] = [
     date: "March 10, 2025",
     readTime: "8 min read",
     category: "Dental",
-    image: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=2070&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=2070&auto=format&fit=crop",
+    content: "This is a sample content for the blog post."
   },
   {
     id: "tiktok-for-wellness-brands",
@@ -32,7 +35,8 @@ const blogPosts: BlogPost[] = [
     date: "March 5, 2025",
     readTime: "5 min read",
     category: "Video",
-    image: "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?q=80&w=800&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?q=80&w=800&auto=format&fit=crop",
+    content: "This is a sample content for the blog post."
   },
   {
     id: "email-automation-healthcare",
@@ -42,7 +46,8 @@ const blogPosts: BlogPost[] = [
     date: "February 28, 2025",
     readTime: "7 min read",
     category: "Email",
-    image: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?q=80&w=800&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?q=80&w=800&auto=format&fit=crop",
+    content: "This is a sample content for the blog post."
   },
   {
     id: "medspa-instagram-growth",
@@ -52,7 +57,8 @@ const blogPosts: BlogPost[] = [
     date: "February 22, 2025",
     readTime: "6 min read",
     category: "Social Media",
-    image: "https://images.unsplash.com/photo-1596360415008-8d76d2acea8b?q=80&w=2069&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1596360415008-8d76d2acea8b?q=80&w=2069&auto=format&fit=crop",
+    content: "This is a sample content for the blog post."
   },
   {
     id: "healthcare-website-conversion",
@@ -62,167 +68,64 @@ const blogPosts: BlogPost[] = [
     date: "February 15, 2025",
     readTime: "9 min read",
     category: "Website",
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop",
+    content: "This is a sample content for the blog post."
   }
 ];
 
-// Get all blog posts from Strapi with fallback to sample data
+// Get all blog posts with fallback to sample data
 export const getBlogPosts = async (): Promise<BlogPost[]> => {
   try {
-    // Try to fetch from Strapi
-    const query = buildStrapiQuery({
-      populate: ['image'],
-      sort: ['publishedAt:desc'],
-    });
+    // Fetch blog posts from content system
+    const posts = await getBlogContent();
     
-    const { data } = await strapiClient.get(`/blog-posts?${query}`);
-    
-    if (data.data.length === 0) {
+    if (!posts || posts.length === 0) {
       return blogPosts; // Fallback to sample data if no posts
     }
     
-    // Transform Strapi data to match our BlogPost interface
-    return data.data.map((post: any) => ({
-      id: post.id.toString(),
-      title: post.attributes.title,
-      excerpt: post.attributes.excerpt,
-      author: "GlowGrid Media", // Default author
-      date: new Date(post.attributes.publishedAt).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
-      readTime: post.attributes.readTime || "5 min read",
-      category: post.attributes.category,
-      image: post.attributes.image?.data?.attributes?.url
-        ? `${post.attributes.image.data.attributes.url}`
-        : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop',
-      featured: post.attributes.featured || false,
-    }));
+    return posts;
   } catch (error) {
-    console.error('Error fetching blog posts from Strapi:', error);
+    console.error('Error fetching blog posts:', error);
     // Fallback to sample data
     return blogPosts;
   }
 };
 
-// Get blog post by ID from Strapi with fallback to sample data
+// Get blog post by ID with fallback to sample data
 export const getBlogPostById = async (id: string): Promise<BlogPost | null> => {
   try {
-    // First try to get by ID
-    const { data } = await strapiClient.get(`/blog-posts/${id}?populate=*`);
+    // Try to get post by ID/slug
+    const post = await getBlogPostBySlug(id);
     
-    if (!data.data) {
-      // If not found by ID, try by slug
-      const query = buildStrapiQuery({
-        populate: ['image'],
-        filters: {
-          slug: {
-            $eq: id, // id might be a slug here
-          },
-        },
-      });
-      
-      const slugResponse = await strapiClient.get(`/blog-posts?${query}`);
-      
-      if (slugResponse.data.data.length === 0) {
-        // If still not found, fall back to sample data
-        return blogPosts.find(post => post.id === id) || null;
-      }
-      
-      const post = slugResponse.data.data[0];
-      return {
-        id: post.id.toString(),
-        title: post.attributes.title,
-        excerpt: post.attributes.excerpt,
-        author: "GlowGrid Media",
-        date: new Date(post.attributes.publishedAt).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        }),
-        readTime: post.attributes.readTime || "5 min read",
-        category: post.attributes.category,
-        image: post.attributes.image?.data?.attributes?.url
-          ? `${post.attributes.image.data.attributes.url}`
-          : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop',
-        featured: post.attributes.featured || false,
-      };
+    if (!post) {
+      // If not found, fall back to sample data
+      return blogPosts.find(post => post.id === id) || null;
     }
     
-    const post = data.data;
-    return {
-      id: post.id.toString(),
-      title: post.attributes.title,
-      excerpt: post.attributes.excerpt,
-      author: "GlowGrid Media",
-      date: new Date(post.attributes.publishedAt).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
-      readTime: post.attributes.readTime || "5 min read",
-      category: post.attributes.category,
-      image: post.attributes.image?.data?.attributes?.url
-        ? `${post.attributes.image.data.attributes.url}`
-        : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop',
-      featured: post.attributes.featured || false,
-    };
+    return post;
   } catch (error) {
-    console.error('Error fetching blog post by ID from Strapi:', error);
+    console.error('Error fetching blog post by ID:', error);
     // Fallback to sample data
     return blogPosts.find(post => post.id === id) || null;
   }
 };
 
-// Get related posts from Strapi
+// Get related posts
 export const getRelatedPosts = async (category: string, currentPostId: string): Promise<BlogPost[]> => {
   try {
-    const query = buildStrapiQuery({
-      populate: ['image'],
-      filters: {
-        category: {
-          $eq: category,
-        },
-        id: {
-          $ne: currentPostId,
-        },
-      },
-      sort: ['publishedAt:desc'],
-      pagination: {
-        limit: 3,
-      },
-    });
+    // Fetch related posts
+    const relatedPosts = await getRelatedBlogPosts(category, currentPostId);
     
-    const { data } = await strapiClient.get(`/blog-posts?${query}`);
-    
-    if (data.data.length === 0) {
+    if (!relatedPosts || relatedPosts.length === 0) {
       // Fallback to sample data
       return blogPosts
         .filter(post => post.category === category && post.id !== currentPostId)
         .slice(0, 3);
     }
     
-    // Transform Strapi data to match our BlogPost interface
-    return data.data.map((post: any) => ({
-      id: post.id.toString(),
-      title: post.attributes.title,
-      excerpt: post.attributes.excerpt,
-      author: "GlowGrid Media",
-      date: new Date(post.attributes.publishedAt).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
-      readTime: post.attributes.readTime || "5 min read",
-      category: post.attributes.category,
-      image: post.attributes.image?.data?.attributes?.url
-        ? `${post.attributes.image.data.attributes.url}`
-        : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop',
-      featured: post.attributes.featured || false,
-    }));
+    return relatedPosts;
   } catch (error) {
-    console.error('Error fetching related posts from Strapi:', error);
+    console.error('Error fetching related posts:', error);
     // Fallback to sample data
     return blogPosts
       .filter(post => post.category === category && post.id !== currentPostId)
@@ -230,46 +133,20 @@ export const getRelatedPosts = async (category: string, currentPostId: string): 
   }
 };
 
-// Get featured posts from Strapi
+// Get featured posts
 export const getFeaturedPosts = async (): Promise<BlogPost[]> => {
   try {
-    const query = buildStrapiQuery({
-      populate: ['image'],
-      filters: {
-        featured: {
-          $eq: true,
-        },
-      },
-      sort: ['publishedAt:desc'],
-    });
+    // Fetch featured posts
+    const featuredPosts = await getFeaturedBlogPosts();
     
-    const { data } = await strapiClient.get(`/blog-posts?${query}`);
-    
-    if (data.data.length === 0) {
+    if (!featuredPosts || featuredPosts.length === 0) {
       // Fallback to sample data
       return blogPosts.filter(post => post.featured);
     }
     
-    // Transform Strapi data to match our BlogPost interface
-    return data.data.map((post: any) => ({
-      id: post.id.toString(),
-      title: post.attributes.title,
-      excerpt: post.attributes.excerpt,
-      author: "GlowGrid Media",
-      date: new Date(post.attributes.publishedAt).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
-      readTime: post.attributes.readTime || "5 min read",
-      category: post.attributes.category,
-      image: post.attributes.image?.data?.attributes?.url
-        ? `${post.attributes.image.data.attributes.url}`
-        : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop',
-      featured: true,
-    }));
+    return featuredPosts;
   } catch (error) {
-    console.error('Error fetching featured posts from Strapi:', error);
+    console.error('Error fetching featured posts:', error);
     // Fallback to sample data
     return blogPosts.filter(post => post.featured);
   }

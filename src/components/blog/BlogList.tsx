@@ -9,12 +9,13 @@ export interface BlogPost {
   id: string;
   title: string;
   excerpt: string;
-  author: string; // keeping this in the type for backward compatibility
+  author: string;
   date: string;
   readTime: string;
   category: string;
   image: string;
   featured?: boolean;
+  content?: string;
 }
 
 interface BlogListProps {
