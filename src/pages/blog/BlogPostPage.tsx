@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import Header from '@/components/sections/Header';
 import Footer from '@/components/sections/Footer';
 import { FloatingCTA } from '@/components/navigation/FloatingCTA';
-import { getBlogPostById, getRelatedPosts } from '@/data/blogData';
+import { getBlogPostBySlug, getRelatedBlogPosts } from '@/data/blogData';  // Changed from getRelatedPosts to getRelatedBlogPosts
 import { BlogPost } from '@/components/blog/BlogList';
 import { BlogPostLoading } from '@/components/blog/BlogPostLoading';
 import { BlogPostNotFound } from '@/components/blog/BlogPostNotFound';
@@ -26,12 +26,12 @@ const BlogPostPage = () => {
       
       setLoading(true);
       try {
-        const fetchedPost = await getBlogPostById(postId);
+        const fetchedPost = await getBlogPostBySlug(postId);
         setPost(fetchedPost);
         
         // Fetch related posts
         if (fetchedPost) {
-          const related = await getRelatedPosts(fetchedPost.category, postId);
+          const related = await getRelatedBlogPosts(fetchedPost.category, postId);  // Changed from getRelatedPosts
           setRelatedPosts(related);
         }
       } catch (error) {
