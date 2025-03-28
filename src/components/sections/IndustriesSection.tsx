@@ -27,11 +27,11 @@ const industryItems = [{
 
 const IndustriesSection = () => {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-[#0D0D0D] text-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Industries We Serve</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold mb-4 orange-gradient-text">Industries We Serve</h2>
+          <p className="text-xl text-white/80 max-w-3xl mx-auto">
             We specialize in healthcare and wellness verticals where high-touch service meets luxury experiences.
           </p>
         </div>
@@ -40,13 +40,13 @@ const IndustriesSection = () => {
           {industryItems.map((item, index) => {
             const Icon = item.icon;
             return (
-              <Card key={index} className="border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <Card key={index} className="border border-white/10 bg-black/20 backdrop-blur-sm text-white hover:bg-black/30 transition-all">
                 <CardContent className="p-6">
-                  <div className="mb-4 text-teal-600">
+                  <div className="mb-4 text-orange-400">
                     <Icon size={36} />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-gray-600">{item.description}</p>
+                  <p className="text-white/70">{item.description}</p>
                 </CardContent>
               </Card>
             );

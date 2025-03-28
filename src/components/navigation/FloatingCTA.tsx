@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUp } from 'lucide-react';
 
 export const FloatingCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,6 +32,10 @@ export const FloatingCTA = () => {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -40,8 +44,18 @@ export const FloatingCTA = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3 }}
-          className="fixed bottom-6 right-6 z-50"
+          className="fixed bottom-6 right-6 z-50 flex flex-col space-y-2"
         >
+          <Button 
+            variant="outline" 
+            size="icon"
+            className="rounded-full border border-white/20 hover:border-orange-400 bg-black/70 backdrop-blur-sm hover:bg-black/90 text-white/70 hover:text-orange-400"
+            onClick={scrollToTop}
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="h-4 w-4" />
+          </Button>
+          
           <Button 
             variant="gradient" 
             size="lg"

@@ -11,6 +11,7 @@ import { IntroAnimation } from '@/components/sections/IntroAnimation';
 import { FloatingCTA } from '@/components/navigation/FloatingCTA';
 import WhyUsSection from '@/components/sections/WhyUsSection';
 import IndustriesSection from '@/components/sections/IndustriesSection';
+import Footer from '@/components/sections/Footer';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -21,10 +22,15 @@ const Index = () => {
     setMounted(true);
     
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
+      // Track scroll position for sticky header
+      const heroSection = document.querySelector('#hero');
+      const heroButton = document.querySelector('.hero-cta-button');
+      
+      if (heroSection && heroButton) {
+        const buttonBottom = heroButton.getBoundingClientRect().bottom;
+        setScrolled(buttonBottom <= 0);
       } else {
-        setScrolled(false);
+        setScrolled(window.scrollY > window.innerHeight * 0.5);
       }
       
       // Animate sections on scroll
@@ -59,13 +65,14 @@ const Index = () => {
       
       <Hero />
       
-      <div id="content" className="w-full">
+      <div id="content" className="w-full bg-[#0D0D0D]">
         <IntroSection />
         <ServiceCards />
         <PhoneMockup />
         <WhyUsSection />
         <IndustriesSection />
         <EnhancedContactSection />
+        <Footer />
       </div>
     </div>
   );
