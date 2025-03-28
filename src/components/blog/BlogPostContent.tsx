@@ -4,6 +4,7 @@ import { Calendar, Clock, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { renderMarkdown } from '@/utils/markdownRenderer';
 import { BlogPost } from '@/components/blog/BlogList';
+import { Table, TableBody, TableHead, TableHeader } from '@/components/ui/table';
 
 interface BlogPostContentProps {
   post: BlogPost;
@@ -20,17 +21,20 @@ export const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
         <h1 className="text-2xl md:text-4xl font-bold mb-4">{post.title}</h1>
         
         <div className="flex flex-wrap items-center gap-4 text-white/60 mb-6">
-          <span className="flex items-center gap-1">
+          <div className="flex items-center gap-1">
             <Calendar size={16} />
             {post.date}
-          </span>
-          <span className="flex items-center gap-1">
+          </div>
+          <div className="flex items-center gap-1">
             <Clock size={16} />
             {post.readTime}
-          </span>
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="text-orange-400">{post.author}</span>
+          </div>
         </div>
         
-        <div 
+        <article 
           className="prose prose-lg prose-invert max-w-none"
           dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
         />
