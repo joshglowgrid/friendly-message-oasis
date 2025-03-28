@@ -17,7 +17,8 @@ const TinaProvider: React.FC<TinaProviderProps> = ({ children }) => {
   return (
     <TinaEditProvider
       editMode={false}
-      enterEditMode={() => {
+      showEditButton={true}
+      onEditModeClick={() => {
         window.location.href = `/admin/#/collections/page/`;
       }}
     >

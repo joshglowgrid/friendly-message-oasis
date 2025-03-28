@@ -5,7 +5,7 @@ import { defineConfig } from "tinacms";
 export default defineConfig({
   contentApiUrlOverride: "/api/tina",
   admin: {
-    path: "/admin",
+    // The admin UI will be available at /admin
   },
   build: {
     outputFolder: "admin",
