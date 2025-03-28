@@ -1,6 +1,5 @@
 
 import { BlogPost } from '@/components/blog/BlogList';
-import { strapiClient, buildStrapiQuery } from '@/lib/strapi';
 
 // Sample blog post data (fallback if API fails)
 const blogPosts: BlogPost[] = [
