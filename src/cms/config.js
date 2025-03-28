@@ -56,6 +56,12 @@ export default defineConfig({
             label: "Category",
           },
           {
+            type: "boolean",
+            name: "featured",
+            label: "Featured",
+            required: false,
+          },
+          {
             type: "image",
             name: "image",
             label: "Cover Image",
