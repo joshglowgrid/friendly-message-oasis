@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Sparkles, BarChart2, Users, Layers, TrendingUp } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { motion } from 'framer-motion';
 
 const whyUsItems = [{
   title: "Vertical Expertise",
@@ -26,31 +26,41 @@ const whyUsItems = [{
 }];
 
 const WhyUsSection = () => {
-  return <section className="py-20 bg-stone-950">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">The GlowGrid Difference</h2>
-          <p className="text-xl max-w-3xl mx-auto text-stone-50">
+  return (
+    <section className="py-12 sm:py-16 md:py-20 px-4 bg-stone-950">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl orange-gradient-text font-blink mb-3 sm:mb-4">The GlowGrid Difference</h2>
+          <p className="text-white/80 max-w-2xl mx-auto text-sm sm:text-base">
             We construct evidence-based digital ecosystems that generate quantifiable return on investment.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
           {whyUsItems.map((item, index) => {
-          const Icon = item.icon;
-          return <Card key={index} className="border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <div className="mb-4 text-purple-600">
-                    <Icon size={36} />
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={index}
+                className="relative rounded-xl p-px overflow-hidden h-full"
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.2 }}
+              >
+                {/* Card content */}
+                <div className="relative rounded-xl bg-black/40 backdrop-blur-sm p-4 sm:p-6 border border-white/10 h-full flex flex-col">
+                  <div className="mb-3 sm:mb-4 orange-gradient-bg w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center text-white">
+                    <Icon size={24} />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-gray-600">{item.description}</p>
-                </CardContent>
-              </Card>;
-        })}
+                  <h3 className="text-base sm:text-lg font-semibold mb-2">{item.title}</h3>
+                  <p className="text-white/80 text-sm sm:text-base">{item.description}</p>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
 
 export default WhyUsSection;

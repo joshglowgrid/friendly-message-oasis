@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -77,6 +78,16 @@
     width: 100%;
     min-height: 100vh;
     padding-top: env(safe-area-inset-top);
+  }
+
+  /* Add padding for content under fixed header */
+  .content-under-header {
+    padding-top: 4rem; /* Approximately header height */
+  }
+
+  /* Blog pages need extra padding */
+  .blog-page-content {
+    padding-top: 6rem;
   }
 
   /* Animated gradient background */

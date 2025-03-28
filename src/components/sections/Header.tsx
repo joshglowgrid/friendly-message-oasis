@@ -15,9 +15,10 @@ interface HeaderProps {
 
 const Header = ({ scrolled }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [headerVisible, setHeaderVisible] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true); // Changed to true by default
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const isBlogPage = location.pathname.includes('/blog');
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -66,15 +67,15 @@ const Header = ({ scrolled }: HeaderProps) => {
     <motion.nav 
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
-        (headerVisible || scrolled)
-          ? "py-2 md:py-3 bg-black/90 backdrop-blur-sm shadow-md" 
+        (headerVisible || scrolled || !isHomePage)
+          ? "py-2 md:py-3 bg-black shadow-md" // Removed backdrop-blur for solid background
           : "py-4 md:py-5 bg-transparent"
       )}
       initial={{ y: -100 }}
-      animate={{ y: (headerVisible || scrolled) ? 0 : -100 }}
+      animate={{ y: (headerVisible || scrolled || !isHomePage) ? 0 : -100 }}
       transition={{ duration: 0.3 }}
       style={{
-        paddingTop: `calc(env(safe-area-inset-top) + ${(headerVisible || scrolled) ? '0.5rem' : '1rem'})`,
+        paddingTop: `calc(env(safe-area-inset-top) + ${(headerVisible || scrolled || !isHomePage) ? '0.5rem' : '1rem'})`,
       }}
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
@@ -104,7 +105,7 @@ const Header = ({ scrolled }: HeaderProps) => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
-            className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm py-4 border-t border-orange-400/20"
+            className="md:hidden absolute top-full left-0 w-full bg-black py-4 border-t border-orange-400/20"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}

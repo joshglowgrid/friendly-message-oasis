@@ -9,40 +9,66 @@ import SocialMediaPage from "./pages/services/SocialMediaPage";
 import BlogPage from "./pages/blog/BlogPage";
 import BlogPostPage from "./pages/blog/BlogPostPage";
 import TinaProvider from "./cms/TinaProvider";
+import Header from "./components/sections/Header";
+import Footer from "./components/sections/Footer";
+import { useState, useEffect } from "react";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <TinaProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            
-            {/* Services routes */}
-            <Route path="/services/social-media" element={<SocialMediaPage />} />
-            <Route path="/services/*" element={<NotFound />} />
-            
-            {/* Blog routes */}
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:postId" element={<BlogPostPage />} />
-            
-            {/* Other routes */}
-            <Route path="/work" element={<NotFound />} />
-            <Route path="/work/:projectId" element={<NotFound />} />
-            <Route path="/resources" element={<NotFound />} />
-            <Route path="/resources/:resourceId" element={<NotFound />} />
-            
-            {/* Catch-all route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-        <Toaster />
-        <Sonner />
-      </TinaProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [scrolled, setScrolled] = useState(false);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <TinaProvider>
+          <BrowserRouter>
+            <Header scrolled={scrolled} />
+            <main>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                
+                {/* Services routes */}
+                <Route path="/services/social-media" element={<SocialMediaPage />} />
+                <Route path="/services/*" element={<NotFound />} />
+                
+                {/* Blog routes */}
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:postId" element={<BlogPostPage />} />
+                
+                {/* Other routes */}
+                <Route path="/work" element={<NotFound />} />
+                <Route path="/work/:projectId" element={<NotFound />} />
+                <Route path="/resources" element={<NotFound />} />
+                <Route path="/resources/:resourceId" element={<NotFound />} />
+                
+                {/* Catch-all route */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+            <Footer />
+            <Toaster />
+            <Sonner />
+          </BrowserRouter>
+        </TinaProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
