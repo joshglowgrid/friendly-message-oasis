@@ -14,13 +14,15 @@ const TinaProvider: React.FC<TinaProviderProps> = ({ children }) => {
     return <>{children}</>;
   }
 
+  const enterEditMode = () => {
+    window.location.href = `/admin/#/collections/page/`;
+  };
+
   return (
     <TinaEditProvider
       editMode={false}
       showEditButton={true}
-      onEditModeClick={() => {
-        window.location.href = `/admin/#/collections/page/`;
-      }}
+      enterEditMode={enterEditMode}
     >
       {children}
     </TinaEditProvider>
