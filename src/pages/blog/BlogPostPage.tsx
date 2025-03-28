@@ -59,6 +59,32 @@ const BlogPostPage = () => {
     };
   }, [postId]);
   
+  // Function to convert markdown to HTML (simple version)
+  const renderMarkdown = (markdown: string | undefined) => {
+    if (!markdown) return '';
+    
+    // Simple markdown parsing (this is a basic implementation)
+    let html = markdown
+      // Headers
+      .replace(/^# (.+)$/gm, '<h1 class="text-3xl font-bold mt-8 mb-4">$1</h1>')
+      .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-bold mt-8 mb-4">$1</h2>')
+      .replace(/^### (.+)$/gm, '<h3 class="text-xl font-bold mt-6 mb-3">$1</h3>')
+      // Bold
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      // Italic
+      .replace(/\_(.+?)\_/g, '<em>$1</em>')
+      // Lists
+      .replace(/^\- (.+)$/gm, '<li class="mb-2">$1</li>')
+      // Convert consecutive list items into a list
+      .replace(/(<li.+<\/li>\n)+/g, '<ul class="list-disc pl-6 mb-6 text-white/80">$&</ul>')
+      // Paragraphs
+      .replace(/^(?!(<h|<ul|<li|\s*$))(.*$)/gm, '<p class="text-white/80 mb-4">$1</p>')
+      // Horizontal rules
+      .replace(/^---$/gm, '<hr class="my-8 border-t border-white/10" />');
+      
+    return html;
+  };
+  
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
@@ -125,34 +151,10 @@ const BlogPostPage = () => {
               </span>
             </div>
             
-            <div className="prose prose-lg prose-invert max-w-none">
-              {/* This would be the actual blog content from CMS */}
-              <p className="text-white/80 mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis augue nec nisi bibendum, vel hendrerit lorem semper. Nullam consectetur urna vel nulla sagittis, at ultricies magna consequat.
-              </p>
-              <p className="text-white/80 mb-4">
-                Maecenas feugiat libero non libero tincidunt, vel tincidunt est ultrices. Cras eleifend, ipsum in hendrerit facilisis, lacus nisi porta nisl, at faucibus nisi ligula vel ex. Nullam consectetur urna vel nulla sagittis, at ultricies magna consequat.
-              </p>
-              
-              <h2 className="text-2xl font-bold mt-8 mb-4">Key insights for healthcare brands</h2>
-              <p className="text-white/80 mb-4">
-                Maecenas feugiat libero non libero tincidunt, vel tincidunt est ultrices. Cras eleifend, ipsum in hendrerit facilisis, lacus nisi porta nisl, at faucibus nisi ligula vel ex.
-              </p>
-              <ul className="list-disc pl-6 mb-6 text-white/80">
-                <li className="mb-2">Understand your target audience's healthcare concerns</li>
-                <li className="mb-2">Create content that addresses specific pain points</li>
-                <li className="mb-2">Establish trust through consistent, valuable information</li>
-                <li className="mb-2">Leverage social proof from satisfied patients</li>
-              </ul>
-              
-              <h2 className="text-2xl font-bold mt-8 mb-4">Implementing effective strategies</h2>
-              <p className="text-white/80 mb-4">
-                Maecenas feugiat libero non libero tincidunt, vel tincidunt est ultrices. Cras eleifend, ipsum in hendrerit facilisis, lacus nisi porta nisl, at faucibus nisi ligula vel ex.
-              </p>
-              <p className="text-white/80 mb-8">
-                Nullam consectetur urna vel nulla sagittis, at ultricies magna consequat. Donec convallis augue nec nisi bibendum, vel hendrerit lorem semper.
-              </p>
-            </div>
+            <div 
+              className="prose prose-lg prose-invert max-w-none"
+              dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
+            />
             
             {/* Share buttons */}
             <div className="mt-10 pt-6 border-t border-white/10">
