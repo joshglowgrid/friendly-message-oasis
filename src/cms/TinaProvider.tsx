@@ -7,7 +7,9 @@ interface TinaProviderProps {
 }
 
 const TinaProvider: React.FC<TinaProviderProps> = ({ children }) => {
-  const isAdmin = window.location.pathname.startsWith('/admin');
+  // We need to check if we're running in the browser before accessing window
+  const isClient = typeof window !== 'undefined';
+  const isAdmin = isClient && window.location.pathname.startsWith('/admin');
 
   // Don't wrap the admin page in the TinaEditProvider
   if (isAdmin) {

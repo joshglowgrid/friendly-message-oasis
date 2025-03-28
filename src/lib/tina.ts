@@ -4,8 +4,14 @@ import { BlogPost } from '@/components/blog/BlogList';
 
 // Create a client for fetching data from TinaCMS with proper configuration
 const client = createClient({
-  url: "/api/tina"
-  // Remove the incorrect `queries: {}` configuration that's causing the type error
+  url: "/api/tina",
+  queries: {
+    // We need to provide an empty function to satisfy the type requirements
+    // but we'll use client.request() for our queries instead
+    __UNUSED__: (_client) => {
+      return {};
+    }
+  }
 });
 
 // Function to transform TinaCMS blog post to our BlogPost format
