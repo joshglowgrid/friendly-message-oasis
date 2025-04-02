@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { BlogList } from '@/components/blog/BlogList';
-import { FloatingCTA } from '@/components/navigation/FloatingCTA';
 import { getBlogPosts } from '@/data/blogData';
 import { BlogPost } from '@/components/blog/BlogList';
 

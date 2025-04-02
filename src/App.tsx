@@ -9,7 +9,6 @@ import NotFound from "./pages/NotFound";
 import SocialMediaPage from "./pages/services/SocialMediaPage";
 import BlogPage from "./pages/blog/BlogPage";
 import BlogPostPage from "./pages/blog/BlogPostPage";
-import TinaProvider from "./cms/TinaProvider";
 import Header from "./components/sections/Header";
 import Footer from "./components/sections/Footer";
 import { useState, useEffect } from "react";
@@ -53,47 +52,45 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <TinaProvider>
-          <BrowserRouter>
-            <Header scrolled={scrolled} />
-            <main>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                
-                {/* Services routes */}
-                <Route path="/services/social-media" element={<SocialMediaPage />} />
-                <Route path="/services/content-creation" element={<ServicesPlaceholder title="Content Creation" />} />
-                <Route path="/services/email-marketing" element={<ServicesPlaceholder title="Email Marketing" />} />
-                <Route path="/services/website-development" element={<ServicesPlaceholder title="Website Development" />} />
-                <Route path="/services/seo" element={<ServicesPlaceholder title="SEO Strategy" />} />
-                <Route path="/services/analytics" element={<ServicesPlaceholder title="Analytics & Reporting" />} />
-                <Route path="/services" element={<ServicesPlaceholder title="Our Services" />} />
-                
-                {/* Blog routes */}
-                <Route path="/blog" element={<BlogPage />} />
-                <Route path="/blog/:postId" element={<BlogPostPage />} />
-                
-                {/* Work routes */}
-                <Route path="/work" element={<WorkPlaceholder />} />
-                <Route path="/work/:projectId" element={<WorkPlaceholder />} />
-                
-                {/* Resources routes */}
-                <Route path="/resources" element={<ResourcesPlaceholder />} />
-                <Route path="/resources/guides" element={<ResourcesPlaceholder title="Marketing Guides" />} />
-                <Route path="/resources/templates" element={<ResourcesPlaceholder title="Template Library" />} />
-                <Route path="/resources/case-studies" element={<ResourcesPlaceholder title="Case Studies" />} />
-                <Route path="/resources/:resourceId" element={<ResourcesPlaceholder />} />
-                
-                {/* Catch-all route */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <FloatingCTA />
-            <Footer />
-            <Toaster />
-            <Sonner />
-          </BrowserRouter>
-        </TinaProvider>
+        <BrowserRouter>
+          <Header scrolled={scrolled} />
+          <main>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              
+              {/* Services routes */}
+              <Route path="/services/social-media" element={<SocialMediaPage />} />
+              <Route path="/services/content-creation" element={<ServicesPlaceholder title="Content Creation" />} />
+              <Route path="/services/email-marketing" element={<ServicesPlaceholder title="Email Marketing" />} />
+              <Route path="/services/website-development" element={<ServicesPlaceholder title="Website Development" />} />
+              <Route path="/services/seo" element={<ServicesPlaceholder title="SEO Strategy" />} />
+              <Route path="/services/analytics" element={<ServicesPlaceholder title="Analytics & Reporting" />} />
+              <Route path="/services" element={<ServicesPlaceholder title="Our Services" />} />
+              
+              {/* Blog routes */}
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:postId" element={<BlogPostPage />} />
+              
+              {/* Work routes */}
+              <Route path="/work" element={<WorkPlaceholder />} />
+              <Route path="/work/:projectId" element={<WorkPlaceholder />} />
+              
+              {/* Resources routes */}
+              <Route path="/resources" element={<ResourcesPlaceholder />} />
+              <Route path="/resources/guides" element={<ResourcesPlaceholder title="Marketing Guides" />} />
+              <Route path="/resources/templates" element={<ResourcesPlaceholder title="Template Library" />} />
+              <Route path="/resources/case-studies" element={<ResourcesPlaceholder title="Case Studies" />} />
+              <Route path="/resources/:resourceId" element={<ResourcesPlaceholder />} />
+              
+              {/* Catch-all route */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <FloatingCTA />
+          <Footer />
+          <Toaster />
+          <Sonner />
+        </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );

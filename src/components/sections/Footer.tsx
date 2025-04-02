@@ -19,7 +19,6 @@ const Footer = () => {
               <Logo 
                 src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
                 alt="GlowGrid Logo"
-                url="/"
               />
             </div>
             <p className="text-sm mb-4 max-w-md">
@@ -57,7 +56,7 @@ const Footer = () => {
               <li><Link to="/work" className="text-sm hover:text-orange-400 transition-colors">Our Work</Link></li>
               <li><Link to="/blog" className="text-sm hover:text-orange-400 transition-colors">Blog</Link></li>
               <li><Link to="/resources" className="text-sm hover:text-orange-400 transition-colors">Resources</Link></li>
-              <li><a href="#contact" onClick={() => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'})} className="text-sm hover:text-orange-400 transition-colors">Contact</a></li>
+              <li><a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'}) }} className="text-sm hover:text-orange-400 transition-colors">Contact</a></li>
             </ul>
           </div>
           

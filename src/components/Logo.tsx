@@ -7,7 +7,7 @@ interface LogoProps {
   src: string;
   alt: string;
   className?: string;
-  url?: string; // Added url as an optional property
+  url?: string;
 }
 
 const Logo: React.FC<LogoProps> = ({ 
@@ -16,18 +16,14 @@ const Logo: React.FC<LogoProps> = ({
   className,
   url = "/" // Default to homepage if no URL provided
 }) => {
-  const logoImage = (
-    <img
-      src={src}
-      alt={alt}
-      className="w-full h-auto object-contain"
-    />
-  );
-
   return (
     <div className={cn("logo-glow-wave", className)}>
-      <Link to={url}>
-        {logoImage}
+      <Link to="/">
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-auto object-contain"
+        />
       </Link>
     </div>
   );
