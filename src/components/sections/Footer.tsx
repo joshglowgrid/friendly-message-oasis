@@ -1,8 +1,6 @@
-
 import React from 'react';
 import Logo from '@/components/Logo';
-import { Instagram, Linkedin, ArrowUp } from 'lucide-react';
-import { TikTok } from '@/components/icons/TikTok';
+import { Instagram, ArrowUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -28,14 +26,6 @@ const Footer = () => {
               <a href="https://instagram.com/glowgridmarketing" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-orange-400 transition-colors">
                 <Instagram size={20} />
                 <span className="sr-only">Instagram</span>
-              </a>
-              <a href="https://tiktok.com/@glowgridmedia" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-orange-400 transition-colors">
-                <TikTok className="w-5 h-5" />
-                <span className="sr-only">TikTok</span>
-              </a>
-              <a href="https://linkedin.com/company/glowgridmedia" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-orange-400 transition-colors">
-                <Linkedin size={20} />
-                <span className="sr-only">LinkedIn</span>
               </a>
             </div>
           </div>
