@@ -10,7 +10,7 @@ const platforms = [
   },
   {
     name: "ActiveCampaign",
-    logo: "https://img.glowgridmedia.com/ActiveCampaign.png",
+    logo: "https://img.glowgridmedia.com/ActiveCampaign-Email%20Marketing%20CRM.png",
     description: "Utilized for its sophisticated automation capabilities, enabling healthcare providers to create intelligent follow-up sequences that respond to patient actions."
   },
   {
