@@ -16,7 +16,7 @@ export const PhoneMockup = () => {
   
   const screens = [
     {
-      title: "Content Creation",
+      title: "",
       description: "Eye-catching reels, photos, and videos that showcase your brand.",
       features: ["Strategic video content planning", "High-quality photo production", "Social-first creative direction", "Branded template system"],
       serviceImage: "https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png"
