@@ -84,7 +84,7 @@ const Header = ({ scrolled }: HeaderProps) => {
         <div className="flex w-full md:w-auto justify-between items-center">
           <div className="w-28 md:w-32 cursor-pointer">
             <Logo 
-              src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
+              src="https://img.glowgridmedia.com/glowgridmedia.png" 
               alt="GlowGrid Logo"
               url="/"
             />
