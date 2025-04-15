@@ -10,7 +10,6 @@ import { IntroAnimation } from '@/components/sections/IntroAnimation';
 import { FloatingCTA } from '@/components/navigation/FloatingCTA';
 import WhyUsSection from '@/components/sections/WhyUsSection';
 import IndustriesSection from '@/components/sections/IndustriesSection';
-import { WorkSlider } from '@/components/sections/WorkSlider';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -70,7 +69,6 @@ const Index = () => {
         <IntroSection />
         <ServiceCards />
         <PhoneMockup />
-        <WorkSlider />
         <WhyUsSection />
         <IndustriesSection />
         <EnhancedContactSection />

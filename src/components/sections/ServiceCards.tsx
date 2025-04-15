@@ -44,14 +44,14 @@ export const ServiceCards = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
-            <Card key={index} className="bg-black/40 backdrop-blur-sm border border-white/10 hover:bg-white/5 transition-all duration-300 group">
+            <Card key={index} className="bg-black/40 backdrop-blur-sm border border-white/10 hover:bg-white/5 transition-all duration-300">
               <CardHeader>
-                <CardTitle className="group-hover:text-orange-400 transition-colors">{service.title}</CardTitle>
-                <CardDescription>{service.description}</CardDescription>
+                <CardTitle className="text-orange-400">{service.title}</CardTitle>
+                <CardDescription className="text-white/70">{service.description}</CardDescription>
               </CardHeader>
               <CardFooter>
                 <Link to={service.link} className="w-full">
-                  <Button variant="outline" className="w-full group-hover:text-orange-400 group-hover:border-orange-400">
+                  <Button variant="outline" className="w-full hover:text-orange-400 hover:border-orange-400">
                     Learn More <ArrowRight className="ml-2" />
                   </Button>
                 </Link>
