@@ -15,7 +15,7 @@ interface HeaderProps {
 
 const Header = ({ scrolled }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [headerVisible, setHeaderVisible] = useState(false); // Changed to false by default
+  const [headerVisible, setHeaderVisible] = useState(true); // Changed to true by default
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -35,16 +35,14 @@ const Header = ({ scrolled }: HeaderProps) => {
   useEffect(() => {
     const handleScroll = () => {
       if (isHomePage) {
-        // On homepage: Show header after hero section
-        const heroSection = document.querySelector('#hero');
+        // On homepage: Show header after scrolling a bit, but always visible
+        const scrollPosition = window.scrollY;
+        setHeaderVisible(true); // Always keep header visible
         
-        if (heroSection) {
-          const heroBottom = heroSection.getBoundingClientRect().bottom;
-          setHeaderVisible(heroBottom <= 0);
-        } else {
-          // Fallback if elements are not found
-          setHeaderVisible(window.scrollY > window.innerHeight * 0.5);
-        }
+        // Optional: could add a class for style changes based on scroll position
+        // if (scrollPosition > 100) {
+        //   // Add some style change class
+        // }
       } else {
         // On other pages: always show header
         setHeaderVisible(true);
@@ -57,17 +55,30 @@ const Header = ({ scrolled }: HeaderProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
+  // Header animation variants
+  const headerVariants = {
+    hidden: { y: -100, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <motion.nav 
+      variants={headerVariants}
+      initial="visible" // Changed from "hidden" to "visible" to show on page load
+      animate="visible"
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
         (headerVisible || scrolled || !isHomePage)
-          ? "py-2 md:py-3 bg-black shadow-md" // Solid black background when scrolled 
+          ? "py-2 md:py-3 bg-black/95 backdrop-blur-md shadow-md border-b border-orange-500/10" // Enhanced style 
           : "py-4 md:py-5 bg-transparent"
       )}
-      initial={{ y: -100 }}
-      animate={{ y: (headerVisible || scrolled || !isHomePage) ? 0 : -100 }}
-      transition={{ duration: 0.3 }}
       style={{
         paddingTop: `calc(env(safe-area-inset-top) + ${(headerVisible || scrolled || !isHomePage) ? '0.5rem' : '1rem'})`,
       }}
@@ -82,14 +93,16 @@ const Header = ({ scrolled }: HeaderProps) => {
             />
           </div>
           
-          <div className="md:hidden">
-            <button
-              onClick={toggleMobileMenu}
-              className="p-2 text-white focus:outline-none"
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          {/* Menu button - now more noticeable with animation */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleMobileMenu}
+            className="p-2 text-white md:hidden flex items-center justify-center bg-orange-500/10 rounded-full border border-orange-500/20"
+            aria-label="Toggle Menu"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </motion.button>
         </div>
 
         <div className="hidden md:flex items-center">
@@ -100,7 +113,7 @@ const Header = ({ scrolled }: HeaderProps) => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
-            className="md:hidden absolute top-full left-0 w-full bg-black py-4 border-t border-orange-400/20"
+            className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-md py-4 border-t border-orange-400/20"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}

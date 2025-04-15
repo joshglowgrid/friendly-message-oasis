@@ -10,6 +10,7 @@ import { IntroAnimation } from '@/components/sections/IntroAnimation';
 import { FloatingCTA } from '@/components/navigation/FloatingCTA';
 import WhyUsSection from '@/components/sections/WhyUsSection';
 import IndustriesSection from '@/components/sections/IndustriesSection';
+import { WorkSlider } from '@/components/sections/WorkSlider';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -22,13 +23,12 @@ const Index = () => {
     const handleScroll = () => {
       // Track scroll position for sticky header
       const heroSection = document.querySelector('#hero');
-      const heroButton = document.querySelector('.hero-cta-button');
       
-      if (heroSection && heroButton) {
-        const buttonBottom = heroButton.getBoundingClientRect().bottom;
-        setScrolled(buttonBottom <= 0);
+      if (heroSection) {
+        const heroBottom = heroSection.getBoundingClientRect().bottom;
+        setScrolled(heroBottom <= 0);
       } else {
-        setScrolled(window.scrollY > window.innerHeight * 0.5);
+        setScrolled(window.scrollY > window.innerHeight * 0.2);
       }
       
       // Animate sections on scroll
@@ -70,10 +70,10 @@ const Index = () => {
         <IntroSection />
         <ServiceCards />
         <PhoneMockup />
+        <WorkSlider />
         <WhyUsSection />
         <IndustriesSection />
         <EnhancedContactSection />
-        {/* Footer removed from here, now only rendered once in App.tsx */}
       </div>
     </div>
   );
