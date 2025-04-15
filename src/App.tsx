@@ -17,6 +17,7 @@ import { FloatingCTA } from "./components/navigation/FloatingCTA";
 import ServicesPlaceholder from "./pages/services/ServicesPlaceholder";
 import WorkPlaceholder from "./pages/work/WorkPlaceholder";
 import ResourcesPlaceholder from "./pages/resources/ResourcesPlaceholder";
+import EmailMarketingPage from "./pages/services/EmailMarketingPage";
 
 const queryClient = new QueryClient();
 
@@ -62,7 +63,7 @@ const App = () => {
               {/* Services routes */}
               <Route path="/services/social-media" element={<SocialMediaPage />} />
               <Route path="/services/content-creation" element={<ServicesPlaceholder title="Content Creation" />} />
-              <Route path="/services/email-marketing" element={<ServicesPlaceholder title="Email Marketing" />} />
+              <Route path="/services/email-marketing" element={<EmailMarketingPage />} />
               <Route path="/services/website-development" element={<ServicesPlaceholder title="Website Development" />} />
               <Route path="/services/seo" element={<ServicesPlaceholder title="SEO Strategy" />} />
               <Route path="/services/analytics" element={<ServicesPlaceholder title="Analytics & Reporting" />} />
