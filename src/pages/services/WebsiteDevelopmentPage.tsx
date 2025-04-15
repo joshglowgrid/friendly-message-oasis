@@ -30,14 +30,14 @@ const WebsiteDevelopmentPage = () => {
               Schedule a Consultation <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-orange-400/50 hover:bg-orange-500/10"
-              asChild
-            >
-              <Link to="/work">View Portfolio</Link>
-            </Button>
+        <Button 
+  variant="outline" 
+  size="lg" 
+  className="border-orange-400/50 hover:bg-orange-500/10 text-orange-400"
+  asChild
+>
+  <Link to="/work">View Our Portfolio</Link>
+</Button>
           </div>
           
           <div className="p-4 bg-orange-500/10 border border-orange-500/20 rounded-lg inline-flex items-center gap-2 mb-12">
