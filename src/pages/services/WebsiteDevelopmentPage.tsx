@@ -84,7 +84,7 @@ const WebsiteDevelopmentPage = () => {
       <section className="py-10 px-4">
         <div className="container mx-auto max-w-5xl">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center gap-2">
-            <span className="text-orange-400">💻</span> What's Included in Our Website Development Services
+            <span className="text-orange-400"></span> What's Included in Our Website Development Services
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8 mt-8">
@@ -127,7 +127,7 @@ const WebsiteDevelopmentPage = () => {
       <section className="py-10 px-4">
         <div className="container mx-auto max-w-5xl">
           <h2 className="text-2xl md:text-3xl font-bold mb-8 flex items-center gap-2">
-            <span className="text-orange-400">🔄</span> Our 4-Step Web Development Process
+            <span className="text-orange-400"></span> Our 4-Step Web Development Process
           </h2>
           
           <div className="space-y-6">
