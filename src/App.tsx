@@ -15,6 +15,31 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
+      import ScrollToTop from "./components/navigation/ScrollToTop"; // adjust path as needed
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <BrowserRouter>
+        <ScrollToTop /> {/* ← Add this right here */}
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/services/social-media" element={<SocialMediaPage />} />
+          <Route path="/services/*" element={<NotFound />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:postId" element={<BlogPostPage />} />
+          <Route path="/work" element={<NotFound />} />
+          <Route path="/work/:projectId" element={<NotFound />} />
+          <Route path="/resources" element={<NotFound />} />
+          <Route path="/resources/:resourceId" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+      <Toaster />
+      <Sonner />
+    </TooltipProvider>
+  </QueryClientProvider>
+);
         <Routes>
           <Route path="/" element={<Index />} />
           
