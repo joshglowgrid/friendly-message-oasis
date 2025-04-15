@@ -73,6 +73,7 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
     document.getElementById(sectionId)?.scrollIntoView({
       behavior: 'smooth'
     });
+    onClose(); // Close menu after navigation
   };
   
   return (
@@ -126,6 +127,7 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
                     "group flex flex-col gap-2 rounded-lg p-3 transition-colors hover:bg-white/5",
                     location.pathname === item.link ? "bg-white/10" : ""
                   )}
+                  onClick={onClose}
                 >
                   {item.icon && (
                     <div className="orange-gradient-bg flex h-10 w-10 items-center justify-center rounded-full">
