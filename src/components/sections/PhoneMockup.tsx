@@ -66,17 +66,13 @@ export const PhoneMockup = () => {
             </Button>
           </div>
           
-        {/* Right visual content */}
-<div className="lg:w-1/2 flex justify-center">
-  <img 
-    src="https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png" 
-    alt="Digital Marketing Visual" 
-  />
-</div>
-              
-              {/* Notch */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-36 h-6 bg-black rounded-b-xl"></div>
-            </div>
+          {/* Right visual content - simplified clean image */}
+          <div className="lg:w-1/2 flex justify-center">
+            <img 
+              src="https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png" 
+              alt="Digital Marketing Visual" 
+              className="max-w-full h-auto shadow-lg rounded-md" 
+            />
           </div>
         </div>
       </div>
