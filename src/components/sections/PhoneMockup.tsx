@@ -1,246 +1,102 @@
 
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const PhoneMockup = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState(0);
-  const isMobile = window.innerWidth < 768;
-  
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-  
-  const screens = [
-    {
-      title: "Content Creation",
-      description: "Eye-catching reels, photos, and videos that showcase your brand.",
-      features: ["Strategic video content planning", "High-quality photo production", "Social-first creative direction", "Branded template system"],
-      serviceImage: "/lovable-uploads/94dadbd9-14d0-4012-9ec1-9fc74a95fb8f.png"
-    }, 
-    {
-      title: "Social Media Management",
-      description: "Strategic content planning and community growth.",
-      features: ["Platform-specific strategy", "Engagement & community building", "Analytics & performance tracking", "Trend monitoring & adaptation"],
-      serviceImage: "/lovable-uploads/b86bc91f-c813-4cb6-8b9e-0fc6fc8172ab.png"
-    }, 
-    {
-      title: "Email Marketing",
-      description: "Targeted campaigns and automated flows that convert.",
-      features: ["Customer journey mapping", "Automated nurture sequences", "A/B testing optimization", "Segmentation & personalization"],
-      serviceImage: "/lovable-uploads/980ee74c-a6c5-47b5-a04e-6988a9081a69.png"
-    }
-  ];
-  
-  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 1.1]);
-  const imageY = useTransform(scrollYProgress, [0, 0.5, 1], [50, 0, -50]);
-  
-  useEffect(() => {
-    const updateScreenIndex = () => {
-      const progress = scrollYProgress.get();
-      if (progress < 0.33) {
-        setActiveTab(0);
-      } else if (progress < 0.66) {
-        setActiveTab(1);
-      } else {
-        setActiveTab(2);
-      }
-    };
-    
-    const unsubscribe = scrollYProgress.on('change', updateScreenIndex);
-    return () => unsubscribe();
-  }, [scrollYProgress]);
-
-  // Handle manual tab switching
-  const handleTabClick = (index: number) => {
-    setActiveTab(index);
-
-    // Optional: Scroll to the corresponding position
-    if (sectionRef.current) {
-      const sectionHeight = sectionRef.current.offsetHeight;
-      const scrollTarget = sectionRef.current.offsetTop + sectionHeight * (index + 1) / 4;
-      window.scrollTo({
-        top: scrollTarget,
-        behavior: 'smooth'
-      });
-    }
-  };
-  
-  const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({
-      behavior: 'smooth'
-    });
-  };
-  
   return (
-    <section 
-      ref={sectionRef} 
-      id="mobile-services" 
-      className="relative py-12 px-4 overflow-hidden pb-8 md:py-[40px]"
-    >
+    <section className="py-20 px-4 relative">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl orange-gradient-text font-blink mb-6 text-center md:text-left">
-          Mobile-First Marketing
-        </h2>
-        <p className="text-white/80 max-w-xl mb-8 text-center md:text-left mx-auto md:mx-0">
-          We create content that connects with audiences on the devices they use most. 
-          Our mobile-first approach ensures your brand stands out on every screen.
-        </p>
-        
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          {/* Mobile view: shows image + tab in a vertical layout */}
-          <div className="md:hidden space-y-6">
-            {screens.map((screen, i) => (
-              <div key={i} className="space-y-4">
-                {/* Image (visible on mobile for all tabs) */}
-                <motion.div 
-                  className={cn(
-                    "relative w-full h-full aspect-[9/16] max-h-[200px] rounded-xl overflow-hidden shadow-lg",
-                    activeTab !== i && "opacity-60"
-                  )}
-                  onClick={() => handleTabClick(i)}
-                >
-                  <img src={screen.serviceImage} alt={screen.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                  
-                  {/* Title overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className="text-xl font-bold text-white">{screen.title}</h3>
-                  </div>
-                </motion.div>
-                
-                {/* Info card */}
-                <motion.div 
-                  className={cn(
-                    "p-4 rounded-lg border transition-all duration-300",
-                    activeTab === i ? "border-orange-400 bg-black/30" : "border-white/10 bg-transparent"
-                  )}
-                  animate={{
-                    opacity: activeTab === i ? 1 : 0.6,
-                    scale: activeTab === i ? 1 : 0.98
-                  }}
-                  onClick={() => handleTabClick(i)}
-                >
-                  <h3 className="text-xl font-semibold">{screen.title}</h3>
-                  <p className="text-white/70 mb-2">{screen.description}</p>
-                  
-                  {activeTab === i && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <ul className="space-y-1 mt-3 text-sm text-white/60">
-                        {screen.features.map((feature, index) => (
-                          <li key={index} className="flex items-center">
-                            <span className="w-1.5 h-1.5 rounded-full bg-orange-400 mr-2"></span>
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                      
-                      <Button 
-                        variant="outline" 
-                        className="mt-4 text-sm border-orange-400/50 text-orange-400 hover:bg-orange-400/10" 
-                        onClick={scrollToContact}
-                      >
-                        Request a Quote
-                      </Button>
-                    </motion.div>
-                  )}
-                </motion.div>
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
+          {/* Left text content */}
+          <div className="lg:w-1/2 space-y-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl orange-gradient-text font-blink mb-4">
+              Digital Marketing Ecosystem
+            </h2>
+            <p className="text-white/80 leading-relaxed">
+              We build complete marketing ecosystems that connect your brand with your audience across multiple touchpoints. From social media to email, web to video, we create cohesive experiences that drive engagement and conversions.
+            </p>
+            
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <div className="w-12 h-12 flex items-center justify-center bg-black/30 border border-white/10 rounded-md mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-orange-400">
+                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-1">Social Media Integration</h3>
+                  <p className="text-white/70">Strategic content that builds community and drives engagement.</p>
+                </div>
               </div>
-            ))}
-          </div>
-          
-          {/* Desktop view */}
-          <div className="hidden md:block">
-            <div className="space-y-6">
-              {screens.map((screen, i) => (
-                <motion.div 
-                  key={i} 
-                  className={cn(
-                    "p-4 rounded-lg border transition-all duration-300 cursor-pointer",
-                    activeTab === i ? "border-orange-400 bg-black/30" : "border-white/10 bg-transparent hover:border-white/30"
-                  )}
-                  animate={{
-                    opacity: activeTab === i ? 1 : 0.6,
-                    scale: activeTab === i ? 1 : 0.98
-                  }}
-                  onClick={() => handleTabClick(i)}
-                >
-                  <h3 className="text-xl font-semibold">{screen.title}</h3>
-                  <p className="text-white/70 mb-2">{screen.description}</p>
-                  
-                  {activeTab === i && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <ul className="space-y-1 mt-3 text-sm text-white/60">
-                        {screen.features.map((feature, index) => (
-                          <li key={index} className="flex items-center">
-                            <span className="w-1.5 h-1.5 rounded-full bg-orange-400 mr-2"></span>
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                      
-                      <Button 
-                        variant="outline" 
-                        className="mt-4 text-sm border-orange-400/50 text-orange-400 hover:bg-orange-400/10" 
-                        onClick={scrollToContact}
-                      >
-                        Request a Quote
-                      </Button>
-                    </motion.div>
-                  )}
-                </motion.div>
-              ))}
+              
+              <div className="flex items-start">
+                <div className="w-12 h-12 flex items-center justify-center bg-black/30 border border-white/10 rounded-md mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-orange-400">
+                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-1">Email Automation</h3>
+                  <p className="text-white/70">Targeted campaigns that nurture leads and retain clients.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <div className="w-12 h-12 flex items-center justify-center bg-black/30 border border-white/10 rounded-md mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-orange-400">
+                    <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path>
+                    <path d="M18 14h-8"></path>
+                    <path d="M15 18h-5"></path>
+                    <path d="M10 6h8v4h-8V6Z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-1">Content Strategy</h3>
+                  <p className="text-white/70">Cohesive storytelling across platforms for maximum impact.</p>
+                </div>
+              </div>
             </div>
+            
+            <Button variant="outline" className="mt-6" asChild>
+              <a href="/services">
+                Explore All Services <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
           </div>
           
-          {/* Desktop image display */}
-          <div className="hidden md:block relative flex justify-center">
-            {screens.map((screen, i) => (
-              <motion.div 
-                key={i} 
-                className="relative w-full h-full aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl"
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: activeTab === i ? 1 : 0,
-                  scale: activeTab === i ? 1 : 0.9
-                }}
-                style={{
-                  scale: imageScale,
-                  y: imageY,
-                  display: activeTab === i ? 'block' : 'none'
-                }}
-                transition={{ duration: 0.5 }}
-              >
-                <img src={screen.serviceImage} alt={screen.title} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+          {/* Right phone mockup */}
+          <div className="lg:w-1/2 flex justify-center">
+            <div className="relative w-72 h-[580px] bg-black border-[8px] border-neutral-800 rounded-[36px] overflow-hidden shadow-xl">
+              <div className="absolute top-0 left-0 w-full h-full">
+                <img 
+                  src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=800&auto=format&fit=crop" 
+                  alt="Digital Marketing Dashboard" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/50 via-transparent to-black/70"></div>
                 
-                {/* Optional: Add a title overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-2xl font-bold text-white">{screen.title}</h3>
+                {/* Simplified UI elements */}
+                <div className="absolute top-8 left-0 right-0 px-4">
+                  <div className="h-6 w-24 bg-white/10 rounded-md mx-auto"></div>
                 </div>
                 
-                {/* Glow effect */}
-                <div 
-                  className="absolute -inset-4 opacity-30 blur-xl rounded-full" 
-                  style={{
-                    background: 'linear-gradient(to right, #FF8359, #FF4E87)',
-                    filter: 'blur(20px)',
-                    zIndex: -1
-                  }} 
-                />
-              </motion.div>
-            ))}
+                <div className="absolute bottom-8 left-0 right-0 px-4 space-y-4">
+                  <div className="h-12 bg-white/10 rounded-md"></div>
+                  <div className="h-12 bg-white/10 rounded-md"></div>
+                  <div className="flex gap-2">
+                    <div className="h-10 flex-1 bg-orange-400/20 rounded-md"></div>
+                    <div className="h-10 w-10 bg-orange-400/80 rounded-md flex items-center justify-center">
+                      <ArrowRight className="text-black h-5 w-5" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Notch */}
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-36 h-6 bg-black rounded-b-xl"></div>
+            </div>
           </div>
         </div>
       </div>

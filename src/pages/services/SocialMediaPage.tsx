@@ -1,7 +1,5 @@
 
 import React, { useEffect } from 'react';
-import Header from '@/components/sections/Header';
-import Footer from '@/components/sections/Footer';
 import { Button } from '@/components/ui/button';
 import { EnhancedContactSection } from '@/components/sections/EnhancedContactSection';
 import { motion } from 'framer-motion';
@@ -9,16 +7,9 @@ import { FloatingCTA } from '@/components/navigation/FloatingCTA';
 import { Instagram, ArrowRight } from 'lucide-react';
 
 const SocialMediaPage = () => {
-  const [scrolled, setScrolled] = React.useState(false);
-  
   useEffect(() => {
+    // Scroll listener for animation
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-      
       const sections = document.querySelectorAll('section');
       sections.forEach(section => {
         const sectionTop = section.getBoundingClientRect().top;
@@ -76,10 +67,9 @@ const SocialMediaPage = () => {
   return (
     <div className="min-h-screen text-white flex flex-col items-center overflow-hidden">
       <FloatingCTA />
-      <Header scrolled={scrolled} />
       
-      {/* Hero Section */}
-      <section className="w-full py-20 px-4 md:py-32 md:px-8 relative overflow-hidden">
+      {/* Hero Section - Add padding top for header space */}
+      <section className="w-full pt-28 pb-20 px-4 md:py-32 md:px-8 relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/60"></div>
           <div className="absolute top-0 right-0 w-full h-full opacity-20">
@@ -243,7 +233,6 @@ const SocialMediaPage = () => {
       
       {/* Contact Section */}
       <EnhancedContactSection />
-      <Footer />
     </div>
   );
 };

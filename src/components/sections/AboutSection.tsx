@@ -3,26 +3,26 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 
 const serviceItems = [{
-  title: "Social Media Management & Content Creation",
-  description: "Visually compelling, algorithm-friendly, and brand-aligned."
+  title: "Strategic Social Architecture",
+  description: "Algorithm-attuned content frameworks and visual systems that deliver measurable engagement."
 }, {
-  title: "Email Marketing & Automation",
-  description: "Nurture your audience with timely, effective messaging that converts."
+  title: "Conversion-Engineered Email Ecosystems",
+  description: "Sequential messaging pathways that nurture prospects through behavioral triggers and segmentation."
 }, {
-  title: "SEO & Content Marketing",
-  description: "Rank higher, reach further, and speak with authority."
+  title: "Semantic Search Optimization",
+  description: "Content architecture built for modern search algorithms, delivering authority and position."
 }, {
-  title: "Custom Landing Pages & Website Strategy",
-  description: "Designed for performance—whether you're capturing leads or scheduling patients."
+  title: "Conversion-First Digital Environments",
+  description: "Intentional digital spaces that transform visitor psychology into appointment bookings."
 }, {
-  title: "E-Commerce Optimization & Digital Merchandising",
-  description: "Maximize your store's potential with strategic UX and conversion funnels."
+  title: "Revenue Acceleration Systems",
+  description: "Strategic digital merchandising that maximizes transaction value and retention metrics."
 }, {
-  title: "Brand Identity & Visual Redesigns",
-  description: "Elevate your look to match the excellence you deliver."
+  title: "Visual Identity Architecture",
+  description: "Cohesive visual systems that communicate clinical excellence through considered aesthetics."
 }, {
-  title: "Advanced Analytics & Performance Insights",
-  description: "Know what's working, improve what's not—down to the last click."
+  title: "Performance Intelligence Framework",
+  description: "Data architecture that transforms metrics into actionable growth directives."
 }];
 
 const AboutSection = () => {
@@ -48,15 +48,15 @@ const AboutSection = () => {
         </div>
         
         <div className="glass-panel p-8 sm:p-10 md:p-12 space-y-8 sm:px-[90px] px-6">
-          <h2 className="text-2xl sm:text-3xl font-blink orange-gradient-text animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 text-center px-[4px] font-medium">Full-Spectrum Digital Strategy, Custom-Crafted for Healthcare & Wellness Brands</h2>
+          <h2 className="text-2xl sm:text-3xl font-blink orange-gradient-text animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 text-center px-[4px] font-medium">Precision-Engineered Digital Systems for Healthcare & Clinical Excellence</h2>
           <div className="space-y-6 animate-on-scroll opacity-0 translate-y-4 transition-all duration-700 delay-100">
             <p className="text-white/80 leading-relaxed text-center mb-8">
-              At GlowGrid Media, every service is engineered for growth and grounded in data. 
-              We don't guess—we analyze, test, and tailor. Serving Los Angeles, The San Gabriel Valley, 
-              the surrounding areas and businesses across the United States.
+              GlowGrid constructs performance-focused digital infrastructures that drive measurable growth. 
+              Every strategy is validated through qualitative and quantitative analytics—scaling what works, 
+              eliminating what doesn't. Operating across Los Angeles and nationwide markets.
             </p>
             
-            <h3 className="text-xl font-semibold mb-4 text-center">Our Core Services Include:</h3>
+            <h3 className="text-xl font-semibold mb-4 text-center">Core Implementation Systems:</h3>
             
             <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
               {serviceItems.map((service, index) => (
@@ -76,7 +76,7 @@ const AboutSection = () => {
                 onClick={scrollToContact}
                 className="mt-4"
               >
-                Schedule a Strategy Call
+                Request a Strategy Session
               </Button>
             </div>
           </div>

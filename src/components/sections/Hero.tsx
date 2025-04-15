@@ -48,8 +48,6 @@ const Hero = () => {
         className="w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/3 mb-12 relative"
       >
         <Logo 
-          src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
-          alt="GlowGrid Logo" 
           url="/"
         />
         
@@ -75,8 +73,8 @@ const Hero = () => {
         transition={{ duration: 0.8, delay: 0.8 }}
         className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-6 max-w-3xl"
       >
-        Digital Marketing That Moves the Needle for 
-        <span className="orange-gradient-text font-blink ml-2">Healthcare & Wellness Brands</span>
+        Precision-Driven Digital Presence for
+        <span className="orange-gradient-text font-blink ml-2">Modern Healthcare Brands</span>
       </motion.h1>
       
       {/* CTA Button */}
@@ -90,9 +88,9 @@ const Hero = () => {
           variant="gradient" 
           size="lg" 
           onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} 
-          className="text-base px-8 py-6 h-auto"
+          className="text-base px-8 py-6 h-auto hover:text-white"
         >
-          Get to know us!
+          Elevate Your Brand
         </Button>
       </motion.div>
       

@@ -1,152 +1,52 @@
 
-import React, { useState, useEffect } from 'react';
-import Header from '@/components/sections/Header';
-import Footer from '@/components/sections/Footer';
-import { BlogList, BlogPost } from '@/components/blog/BlogList';
-import { FloatingCTA } from '@/components/navigation/FloatingCTA';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { BlogList } from '@/components/blog/BlogList';
 import { getBlogPosts } from '@/data/blogData';
+import { BlogPost } from '@/components/blog/BlogList';
 
 const BlogPage = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('all');
+  // State for blog posts
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
-  
-  // Categories derived from posts
-  const categories = ['all', ...Array.from(new Set(posts.map(post => post.category.toLowerCase())))];
-  
+  const [loading, setLoading] = useState(true);
+
+  // Fetch blog posts
   useEffect(() => {
-    // Fetch blog posts
     const fetchPosts = async () => {
-      const allPosts = await getBlogPosts();
-      setPosts(allPosts);
-      setFilteredPosts(allPosts);
-    };
-    
-    fetchPosts();
-    
-    // Handle scroll for sticky header
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+      try {
+        const blogPosts = await getBlogPosts();
+        setPosts(blogPosts);
+      } catch (error) {
+        console.error('Error fetching blog posts:', error);
+      } finally {
+        setLoading(false);
       }
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+
+    fetchPosts();
+    document.title = 'GlowGrid Media Blog';
   }, []);
-  
-  // Filter posts based on search query and active category
-  useEffect(() => {
-    let result = posts;
-    
-    // Filter by search query
-    if (searchQuery) {
-      result = result.filter(post => 
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    
-    // Filter by category
-    if (activeCategory !== 'all') {
-      result = result.filter(post => 
-        post.category.toLowerCase() === activeCategory
-      );
-    }
-    
-    setFilteredPosts(result);
-  }, [searchQuery, activeCategory, posts]);
-  
-  // Handle search input change
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-  
-  // Handle category change
-  const handleCategoryChange = (category: string) => {
-    setActiveCategory(category);
-  };
-  
+
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
-      <FloatingCTA />
-      <Header scrolled={scrolled} />
-      
-      <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-b from-gray-900 to-black py-20 px-4">
-          <div className="max-w-5xl mx-auto text-center">
-            <h1 className="orange-gradient-text text-3xl md:text-5xl font-bold mb-4">GlowGrid Media Blog</h1>
-            <p className="text-lg text-white/70 mb-8 max-w-3xl mx-auto">
-              Insights, strategies, and inspiration for healthcare and wellness brands looking to elevate their digital presence.
-            </p>
-            
-            {/* Search Bar */}
-            <div className="relative max-w-md mx-auto">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-              <Input
-                type="text"
-                placeholder="Search articles..."
-                className="pl-10 py-6 bg-black/50 border-orange-400/30 focus:border-orange-400 text-white"
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-            </div>
-          </div>
-        </section>
+    <div className="min-h-screen">
+      {/* Added padding-top to ensure the header doesn't overlap content */}
+      <div className="max-w-7xl mx-auto px-4 pt-28 md:pt-32">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl orange-gradient-text font-blink mb-4">
+          GlowGrid Media Blog
+        </h1>
+        <p className="text-lg text-white/80 mb-12 max-w-3xl">
+          Strategic insights for healthcare, aesthetic, and wellness brands looking to elevate their digital presence and drive measurable growth.
+        </p>
         
-        {/* Blog Content */}
-        <section className="py-16 px-4">
-          <div className="max-w-7xl mx-auto">
-            {/* Category Tabs */}
-            <Tabs defaultValue="all" className="mb-10">
-              <TabsList className="mb-8 w-full max-w-md mx-auto flex justify-center bg-black/60 border border-orange-400/20">
-                {categories.map((category) => (
-                  <TabsTrigger 
-                    key={category} 
-                    value={category}
-                    onClick={() => handleCategoryChange(category)}
-                    className="capitalize"
-                  >
-                    {category}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-              
-              <TabsContent value="all" className="mt-0">
-                {filteredPosts.length > 0 ? (
-                  <BlogList posts={filteredPosts} />
-                ) : (
-                  <div className="text-center py-10">
-                    <p className="text-lg text-white/60">No posts found. Try a different search term.</p>
-                  </div>
-                )}
-              </TabsContent>
-              
-              {categories.slice(1).map((category) => (
-                <TabsContent key={category} value={category} className="mt-0">
-                  <BlogList 
-                    posts={filteredPosts.filter(post => post.category.toLowerCase() === category)} 
-                  />
-                </TabsContent>
-              ))}
-            </Tabs>
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="bg-black/60 border border-orange-400/20 backdrop-blur-sm h-80 animate-pulse rounded-lg"></div>
+            ))}
           </div>
-        </section>
-      </main>
-      
-      <Footer />
+        ) : (
+          <BlogList posts={posts} />
+        )}
+      </div>
     </div>
   );
 };

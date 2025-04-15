@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +9,15 @@ import NotFound from "./pages/NotFound";
 import SocialMediaPage from "./pages/services/SocialMediaPage";
 import BlogPage from "./pages/blog/BlogPage";
 import BlogPostPage from "./pages/blog/BlogPostPage";
+import ContactPage from "./pages/ContactPage";
+import Header from "./components/sections/Header";
+import Footer from "./components/sections/Footer";
+import { useState, useEffect } from "react";
+import { FloatingCTA } from "./components/navigation/FloatingCTA";
+import ServicesPlaceholder from "./pages/services/ServicesPlaceholder";
+import WorkPlaceholder from "./pages/work/WorkPlaceholder";
+import ResourcesPlaceholder from "./pages/resources/ResourcesPlaceholder";
+import EmailMarketingPage from "./pages/services/EmailMarketingPage";
 
 const queryClient = new QueryClient();
 
