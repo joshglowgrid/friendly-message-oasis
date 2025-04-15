@@ -71,7 +71,7 @@ export const PhoneMockup = () => {
             <div className="relative w-72 h-[580px] bg-black border-[8px] border-neutral-800 rounded-[36px] overflow-hidden shadow-xl">
               <div className="absolute top-0 left-0 w-full h-full">
                 <img 
-                  src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=800&auto=format&fit=crop" 
+                  src="https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png" 
                   alt="Digital Marketing Dashboard" 
                   className="w-full h-full object-cover"
                 />
