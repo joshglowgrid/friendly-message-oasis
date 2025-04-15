@@ -47,14 +47,34 @@ const WebsiteDevelopmentPage = () => {
             </p>
           </div>
           
-          {/* Featured Image */}
-          <div className="w-full h-auto overflow-hidden rounded-lg border border-orange-500/20 mb-12">
-            <img 
-              src="https://img.glowgridmedia.com/Web%20Design%20%26%20Development%20-%20GlowGrid%20Media.webp" 
-              alt="Website Development by GlowGrid Media" 
-              className="w-full h-auto object-cover"
-            />
-          </div>
+        {/* Featured Case Study Section */}
+<div className="w-full mb-12">
+  <div className="flex flex-col lg:flex-row items-center gap-10">
+    
+    {/* Text Column */}
+    <div className="lg:w-1/2 space-y-4">
+      <h3 className="text-2xl md:text-3xl font-bold text-orange-400">
+        Real Results, Real Brands
+      </h3>
+      <p className="text-gray-300">
+        See how we helped an aesthetics brand transform their online presence into a high-converting, patient-friendly platform.
+      </p>
+      <p className="text-gray-400">
+        From strategy and design to full deployment — we deliver digital experiences that grow with your business.
+      </p>
+    </div>
+
+    {/* Image Column */}
+    <div className="lg:w-1/2 w-full">
+      <img 
+        src="https://img.glowgridmedia.com/Web%20Design%20%26%20Development%20-%20GlowGrid%20Media.webp" 
+        alt="Website Mockup"
+        className="rounded-xl shadow-xl w-full max-w-md mx-auto"
+      />
+    </div>
+    
+  </div>
+</div>
           
           <Separator className="bg-orange-500/30 my-12" />
         </div>
