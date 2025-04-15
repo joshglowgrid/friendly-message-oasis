@@ -16,7 +16,7 @@ const Footer = () => {
           <div className="md:col-span-5">
             <div className="w-36 sm:w-48 md:w-56 mb-4">
               <Logo 
-                src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
+                src="https://img.glowgridmedia.com/glowgridmedia.png" 
                 alt="GlowGrid Logo"
               />
             </div>
