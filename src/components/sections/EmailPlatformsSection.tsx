@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 const platforms = [
   {
     name: "Klaviyo",
-    logo: "https://img.glowgridmedia.com/Klaviyo.png",
+    logo: "https://img.glowgridmedia.com/Klaviyo-Email%20Marketing.png",
     description: "Preferred for advanced segmentation and behavioral analytics, allowing medical practices to deliver personalized patient journeys based on engagement patterns."
   },
   {
@@ -20,12 +20,12 @@ const platforms = [
   },
   {
     name: "Mailchimp",
-    logo: "https://img.glowgridmedia.com/Mailchimp.png",
+    logo: "https://img.glowgridmedia.com/Mailchimp%20Email%20Marketing.png",
     description: "Implemented for practices seeking an accessible platform with reliable delivery and straightforward campaign management across multiple patient segments."
   },
   {
     name: "Mindbody",
-    logo: "https://img.glowgridmedia.com/Mindbody.png",
+    logo: "https://img.glowgridmedia.com/Mindbody%20Wellness%20Scheduling%20and%20Marketing.png",
     description: "Integrated for wellness practitioners to combine appointment scheduling with targeted communications, creating a seamless client experience from inbox to visit."
   }
 ];
