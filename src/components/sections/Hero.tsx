@@ -48,8 +48,6 @@ const Hero = () => {
         className="w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/3 mb-12 relative"
       >
         <Logo 
-          src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
-          alt="GlowGrid Logo" 
           url="/"
         />
         
