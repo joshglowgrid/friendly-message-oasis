@@ -1,7 +1,7 @@
 
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
@@ -12,9 +12,10 @@ import { scrollToSection } from './navUtils';
 
 interface MegaMenuProps {
   className?: string;
+  onLinkClick?: () => void;
 }
 
-export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
+export const MegaMenu: React.FC<MegaMenuProps> = ({ className, onLinkClick }) => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const location = useLocation();
 
@@ -26,12 +27,19 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
     setOpenMenu(null);
   };
 
+  const handleLinkClick = () => {
+    handleCloseMenu();
+    if (onLinkClick) {
+      onLinkClick();
+    }
+  };
+
   const isActive = (path: string) => {
     return location.pathname === path;
   };
 
   // Close menu when location changes
-  React.useEffect(() => {
+  useEffect(() => {
     handleCloseMenu();
   }, [location]);
 
@@ -43,6 +51,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
         isOpen={openMenu === 'services'}
         onOpen={() => handleOpenMenu('services')}
         onClose={handleCloseMenu}
+        onLinkClick={handleLinkClick}
       />
       
       <Link 
@@ -51,7 +60,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
           "px-3 py-2 text-sm font-medium uppercase tracking-wide relative transition-colors after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150 hover:after:scale-x-100 hover:after:origin-bottom-left",
           isActive('/work') ? "text-orange-400 after:scale-x-100" : "text-white hover:text-white"
         )}
-        onClick={handleCloseMenu}
+        onClick={handleLinkClick}
       >
         Work
       </Link>
@@ -62,7 +71,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
           "px-3 py-2 text-sm font-medium uppercase tracking-wide relative transition-colors after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150 hover:after:scale-x-100 hover:after:origin-bottom-left",
           isActive('/blog') ? "text-orange-400 after:scale-x-100" : "text-white hover:text-white"
         )}
-        onClick={handleCloseMenu}
+        onClick={handleLinkClick}
       >
         Blog
       </Link>
@@ -73,6 +82,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
         isOpen={openMenu === 'resources'}
         onOpen={() => handleOpenMenu('resources')}
         onClose={handleCloseMenu}
+        onLinkClick={handleLinkClick}
       />
       
       <a 
@@ -80,7 +90,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
         onClick={(e) => {
           e.preventDefault();
           scrollToSection('contact');
-          handleCloseMenu();
+          handleLinkClick();
         }}
         className="px-3 py-2 text-sm font-medium uppercase tracking-wide text-white relative hover:text-white hover:after:scale-x-100 hover:after:origin-bottom-left after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:orange-gradient-bg after:origin-bottom-right after:transition-transform after:duration-150"
       >
@@ -92,7 +102,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className }) => {
         className="ml-4 text-sm font-medium"
         onClick={() => {
           scrollToSection('contact');
-          handleCloseMenu();
+          handleLinkClick();
         }}
       >
         Book a Call <ArrowRight className="ml-1 h-4 w-4" />

@@ -34,6 +34,7 @@ interface MegaMenuItemProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  onLinkClick?: () => void;
 }
 
 export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({ 
@@ -41,7 +42,8 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
   items, 
   isOpen,
   onOpen,
-  onClose
+  onClose,
+  onLinkClick
 }) => {
   const location = useLocation();
   const isActive = items.some(item => location.pathname === item.link);
@@ -74,6 +76,9 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
       behavior: 'smooth'
     });
     onClose(); // Close menu after navigation
+    if (onLinkClick) {
+      onLinkClick();
+    }
   };
   
   return (
@@ -127,7 +132,12 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
                     "group flex flex-col gap-2 rounded-lg p-3 transition-colors hover:bg-white/5",
                     location.pathname === item.link ? "bg-white/10" : ""
                   )}
-                  onClick={onClose}
+                  onClick={() => {
+                    onClose();
+                    if (onLinkClick) {
+                      onLinkClick();
+                    }
+                  }}
                 >
                   {item.icon && (
                     <div className="orange-gradient-bg flex h-10 w-10 items-center justify-center rounded-full">

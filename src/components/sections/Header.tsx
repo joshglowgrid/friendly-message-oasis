@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { MegaMenu } from '@/components/navigation/MegaMenu';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { scrollToSection } from '@/components/navigation/navUtils';
 
 interface HeaderProps {
@@ -15,7 +15,7 @@ interface HeaderProps {
 
 const Header = ({ scrolled }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [headerVisible, setHeaderVisible] = useState(true); // Changed to true by default
+  const [headerVisible, setHeaderVisible] = useState(true); 
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -35,16 +35,8 @@ const Header = ({ scrolled }: HeaderProps) => {
   useEffect(() => {
     const handleScroll = () => {
       if (isHomePage) {
-        // On homepage: Show header after scrolling a bit, but always visible
-        const scrollPosition = window.scrollY;
         setHeaderVisible(true); // Always keep header visible
-        
-        // Optional: could add a class for style changes based on scroll position
-        // if (scrollPosition > 100) {
-        //   // Add some style change class
-        // }
       } else {
-        // On other pages: always show header
         setHeaderVisible(true);
       }
     };
@@ -54,6 +46,11 @@ const Header = ({ scrolled }: HeaderProps) => {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   // Header animation variants
   const headerVariants = {
@@ -71,12 +68,12 @@ const Header = ({ scrolled }: HeaderProps) => {
   return (
     <motion.nav 
       variants={headerVariants}
-      initial="visible" // Changed from "hidden" to "visible" to show on page load
+      initial="visible"
       animate="visible"
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
         (headerVisible || scrolled || !isHomePage)
-          ? "py-2 md:py-3 bg-black/95 backdrop-blur-md shadow-md border-b border-orange-500/10" // Enhanced style 
+          ? "py-2 md:py-3 bg-black/95 backdrop-blur-md shadow-md border-b border-orange-500/10"
           : "py-4 md:py-5 bg-transparent"
       )}
       style={{
@@ -93,7 +90,6 @@ const Header = ({ scrolled }: HeaderProps) => {
             />
           </div>
           
-          {/* Menu button - now more noticeable with animation */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -106,7 +102,7 @@ const Header = ({ scrolled }: HeaderProps) => {
         </div>
 
         <div className="hidden md:flex items-center">
-          <MegaMenu />
+          <MegaMenu onLinkClick={handleLinkClick} />
         </div>
       </div>
 
@@ -120,8 +116,8 @@ const Header = ({ scrolled }: HeaderProps) => {
             transition={{ duration: 0.3 }}
           >
             <div className="flex flex-col items-center space-y-4 px-4">
-              <a 
-                href="/services" 
+              <Link 
+                to="/services" 
                 onClick={handleLinkClick} 
                 className={cn(
                   "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
@@ -129,9 +125,9 @@ const Header = ({ scrolled }: HeaderProps) => {
                 )}
               >
                 Services
-              </a>
-              <a 
-                href="/work" 
+              </Link>
+              <Link 
+                to="/work" 
                 onClick={handleLinkClick} 
                 className={cn(
                   "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
@@ -139,9 +135,9 @@ const Header = ({ scrolled }: HeaderProps) => {
                 )}
               >
                 Work
-              </a>
-              <a 
-                href="/blog" 
+              </Link>
+              <Link 
+                to="/blog" 
                 onClick={handleLinkClick} 
                 className={cn(
                   "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
@@ -149,9 +145,9 @@ const Header = ({ scrolled }: HeaderProps) => {
                 )}
               >
                 Blog
-              </a>
-              <a 
-                href="/resources" 
+              </Link>
+              <Link 
+                to="/resources" 
                 onClick={handleLinkClick} 
                 className={cn(
                   "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
@@ -159,24 +155,24 @@ const Header = ({ scrolled }: HeaderProps) => {
                 )}
               >
                 Resources
-              </a>
-              <a 
-                href="/contact" 
+              </Link>
+              <Link 
+                to="/contact" 
                 onClick={handleLinkClick} 
                 className={cn(
                   "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
-                  isActivePath('/contact') ? "text-orange-400" : "text-white hover:text-orange-400"
+                  isActivePath('/contact') ? "text-orange-400" : "text-white hover:text-white hover:text-orange-400"
                 )}
               >
                 Contact
-              </a>
+              </Link>
               
               <Button 
                 variant="gradient" 
                 className="w-full justify-center mt-2 py-2 hover:text-white"
                 onClick={() => {
-                  window.location.href = '/contact';
                   handleLinkClick();
+                  scrollToSection('contact');
                 }}
               >
                 Book a Call
