@@ -207,13 +207,13 @@ const WebsiteDevelopmentPage = () => {
             </Button>
             
             <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-orange-400/50 hover:bg-orange-500/10"
-              asChild
-            >
-              <Link to="/work">👉 View Our Portfolio</Link>
-            </Button>
+  variant="outline" 
+  size="lg" 
+  className="border-orange-400/50 hover:bg-orange-500/10 text-orange-400"
+  asChild
+>
+  <Link to="/work">👉 View Our Portfolio</Link>
+</Button>
           </div>
           
           <Separator className="bg-orange-500/30 my-12" />
