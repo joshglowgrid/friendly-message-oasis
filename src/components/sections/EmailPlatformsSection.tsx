@@ -5,27 +5,27 @@ import { motion } from 'framer-motion';
 const platforms = [
   {
     name: "Klaviyo",
-    logo: "https://img.glowgridmedia.com/klaviyo-logo.png",
+    logo: "https://img.glowgridmedia.com/klaviyo.png",
     description: "Preferred for advanced segmentation and behavioral analytics, allowing medical practices to deliver personalized patient journeys based on engagement patterns."
   },
   {
     name: "ActiveCampaign",
-    logo: "https://img.glowgridmedia.com/activecampaign-logo.png",
+    logo: "https://img.glowgridmedia.com/active-campaign.png",
     description: "Utilized for its sophisticated automation capabilities, enabling healthcare providers to create intelligent follow-up sequences that respond to patient actions."
   },
   {
     name: "Flodesk",
-    logo: "https://img.glowgridmedia.com/flodesk-logo.png",
+    logo: "https://img.glowgridmedia.com/Flodesk-Logo.png",
     description: "Selected for aesthetic-focused practices that prioritize visual impact, with templates designed to showcase clinical results and services with premium presentation."
   },
   {
     name: "Mailchimp",
-    logo: "https://img.glowgridmedia.com/mailchimp-logo.png",
+    logo: "https://img.glowgridmedia.com/mailchimp_2018_logo.png",
     description: "Implemented for practices seeking an accessible platform with reliable delivery and straightforward campaign management across multiple patient segments."
   },
   {
     name: "Mindbody",
-    logo: "https://img.glowgridmedia.com/mindbody-logo.png",
+    logo: "https://img.glowgridmedia.com/minbody.png",
     description: "Integrated for wellness practitioners to combine appointment scheduling with targeted communications, creating a seamless client experience from inbox to visit."
   }
 ];
