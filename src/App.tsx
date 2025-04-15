@@ -18,45 +18,88 @@ import ServicesPlaceholder from "./pages/services/ServicesPlaceholder";
 import WorkPlaceholder from "./pages/work/WorkPlaceholder";
 import ResourcesPlaceholder from "./pages/resources/ResourcesPlaceholder";
 import EmailMarketingPage from "./pages/services/EmailMarketingPage";
+import WebsiteDevelopmentPage from "./pages/services/WebsiteDevelopmentPage";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <BrowserRouter>
-      import ScrollToTop from "./components/navigation/ScrollToTop"; // adjust path as needed
+const App = () => {
+  const [scrolled, setScrolled] = useState(false);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    
+    // Enable tap-to-top behavior on mobile
+    const handleTapTop = (event: MouseEvent) => {
+      if (window.scrollY > window.innerHeight && event.clientY < 20) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+    
+    document.addEventListener('click', handleTapTop);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleTapTop);
+    };
+  }, []);
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+  return (
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <ScrollToTop /> {/* ← Add this right here */}
-        <Routes>
-          <Route path="/" element={<Index />} />
-          
-          {/* Services routes */}
-          <Route path="/services/social-media" element={<SocialMediaPage />} />
-          <Route path="/services/*" element={<NotFound />} />
-          
-          {/* Blog routes */}
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:postId" element={<BlogPostPage />} />
-          
-          {/* Other routes */}
-          <Route path="/work" element={<NotFound />} />
-          <Route path="/work/:projectId" element={<NotFound />} />
-          <Route path="/resources" element={<NotFound />} />
-          <Route path="/resources/:resourceId" element={<NotFound />} />
-          
-          {/* Catch-all route */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <TooltipProvider>
+          <Header scrolled={scrolled} />
+          <main>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              
+              {/* Services routes */}
+              <Route path="/services/social-media" element={<SocialMediaPage />} />
+              <Route path="/services/content-creation" element={<ServicesPlaceholder title="Content Creation" />} />
+              <Route path="/services/email-marketing" element={<EmailMarketingPage />} />
+              <Route path="/services/website-development" element={<WebsiteDevelopmentPage />} />
+              <Route path="/services/seo" element={<ServicesPlaceholder title="SEO Strategy" />} />
+              <Route path="/services/analytics" element={<ServicesPlaceholder title="Analytics & Reporting" />} />
+              <Route path="/services" element={<ServicesPlaceholder title="Our Services" />} />
+              
+              {/* Blog routes */}
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:postId" element={<BlogPostPage />} />
+              
+              {/* Work routes */}
+              <Route path="/work" element={<WorkPlaceholder />} />
+              <Route path="/work/:projectId" element={<WorkPlaceholder />} />
+              
+              {/* Resources routes */}
+              <Route path="/resources" element={<ResourcesPlaceholder />} />
+              <Route path="/resources/guides" element={<ResourcesPlaceholder title="Marketing Guides" />} />
+              <Route path="/resources/templates" element={<ResourcesPlaceholder title="Template Library" />} />
+              <Route path="/resources/case-studies" element={<ResourcesPlaceholder title="Case Studies" />} />
+              <Route path="/resources/:resourceId" element={<ResourcesPlaceholder />} />
+              
+              {/* Contact page */}
+              <Route path="/contact" element={<ContactPage />} />
+              
+              {/* Catch-all route */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <FloatingCTA />
+          <Footer />
+          <Toaster />
+          <Sonner />
+        </TooltipProvider>
       </BrowserRouter>
-      <Toaster />
-      <Sonner />
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+    </QueryClientProvider>
+  );
+};
 
 export default App;

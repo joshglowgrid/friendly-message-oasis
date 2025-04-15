@@ -66,37 +66,13 @@ export const PhoneMockup = () => {
             </Button>
           </div>
           
-          {/* Right phone mockup */}
+          {/* Right visual content - simplified clean image */}
           <div className="lg:w-1/2 flex justify-center">
-            <div className="relative w-72 h-[580px] bg-black border-[8px] border-neutral-800 rounded-[36px] overflow-hidden shadow-xl">
-              <div className="absolute top-0 left-0 w-full h-full">
-                <img 
-                  src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=800&auto=format&fit=crop" 
-                  alt="Digital Marketing Dashboard" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/50 via-transparent to-black/70"></div>
-                
-                {/* Simplified UI elements */}
-                <div className="absolute top-8 left-0 right-0 px-4">
-                  <div className="h-6 w-24 bg-white/10 rounded-md mx-auto"></div>
-                </div>
-                
-                <div className="absolute bottom-8 left-0 right-0 px-4 space-y-4">
-                  <div className="h-12 bg-white/10 rounded-md"></div>
-                  <div className="h-12 bg-white/10 rounded-md"></div>
-                  <div className="flex gap-2">
-                    <div className="h-10 flex-1 bg-orange-400/20 rounded-md"></div>
-                    <div className="h-10 w-10 bg-orange-400/80 rounded-md flex items-center justify-center">
-                      <ArrowRight className="text-black h-5 w-5" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Notch */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-36 h-6 bg-black rounded-b-xl"></div>
-            </div>
+            <img 
+              src="https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png" 
+              alt="Digital Marketing Visual" 
+              className="max-w-full h-auto shadow-lg rounded-md" 
+            />
           </div>
         </div>
       </div>
