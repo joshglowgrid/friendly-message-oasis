@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import SocialMediaPage from "./pages/services/SocialMediaPage";
 import BlogPage from "./pages/blog/BlogPage";
 import BlogPostPage from "./pages/blog/BlogPostPage";
+import ContactPage from "./pages/ContactPage";
 import Header from "./components/sections/Header";
 import Footer from "./components/sections/Footer";
 import { useState, useEffect } from "react";
@@ -81,6 +82,9 @@ const App = () => {
               <Route path="/resources/templates" element={<ResourcesPlaceholder title="Template Library" />} />
               <Route path="/resources/case-studies" element={<ResourcesPlaceholder title="Case Studies" />} />
               <Route path="/resources/:resourceId" element={<ResourcesPlaceholder />} />
+              
+              {/* Contact page */}
+              <Route path="/contact" element={<ContactPage />} />
               
               {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />

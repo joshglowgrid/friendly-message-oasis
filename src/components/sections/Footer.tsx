@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Logo from '@/components/Logo';
 import { Instagram, ArrowUp } from 'lucide-react';
@@ -34,6 +35,7 @@ const Footer = () => {
             <h3 className="text-white font-medium mb-3 text-sm uppercase tracking-wider">Services</h3>
             <ul className="space-y-2">
               <li><Link to="/services/social-media" className="text-sm hover:text-orange-400 transition-colors">Social Media</Link></li>
+              <li><Link to="/services/website-development" className="text-sm hover:text-orange-400 transition-colors">Web Development</Link></li>
               <li><Link to="/services/content-creation" className="text-sm hover:text-orange-400 transition-colors">Content Creation</Link></li>
               <li><Link to="/services/email-marketing" className="text-sm hover:text-orange-400 transition-colors">Email Marketing</Link></li>
               <li><Link to="/services/seo" className="text-sm hover:text-orange-400 transition-colors">SEO Strategy</Link></li>
@@ -46,7 +48,7 @@ const Footer = () => {
               <li><Link to="/work" className="text-sm hover:text-orange-400 transition-colors">Our Work</Link></li>
               <li><Link to="/blog" className="text-sm hover:text-orange-400 transition-colors">Blog</Link></li>
               <li><Link to="/resources" className="text-sm hover:text-orange-400 transition-colors">Resources</Link></li>
-              <li><a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'}) }} className="text-sm hover:text-orange-400 transition-colors">Contact</a></li>
+              <li><Link to="/contact" className="text-sm hover:text-orange-400 transition-colors">Contact</Link></li>
             </ul>
           </div>
           
@@ -56,7 +58,7 @@ const Footer = () => {
             <p className="text-sm mb-4">Serving clients nationwide</p>
             <button 
               onClick={scrollToTop}
-              className="text-white/60 hover:text-orange-400 transition-colors p-1 rounded-full border border-white/20 hover:border-orange-400 inline-flex"
+              className="text-white/60 hover:text-orange-400 transition-colors p-2 rounded-full border border-white/20 hover:border-orange-400 inline-flex"
               aria-label="Scroll to top"
             >
               <ArrowUp size={16} />

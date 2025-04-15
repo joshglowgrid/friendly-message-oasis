@@ -90,7 +90,7 @@ const Hero = () => {
           variant="gradient" 
           size="lg" 
           onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} 
-          className="text-base px-8 py-6 h-auto"
+          className="text-base px-8 py-6 h-auto hover:text-white"
         >
           Elevate Your Brand
         </Button>

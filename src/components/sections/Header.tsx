@@ -15,7 +15,7 @@ interface HeaderProps {
 
 const Header = ({ scrolled }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [headerVisible, setHeaderVisible] = useState(true); // Always visible by default
+  const [headerVisible, setHeaderVisible] = useState(false); // Changed to false by default
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -35,13 +35,12 @@ const Header = ({ scrolled }: HeaderProps) => {
   useEffect(() => {
     const handleScroll = () => {
       if (isHomePage) {
-        // On homepage: Show header after hero section or CTA button
+        // On homepage: Show header after hero section
         const heroSection = document.querySelector('#hero');
-        const heroButton = document.querySelector('.hero-cta-button');
         
-        if (heroSection && heroButton) {
-          const buttonBottom = heroButton.getBoundingClientRect().bottom;
-          setHeaderVisible(buttonBottom <= 0);
+        if (heroSection) {
+          const heroBottom = heroSection.getBoundingClientRect().bottom;
+          setHeaderVisible(heroBottom <= 0);
         } else {
           // Fallback if elements are not found
           setHeaderVisible(window.scrollY > window.innerHeight * 0.5);
@@ -58,10 +57,6 @@ const Header = ({ scrolled }: HeaderProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-  
   return (
     <motion.nav 
       className={cn(
@@ -153,21 +148,21 @@ const Header = ({ scrolled }: HeaderProps) => {
                 Resources
               </a>
               <a 
-                href="#contact" 
-                onClick={() => {
-                  scrollToSection('contact');
-                  handleLinkClick();
-                }} 
-                className="text-sm md:text-base font-medium tracking-wide uppercase hover:text-orange-400 transition-colors"
+                href="/contact" 
+                onClick={handleLinkClick} 
+                className={cn(
+                  "text-sm md:text-base font-medium tracking-wide uppercase transition-colors",
+                  isActivePath('/contact') ? "text-orange-400" : "text-white hover:text-orange-400"
+                )}
               >
                 Contact
               </a>
               
               <Button 
                 variant="gradient" 
-                className="w-full justify-center mt-2 py-2"
+                className="w-full justify-center mt-2 py-2 hover:text-white"
                 onClick={() => {
-                  scrollToSection('contact');
+                  window.location.href = '/contact';
                   handleLinkClick();
                 }}
               >
