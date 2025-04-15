@@ -174,7 +174,7 @@ const WebsiteDevelopmentPage = () => {
           
           <div className="mt-12 p-6 bg-gray-900/80 rounded-lg border border-orange-500/20">
             <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
-              <span className="text-orange-400">✅</span> Why GlowGrid?
+              <span className="text-orange-400"></span> Why GlowGrid?
             </h3>
             <p className="text-gray-200 mb-4">
               We blend creative design with strategic thinking to deliver websites that actually work.
@@ -193,7 +193,7 @@ const WebsiteDevelopmentPage = () => {
       <section className="py-10 px-4">
         <div className="container mx-auto max-w-5xl">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-2">
-            <span className="text-orange-400">📞</span> Ready to Elevate Your Website?
+            <span className="text-orange-400"></span> Ready to Elevate Your Website?
           </h2>
           
           <div className="flex flex-col md:flex-row gap-4 mb-12">
