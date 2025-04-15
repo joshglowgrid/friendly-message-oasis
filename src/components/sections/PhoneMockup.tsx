@@ -71,7 +71,6 @@ export const PhoneMockup = () => {
   <img 
     src="https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png" 
     alt="Digital Marketing Visual" 
-    className="w-full max-w-md rounded-lg shadow-lg object-cover"
   />
 </div>
               
