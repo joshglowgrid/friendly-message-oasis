@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/Logo';
@@ -64,7 +63,7 @@ export const IntroAnimation = () => {
                 className="relative w-1/2 max-w-md z-10"
               >
                 <Logo 
-                  src="https://github.com/joshglowgrid/friendly-message-oasis/blob/main/glowgridmedia.png?raw=true" 
+                  src="https://img.glowgridmedia.com/glowgridmedia.png" 
                   alt="GlowGrid Logo"
                   url=""
                 />
