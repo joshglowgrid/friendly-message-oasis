@@ -27,7 +27,7 @@ export const PostNavigation: React.FC<PostNavigationProps> = ({ previous, next }
             </Link>
           </Button>
         ) : (
-          <div></div> {/* Empty div to maintain layout */}
+          <div></div> /* Empty div to maintain layout */
         )}
 
         {next ? (
@@ -41,7 +41,7 @@ export const PostNavigation: React.FC<PostNavigationProps> = ({ previous, next }
             </Link>
           </Button>
         ) : (
-          <div></div> {/* Empty div to maintain layout */}
+          <div></div> /* Empty div to maintain layout */
         )}
       </div>
     </div>

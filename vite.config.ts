@@ -1,18 +1,14 @@
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
-
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    allowedHosts: ['409affc5-4d9e-4813-902f-263aa3985e80.lovableproject.com'],
-  },
-});
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    allowedHosts: ['409affc5-4d9e-4813-902f-263aa3985e80.lovableproject.com'],
     fs: {
       // Allow serving files from one level up from the package root
       allow: [".."],
@@ -22,8 +18,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    // Removed componentTagger which was not defined
   ].filter(Boolean),
   resolve: {
     alias: {
