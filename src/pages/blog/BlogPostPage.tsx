@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getBlogPostBySlug, getRelatedBlogPosts } from '@/data/blogData';
-import { BlogPost } from '@/types/blog';
+import { BlogPost as TypesBlogPost } from '@/types/blog';
 import { BlogPostLoading } from '@/components/blog/BlogPostLoading';
 import { BlogPostNotFound } from '@/components/blog/BlogPostNotFound';
 import { BlogPostHeader } from '@/components/blog/BlogPostHeader';
@@ -15,8 +15,8 @@ import { toast } from '@/components/ui/use-toast';
 
 const BlogPostPage = () => {
   const { postId } = useParams<{ postId: string }>();
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+  const [post, setPost] = useState<TypesBlogPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<TypesBlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
@@ -26,7 +26,8 @@ const BlogPostPage = () => {
       setLoading(true);
       try {
         const fetchedPost = await getBlogPostBySlug(postId);
-        setPost(fetchedPost);
+        // Cast to TypesBlogPost to match our state type
+        setPost(fetchedPost as unknown as TypesBlogPost);
         
         // Set page metadata
         if (fetchedPost) {
@@ -34,7 +35,7 @@ const BlogPostPage = () => {
           
           // Fetch related posts
           const related = await getRelatedBlogPosts(fetchedPost.category, postId);
-          setRelatedPosts(related);
+          setRelatedPosts(related as unknown as TypesBlogPost[]);
         }
       } catch (error) {
         console.error('Error fetching post:', error);

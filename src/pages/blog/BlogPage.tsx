@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { BlogListAdapter } from '@/components/blog/BlogListAdapter';
 import { getBlogPosts } from '@/data/blogData';
-import { BlogPost, BlogCategoryType } from '@/types/blog';
+import { BlogPost as TypesBlogPost, BlogCategoryType } from '@/types/blog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -28,9 +28,9 @@ const blogCategories: BlogCategoryItem[] = [
 ];
 
 const BlogPage = () => {
-  // State for blog posts
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
+  // State for blog posts - explicitly using TypesBlogPost
+  const [posts, setPosts] = useState<TypesBlogPost[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<TypesBlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('all');
 
@@ -39,8 +39,9 @@ const BlogPage = () => {
     const fetchPosts = async () => {
       try {
         const blogPosts = await getBlogPosts();
-        setPosts(blogPosts);
-        setFilteredPosts(blogPosts);
+        // Cast to TypesBlogPost[] to match our state type
+        setPosts(blogPosts as unknown as TypesBlogPost[]);
+        setFilteredPosts(blogPosts as unknown as TypesBlogPost[]);
       } catch (error) {
         console.error('Error fetching blog posts:', error);
       } finally {
