@@ -4,6 +4,10 @@ import { BlogPost } from '@/types/blog';
 import { getBlogPostBySlug, getRelatedBlogPosts } from '@/data/blogData';
 import { updateMetaTags, removeMetaTags } from '@/utils/seoUtils';
 
+/**
+ * Custom hook to fetch and handle a single blog post
+ * @param postId - The ID or slug of the blog post to fetch
+ */
 export const useBlogPost = (postId: string | undefined) => {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
@@ -21,13 +25,10 @@ export const useBlogPost = (postId: string | undefined) => {
         if (fetchedPost) {
           setPost(fetchedPost);
           
-          // Set page title
-          document.title = fetchedPost.metaTitle || `${fetchedPost.title} | GlowGrid Media Blog`;
-          
-          // Update meta tags
+          // Update meta tags for SEO
           updateMetaTags(fetchedPost);
           
-          // Fetch related posts
+          // Fetch related posts based on category
           const related = await getRelatedBlogPosts(fetchedPost.category, postId);
           setRelatedPosts(related);
         } else {

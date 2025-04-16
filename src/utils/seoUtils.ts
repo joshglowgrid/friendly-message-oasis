@@ -3,6 +3,7 @@
  * Utility functions for handling SEO meta tags
  */
 import { BlogPost } from '@/types/blog';
+import { generateArticleJsonLd } from './blogUtils';
 
 /**
  * Updates meta tags in document head based on blog post data
@@ -10,6 +11,9 @@ import { BlogPost } from '@/types/blog';
 export const updateMetaTags = (post: BlogPost) => {
   // Remove any existing meta tags first to prevent duplicates
   removeMetaTags();
+  
+  // Set page title
+  document.title = post.metaTitle || `${post.title} | GlowGrid Media Blog`;
   
   // Set meta description
   if (post.metaDescription) {
@@ -53,6 +57,10 @@ export const updateMetaTags = (post: BlogPost) => {
       }
     });
   }
+  
+  // Add JSON-LD structured data
+  const jsonLd = generateArticleJsonLd(post);
+  addJsonLd(jsonLd);
   
   // If raw SEO tags are provided from Craft, insert them
   if (post.metaTags) {
@@ -123,6 +131,20 @@ const setOpenGraphTag = (property: string, content: string) => {
 };
 
 /**
+ * Add JSON-LD structured data to the document
+ */
+const addJsonLd = (jsonLdString: string) => {
+  // Remove any existing JSON-LD
+  document.querySelectorAll('script[type="application/ld+json"]').forEach(tag => tag.remove());
+  
+  // Create new script tag
+  const scriptTag = document.createElement('script');
+  scriptTag.setAttribute('type', 'application/ld+json');
+  scriptTag.textContent = jsonLdString;
+  document.head.appendChild(scriptTag);
+};
+
+/**
  * Remove meta tags when unmounting
  */
 export const removeMetaTags = () => {
@@ -140,6 +162,9 @@ export const removeMetaTags = () => {
   
   // Remove Open Graph meta tags
   document.querySelectorAll('meta[property^="og:"]').forEach(tag => tag.remove());
+  
+  // Remove JSON-LD structured data
+  document.querySelectorAll('script[type="application/ld+json"]').forEach(tag => tag.remove());
   
   // We don't remove all custom meta tags to avoid removing essential ones
   // that might be required by the site globally

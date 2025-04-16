@@ -1,21 +1,54 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { BlogPost as TypesBlogPost } from '@/types/blog';
 import { BlogPostLoading } from '@/components/blog/BlogPostLoading';
 import { BlogPostNotFound } from '@/components/blog/BlogPostNotFound';
 import { BlogPostHeader } from '@/components/blog/BlogPostHeader';
 import { BlogPostHero } from '@/components/blog/BlogPostHero';
 import { BlogPostContent } from '@/components/blog/BlogPostContent';
-import { ShareButton } from '@/components/blog/ShareButton';
 import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
 import { RelatedPostsSection } from '@/components/blog/RelatedPostsSection';
+import { PostNavigation } from '@/components/blog/PostNavigation';
 import { useBlogPost } from '@/hooks/useBlogPost';
-import { CalendarDays, Clock } from 'lucide-react';
+import { CalendarDays, Clock, FileText } from 'lucide-react';
+import { ShareButton } from '@/components/blog/ShareButton';
+import { getBlogPosts } from '@/data/blogData';
+import { findPrevNextPosts, calculateReadingTime } from '@/utils/blogUtils';
+import { BlogPost } from '@/types/blog';
 
 const BlogPostPage = () => {
   const { postId } = useParams<{ postId: string }>();
   const { post, relatedPosts, loading } = useBlogPost(postId);
+  const [readingStats, setReadingStats] = useState({ readingTime: '', wordCount: 0 });
+  const [navPosts, setNavPosts] = useState<{ previous: BlogPost | null; next: BlogPost | null }>({
+    previous: null,
+    next: null
+  });
+  
+  // Calculate reading time when post content loads
+  useEffect(() => {
+    if (post?.content) {
+      const stats = calculateReadingTime(post.content);
+      setReadingStats(stats);
+    }
+  }, [post?.content]);
+  
+  // Set up previous/next navigation
+  useEffect(() => {
+    const fetchAllPosts = async () => {
+      if (!post) return;
+      
+      try {
+        const allPosts = await getBlogPosts();
+        const { previous, next } = findPrevNextPosts(allPosts, post.slug);
+        setNavPosts({ previous, next });
+      } catch (error) {
+        console.error("Error fetching posts for navigation:", error);
+      }
+    };
+    
+    fetchAllPosts();
+  }, [post]);
   
   if (loading) {
     return <BlogPostLoading />;
@@ -35,7 +68,7 @@ const BlogPostPage = () => {
           <div className="max-w-4xl mx-auto -mt-16 relative z-10 bg-black/90 border border-orange-500/20 rounded-lg p-6 sm:p-8">
             {/* Category badge */}
             <a 
-              href={`/blog?category=${post.category}`}
+              href={`/blog/category/${post.category}`}
               className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-orange-500/10 text-orange-400 mb-4 hover:bg-orange-500/20 transition-colors"
             >
               {post.category.toString().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
@@ -50,7 +83,11 @@ const BlogPostPage = () => {
               </div>
               <div className="flex items-center">
                 <Clock className="w-4 h-4 mr-1" />
-                <span>{post.readTime}</span>
+                <span>{readingStats.readingTime}</span>
+              </div>
+              <div className="flex items-center">
+                <FileText className="w-4 h-4 mr-1" />
+                <span>{readingStats.wordCount.toLocaleString()} words</span>
               </div>
               <ShareButton 
                 title={post.title} 
@@ -61,6 +98,9 @@ const BlogPostPage = () => {
           
           <div className="max-w-4xl mx-auto my-8">
             <BlogPostContent post={post} />
+            
+            {/* Post Navigation */}
+            <PostNavigation previous={navPosts.previous} next={navPosts.next} />
             
             {/* CTA Section */}
             <BlogPostCTA category={post.category} />

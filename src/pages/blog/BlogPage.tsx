@@ -2,12 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { BlogListAdapter } from '@/components/blog/BlogListAdapter';
 import { getBlogPosts } from '@/data/blogData';
-import { BlogPost as TypesBlogPost, BlogCategoryType } from '@/types/blog';
+import { BlogPost, BlogCategoryType } from '@/types/blog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { BlogSearch } from '@/components/blog/BlogSearch';
+import { searchBlogPosts } from '@/utils/blogUtils';
 
 // Define blog category interface for the local component use
 interface BlogCategoryItem {
@@ -28,20 +30,25 @@ const blogCategories: BlogCategoryItem[] = [
 ];
 
 const BlogPage = () => {
-  // State for blog posts - explicitly using TypesBlogPost
-  const [posts, setPosts] = useState<TypesBlogPost[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<TypesBlogPost[]>([]);
+  // State for blog posts - explicitly using BlogPost
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  // Get category from URL if present
+  const categoryParam = searchParams.get('category') || 'all';
+  const [activeCategory, setActiveCategory] = useState(categoryParam);
 
   // Fetch blog posts
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setLoading(true);
         const blogPosts = await getBlogPosts();
-        // Cast to TypesBlogPost[] to match our state type
-        setPosts(blogPosts as unknown as TypesBlogPost[]);
-        setFilteredPosts(blogPosts as unknown as TypesBlogPost[]);
+        setPosts(blogPosts);
+        applyFilters(blogPosts, activeCategory, searchTerm);
       } catch (error) {
         console.error('Error fetching blog posts:', error);
       } finally {
@@ -51,21 +58,39 @@ const BlogPage = () => {
 
     fetchPosts();
     document.title = 'GlowGrid Media Blog: Healthcare & Wellness Marketing Insights';
-  }, []);
+  }, [activeCategory, searchTerm]);
 
-  // Filter posts when category changes
-  const handleCategoryChange = (category: string) => {
-    setActiveCategory(category);
+  // Filter posts when category or search changes
+  const applyFilters = (allPosts: BlogPost[], category: string, search: string) => {
+    // First filter by category
+    let result = allPosts;
     
-    if (category === 'all') {
-      setFilteredPosts(posts);
-    } else {
-      const filtered = posts.filter(post => 
+    if (category !== 'all') {
+      result = result.filter(post => 
         post.category.toString().includes(category) || 
         (post.tags && post.tags.includes(category))
       );
-      setFilteredPosts(filtered);
     }
+    
+    // Then apply search filter
+    if (search) {
+      result = searchBlogPosts(result, search);
+    }
+    
+    setFilteredPosts(result);
+  };
+
+  // Handle category change
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+    setSearchParams(category === 'all' ? {} : { category });
+    applyFilters(posts, category, searchTerm);
+  };
+
+  // Handle search
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
+    applyFilters(posts, activeCategory, term);
   };
 
   return (
@@ -99,9 +124,15 @@ const BlogPage = () => {
           </div>
         </div>
         
+        {/* Search bar */}
+        <div className="mb-8 flex justify-between items-center">
+          <h2 className="text-2xl font-semibold">Search Articles</h2>
+          <BlogSearch onSearch={handleSearch} />
+        </div>
+        
         {/* Categories tabs */}
         <div id="categories" className="mb-8">
-          <Tabs defaultValue="all" className="w-full" onValueChange={handleCategoryChange}>
+          <Tabs defaultValue={activeCategory} className="w-full" onValueChange={handleCategoryChange}>
             <div className="border-b border-orange-500/20 mb-6">
               <h2 className="text-2xl font-semibold mb-4">Browse by Category</h2>
               <TabsList className="overflow-x-auto flex pb-2 mb-0 bg-transparent">
@@ -141,9 +172,14 @@ const BlogPage = () => {
                       <BlogListAdapter posts={filteredPosts} />
                     ) : (
                       <div className="text-center py-12">
-                        <h3 className="text-xl font-medium mb-2">No posts found in this category</h3>
-                        <p className="text-white/70 mb-6">We're working on adding content to this category soon.</p>
-                        <Button variant="outline" onClick={() => handleCategoryChange('all')}>
+                        <h3 className="text-xl font-medium mb-2">No posts found</h3>
+                        <p className="text-white/70 mb-6">
+                          {searchTerm ? 'No posts match your search criteria' : 'We\'re working on adding content to this category soon'}
+                        </p>
+                        <Button variant="outline" onClick={() => {
+                          setSearchTerm('');
+                          handleCategoryChange('all');
+                        }}>
                           View All Posts
                         </Button>
                       </div>

@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import SocialMediaPage from "./pages/services/SocialMediaPage";
 import BlogPage from "./pages/blog/BlogPage";
 import BlogPostPage from "./pages/blog/BlogPostPage";
+import BlogCategoryPage from "./pages/blog/BlogCategoryPage";
 import ContactPage from "./pages/ContactPage";
 import Header from "./components/sections/Header";
 import Footer from "./components/sections/Footer";
@@ -70,8 +71,9 @@ const App = () => {
               <Route path="/services/analytics" element={<ServicesPlaceholder title="Analytics & Reporting" />} />
               <Route path="/services" element={<ServicesPlaceholder title="Our Services" />} />
               
-              {/* Blog routes */}
+              {/* Blog routes - updated to include category page */}
               <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/category/:categorySlug" element={<BlogCategoryPage />} />
               <Route path="/blog/:postId" element={<BlogPostPage />} />
               
               {/* Work routes */}
