@@ -1,7 +1,7 @@
 
 "use client"
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
@@ -18,6 +18,7 @@ interface MegaMenuProps {
 export const MegaMenu: React.FC<MegaMenuProps> = ({ className, onLinkClick }) => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const location = useLocation();
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const handleOpenMenu = (menu: string) => {
     setOpenMenu(menu);
@@ -43,8 +44,22 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ className, onLinkClick }) =>
     handleCloseMenu();
   }, [location]);
 
+  // Handle clicks outside the menu to close it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (openMenu && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        handleCloseMenu();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openMenu]);
+
   return (
-    <nav className={cn("flex items-center space-x-1", className)}>
+    <nav ref={menuRef} className={cn("flex items-center space-x-1", className)}>
       <MegaMenuItem 
         title="Services" 
         items={getServicesData()}

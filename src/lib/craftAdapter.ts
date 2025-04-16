@@ -46,6 +46,27 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
             seomatic {
               metaTitleContainer
               metaDescriptionContainer
+              metaLinkContainer
+              metaJsonLdContainer
+              metaSiteVarsContainer
+              metaTagContainer
+              canonicalUrl
+              twitter {
+                card
+                site
+                creator
+                title
+                description
+                image
+              }
+              facebook {
+                title
+                description
+                image
+                url
+                type
+                siteName
+              }
             }
           }
         }
@@ -127,6 +148,27 @@ export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost | null
             seomatic {
               metaTitleContainer
               metaDescriptionContainer
+              metaLinkContainer
+              metaJsonLdContainer
+              metaSiteVarsContainer
+              metaTagContainer
+              canonicalUrl
+              twitter {
+                card
+                site
+                creator
+                title
+                description
+                image
+              }
+              facebook {
+                title
+                description
+                image
+                url
+                type
+                siteName
+              }
             }
           }
         }
@@ -171,9 +213,18 @@ function transformCraftBlogPost(craftPost: any): BlogPost {
     category: craftPost.blogCategory?.slug || 'general',
     tags: craftPost.tags || [],
     featured: Boolean(craftPost.featured),
+    published: true,
+    
+    // SEO fields
     metaTitle: craftPost.seomatic?.metaTitleContainer,
     metaDescription: craftPost.seomatic?.metaDescriptionContainer,
-    published: true
+    metaLinks: craftPost.seomatic?.metaLinkContainer,
+    metaJsonLd: craftPost.seomatic?.metaJsonLdContainer,
+    metaSiteVars: craftPost.seomatic?.metaSiteVarsContainer,
+    metaTags: craftPost.seomatic?.metaTagContainer,
+    canonicalUrl: craftPost.seomatic?.canonicalUrl,
+    twitter: craftPost.seomatic?.twitter,
+    facebook: craftPost.seomatic?.facebook
   };
 }
 

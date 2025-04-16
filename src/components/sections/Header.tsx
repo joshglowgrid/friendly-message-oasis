@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useRef } from 'react';
 import Logo from '@/components/Logo';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -17,6 +18,7 @@ const Header = ({ scrolled }: HeaderProps) => {
   const [headerVisible, setHeaderVisible] = useState(true); 
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -50,6 +52,23 @@ const Header = ({ scrolled }: HeaderProps) => {
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
+
+  // Handle clicks outside the mobile menu to close it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (mobileMenuOpen && 
+          mobileMenuRef.current && 
+          !mobileMenuRef.current.contains(event.target as Node) &&
+          !(event.target as Element).closest('button[aria-label="Toggle Menu"]')) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [mobileMenuOpen]);
 
   // Header animation variants
   const headerVariants = {
@@ -108,6 +127,7 @@ const Header = ({ scrolled }: HeaderProps) => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
+            ref={mobileMenuRef}
             className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-md py-4 border-t border-orange-400/20"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}

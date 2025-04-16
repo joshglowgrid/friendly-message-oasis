@@ -31,7 +31,11 @@ const BlogPostPage = () => {
         
         // Set page metadata
         if (fetchedPost) {
-          document.title = `${fetchedPost.title} | GlowGrid Media Blog`;
+          // Use SEO title if available, otherwise fallback to post title
+          document.title = fetchedPost.metaTitle || `${fetchedPost.title} | GlowGrid Media Blog`;
+          
+          // Update meta tags
+          updateMetaTags(fetchedPost);
           
           // Fetch related posts
           const related = await getRelatedBlogPosts(fetchedPost.category, postId);
@@ -48,7 +52,91 @@ const BlogPostPage = () => {
     
     // Scroll to top when post ID changes
     window.scrollTo(0, 0);
+    
+    // Clean up meta tags when unmounting
+    return () => {
+      removeMetaTags();
+    };
   }, [postId]);
+  
+  // Helper function to update meta tags based on post data
+  const updateMetaTags = (post: TypesBlogPost) => {
+    // Remove any existing meta tags first
+    removeMetaTags();
+    
+    // Set meta description
+    if (post.metaDescription) {
+      const metaDesc = document.createElement('meta');
+      metaDesc.name = 'description';
+      metaDesc.content = post.metaDescription;
+      document.head.appendChild(metaDesc);
+    }
+    
+    // Set canonical URL
+    if (post.canonicalUrl) {
+      const canonicalLink = document.createElement('link');
+      canonicalLink.rel = 'canonical';
+      canonicalLink.href = post.canonicalUrl;
+      document.head.appendChild(canonicalLink);
+    }
+    
+    // Set Twitter Card data
+    if (post.twitter) {
+      const twitterProps = post.twitter;
+      Object.entries(twitterProps).forEach(([key, value]) => {
+        if (value) {
+          const twitterMeta = document.createElement('meta');
+          twitterMeta.name = `twitter:${key}`;
+          twitterMeta.content = value;
+          document.head.appendChild(twitterMeta);
+        }
+      });
+    }
+    
+    // Set Facebook/Open Graph data
+    if (post.facebook) {
+      const ogProps = post.facebook;
+      Object.entries(ogProps).forEach(([key, value]) => {
+        if (value) {
+          const ogMeta = document.createElement('meta');
+          ogMeta.property = `og:${key}`;
+          ogMeta.content = value;
+          document.head.appendChild(ogMeta);
+        }
+      });
+    }
+    
+    // If raw SEO tags are provided from Craft, insert them
+    if (post.metaTags) {
+      try {
+        // Create a temporary container
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = post.metaTags;
+        
+        // Extract and append each meta tag
+        Array.from(tempContainer.children).forEach(node => {
+          document.head.appendChild(node);
+        });
+      } catch (error) {
+        console.error('Error parsing SEO meta tags:', error);
+      }
+    }
+  };
+  
+  // Helper function to remove meta tags when unmounting
+  const removeMetaTags = () => {
+    // Remove meta description
+    document.querySelectorAll('meta[name="description"]').forEach(tag => tag.remove());
+    
+    // Remove canonical link
+    document.querySelectorAll('link[rel="canonical"]').forEach(tag => tag.remove());
+    
+    // Remove Twitter Card meta tags
+    document.querySelectorAll('meta[name^="twitter:"]').forEach(tag => tag.remove());
+    
+    // Remove Open Graph meta tags
+    document.querySelectorAll('meta[property^="og:"]').forEach(tag => tag.remove());
+  };
   
   const handleShareClick = () => {
     if (navigator.share) {

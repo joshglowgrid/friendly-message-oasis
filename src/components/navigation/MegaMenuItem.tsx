@@ -1,7 +1,7 @@
 
 "use client"
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Phone } from 'lucide-react';
@@ -49,6 +49,7 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
   const isActive = items.some(item => location.pathname === item.link);
   const [isHovering, setIsHovering] = useState(false);
   const closeTimeoutRef = useRef<number | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   
   const handleMouseEnter = () => {
     setIsHovering(true);
@@ -80,9 +81,24 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
       onLinkClick();
     }
   };
+
+  // Handle clicks outside the menu to close it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isOpen && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, onClose]);
   
   return (
     <div 
+      ref={menuRef}
       className="relative" 
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
