@@ -32,10 +32,10 @@ const BlogPostPage = () => {
         // Set page metadata
         if (fetchedPost) {
           // Use SEO title if available, otherwise fallback to post title
-          document.title = fetchedPost.metaTitle || `${fetchedPost.title} | GlowGrid Media Blog`;
+          document.title = (fetchedPost as any).metaTitle || `${fetchedPost.title} | GlowGrid Media Blog`;
           
           // Update meta tags
-          updateMetaTags(fetchedPost);
+          updateMetaTags(fetchedPost as unknown as TypesBlogPost);
           
           // Fetch related posts
           const related = await getRelatedBlogPosts(fetchedPost.category, postId);
@@ -99,7 +99,8 @@ const BlogPostPage = () => {
       Object.entries(ogProps).forEach(([key, value]) => {
         if (value) {
           const ogMeta = document.createElement('meta');
-          ogMeta.property = `og:${key}`;
+          // Use setAttribute instead of property assignment for Open Graph meta tags
+          ogMeta.setAttribute('property', `og:${key}`);
           ogMeta.content = value;
           document.head.appendChild(ogMeta);
         }
