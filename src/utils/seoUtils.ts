@@ -8,23 +8,30 @@ import { BlogPost } from '@/types/blog';
  * Updates meta tags in document head based on blog post data
  */
 export const updateMetaTags = (post: BlogPost) => {
-  // Remove any existing meta tags first
+  // Remove any existing meta tags first to prevent duplicates
   removeMetaTags();
   
   // Set meta description
   if (post.metaDescription) {
-    const metaDesc = document.createElement('meta');
-    metaDesc.name = 'description';
-    metaDesc.content = post.metaDescription;
-    document.head.appendChild(metaDesc);
+    setMetaTag('description', post.metaDescription);
+  }
+  
+  // Set robots meta if available
+  if (post.robots) {
+    setMetaTag('robots', post.robots);
   }
   
   // Set canonical URL
   if (post.canonicalUrl) {
-    const canonicalLink = document.createElement('link');
-    canonicalLink.rel = 'canonical';
-    canonicalLink.href = post.canonicalUrl;
-    document.head.appendChild(canonicalLink);
+    const existingCanonical = document.querySelector('link[rel="canonical"]');
+    if (existingCanonical) {
+      (existingCanonical as HTMLLinkElement).href = post.canonicalUrl;
+    } else {
+      const canonicalLink = document.createElement('link');
+      canonicalLink.rel = 'canonical';
+      canonicalLink.href = post.canonicalUrl;
+      document.head.appendChild(canonicalLink);
+    }
   }
   
   // Set Twitter Card data
@@ -32,10 +39,7 @@ export const updateMetaTags = (post: BlogPost) => {
     const twitterProps = post.twitter;
     Object.entries(twitterProps).forEach(([key, value]) => {
       if (value) {
-        const twitterMeta = document.createElement('meta');
-        twitterMeta.name = `twitter:${key}`;
-        twitterMeta.content = value;
-        document.head.appendChild(twitterMeta);
+        setMetaTag(`twitter:${key}`, value);
       }
     });
   }
@@ -45,11 +49,7 @@ export const updateMetaTags = (post: BlogPost) => {
     const ogProps = post.facebook;
     Object.entries(ogProps).forEach(([key, value]) => {
       if (value) {
-        const ogMeta = document.createElement('meta');
-        // Use setAttribute instead of property assignment for Open Graph meta tags
-        ogMeta.setAttribute('property', `og:${key}`);
-        ogMeta.content = value;
-        document.head.appendChild(ogMeta);
+        setOpenGraphTag(`og:${key}`, value);
       }
     });
   }
@@ -61,13 +61,64 @@ export const updateMetaTags = (post: BlogPost) => {
       const tempContainer = document.createElement('div');
       tempContainer.innerHTML = post.metaTags;
       
-      // Extract and append each meta tag
+      // Extract and append each meta tag, avoiding duplicates
       Array.from(tempContainer.children).forEach(node => {
+        if (node.nodeName === 'META') {
+          const metaNode = node as HTMLMetaElement;
+          const name = metaNode.getAttribute('name');
+          const property = metaNode.getAttribute('property');
+          
+          // Check for duplicates before adding
+          if (name && document.querySelector(`meta[name="${name}"]`)) {
+            document.querySelector(`meta[name="${name}"]`)!.remove();
+          } else if (property && document.querySelector(`meta[property="${property}"]`)) {
+            document.querySelector(`meta[property="${property}"]`)!.remove();
+          }
+        }
+        
         document.head.appendChild(node);
       });
     } catch (error) {
       console.error('Error parsing SEO meta tags:', error);
     }
+  }
+};
+
+/**
+ * Helper function to set or update a meta tag
+ */
+const setMetaTag = (name: string, content: string) => {
+  // Check if meta tag already exists
+  let metaTag = document.querySelector(`meta[name="${name}"]`);
+  
+  if (metaTag) {
+    // Update existing tag
+    metaTag.setAttribute('content', content);
+  } else {
+    // Create new tag
+    metaTag = document.createElement('meta');
+    metaTag.setAttribute('name', name);
+    metaTag.setAttribute('content', content);
+    document.head.appendChild(metaTag);
+  }
+};
+
+/**
+ * Helper function to set or update an Open Graph meta tag
+ */
+const setOpenGraphTag = (property: string, content: string) => {
+  // Check if meta tag already exists
+  let metaTag = document.querySelector(`meta[property="${property}"]`);
+  
+  if (metaTag) {
+    // Update existing tag
+    metaTag.setAttribute('content', content);
+  } else {
+    // Create new tag
+    metaTag = document.createElement('meta');
+    metaTag.setAttribute('property', property);
+    metaTag.setAttribute('content', content);
+    document.head.appendChild(metaTag);
   }
 };
 
@@ -78,6 +129,9 @@ export const removeMetaTags = () => {
   // Remove meta description
   document.querySelectorAll('meta[name="description"]').forEach(tag => tag.remove());
   
+  // Remove robots meta
+  document.querySelectorAll('meta[name="robots"]').forEach(tag => tag.remove());
+  
   // Remove canonical link
   document.querySelectorAll('link[rel="canonical"]').forEach(tag => tag.remove());
   
@@ -86,4 +140,7 @@ export const removeMetaTags = () => {
   
   // Remove Open Graph meta tags
   document.querySelectorAll('meta[property^="og:"]').forEach(tag => tag.remove());
+  
+  // We don't remove all custom meta tags to avoid removing essential ones
+  // that might be required by the site globally
 };

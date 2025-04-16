@@ -73,6 +73,7 @@ export interface BlogPost {
   metaSiteVars?: string;
   metaTags?: string;
   canonicalUrl?: string;
+  robots?: string;
   twitter?: TwitterCardData;
   facebook?: FacebookOpenGraphData;
   publishDate?: string; // For scheduled posts

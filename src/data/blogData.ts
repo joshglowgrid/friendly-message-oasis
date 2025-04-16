@@ -1,19 +1,19 @@
 
-import { BlogPost } from '@/components/blog/BlogList';
+import { BlogPost } from '@/types/blog';
 import { transformBlogPost } from '@/utils/blogTransformers';
 import { getBlogContent } from '@/lib/content';
 
 // Get all blog posts
 export async function getBlogPosts(): Promise<BlogPost[]> {
   const posts = await getBlogContent();
-  return posts.map(post => transformBlogPost(post));
+  return posts.map(post => transformBlogPost(post) as BlogPost);
 }
 
 // Get a single blog post by slug
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
   const posts = await getBlogContent();
   const post = posts.find(post => post.id === slug);
-  return post ? transformBlogPost(post) : null;
+  return post ? transformBlogPost(post) as BlogPost : null;
 }
 
 // Get related blog posts
@@ -23,14 +23,14 @@ export async function getRelatedBlogPosts(category: string, currentPostId: strin
     .filter(post => post.category === category && post.id !== currentPostId)
     .slice(0, 3);
   
-  return relatedPosts.map(post => transformBlogPost(post));
+  return relatedPosts.map(post => transformBlogPost(post) as BlogPost);
 }
 
 // Get featured blog posts
 export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
   const posts = await getBlogContent();
   const featuredPosts = posts.filter(post => post.featured);
-  return featuredPosts.map(post => transformBlogPost(post));
+  return featuredPosts.map(post => transformBlogPost(post) as BlogPost);
 }
 
 // Export the functions for backward compatibility

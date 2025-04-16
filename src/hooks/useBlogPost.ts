@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
-import { getBlogPostBySlug, getRelatedBlogPosts } from '@/data/blogData';
 import { BlogPost } from '@/types/blog';
+import { getBlogPostBySlug, getRelatedBlogPosts } from '@/data/blogData';
 import { updateMetaTags, removeMetaTags } from '@/utils/seoUtils';
 
 export const useBlogPost = (postId: string | undefined) => {
@@ -15,24 +15,27 @@ export const useBlogPost = (postId: string | undefined) => {
       
       setLoading(true);
       try {
+        // Fetch the post with correct type inference
         const fetchedPost = await getBlogPostBySlug(postId);
-        // Cast to BlogPost to match our state type
-        setPost(fetchedPost as unknown as BlogPost);
         
-        // Set page metadata
         if (fetchedPost) {
-          // Use SEO title if available, otherwise fallback to post title
-          document.title = (fetchedPost as any).metaTitle || `${fetchedPost.title} | GlowGrid Media Blog`;
+          setPost(fetchedPost);
+          
+          // Set page title
+          document.title = fetchedPost.metaTitle || `${fetchedPost.title} | GlowGrid Media Blog`;
           
           // Update meta tags
-          updateMetaTags(fetchedPost as unknown as BlogPost);
+          updateMetaTags(fetchedPost);
           
           // Fetch related posts
           const related = await getRelatedBlogPosts(fetchedPost.category, postId);
-          setRelatedPosts(related as unknown as BlogPost[]);
+          setRelatedPosts(related);
+        } else {
+          setPost(null);
         }
       } catch (error) {
         console.error('Error fetching post:', error);
+        setPost(null);
       } finally {
         setLoading(false);
       }
