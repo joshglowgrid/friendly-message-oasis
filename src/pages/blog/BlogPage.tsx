@@ -1,15 +1,23 @@
 
 import React, { useEffect, useState } from 'react';
-import { BlogList } from '@/components/blog/BlogList';
+import { BlogListAdapter } from '@/components/blog/BlogListAdapter';
 import { getBlogPosts } from '@/data/blogData';
-import { BlogPost, BlogCategory } from '@/types/blog';
+import { BlogPost, BlogCategoryType } from '@/types/blog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const blogCategories: BlogCategory[] = [
+// Define blog category interface for the local component use
+interface BlogCategoryItem {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+}
+
+const blogCategories: BlogCategoryItem[] = [
   { id: '1', name: 'All Posts', slug: 'all', description: 'View all our blog posts' },
   { id: '2', name: 'Aesthetic Marketing Trends', slug: 'aesthetic-marketing', description: 'Latest trends in aesthetic marketing' },
   { id: '3', name: 'Client Success Stories', slug: 'client-success', description: 'See how our clients have succeeded' },
@@ -78,15 +86,15 @@ const BlogPage = () => {
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
-           <Button 
-  variant="outline" 
-  className="border-orange-500/30 hover:bg-orange-500/10 text-orange-400" 
-  asChild
->
-  <a href="#categories">
-    Browse by Category
-  </a>
-</Button>
+            <Button 
+              variant="outline" 
+              className="border-orange-500/30 hover:bg-orange-500/10 text-orange-400" 
+              asChild
+            >
+              <a href="#categories">
+                Browse by Category
+              </a>
+            </Button>
           </div>
         </div>
         
@@ -129,7 +137,7 @@ const BlogPage = () => {
                 ) : (
                   <>
                     {filteredPosts.length > 0 ? (
-                      <BlogList posts={filteredPosts} />
+                      <BlogListAdapter posts={filteredPosts} />
                     ) : (
                       <div className="text-center py-12">
                         <h3 className="text-xl font-medium mb-2">No posts found in this category</h3>

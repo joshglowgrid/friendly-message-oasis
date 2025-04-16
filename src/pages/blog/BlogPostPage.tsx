@@ -8,7 +8,7 @@ import { BlogPostNotFound } from '@/components/blog/BlogPostNotFound';
 import { BlogPostHeader } from '@/components/blog/BlogPostHeader';
 import { BlogPostHero } from '@/components/blog/BlogPostHero';
 import { BlogPostContent } from '@/components/blog/BlogPostContent';
-import { RelatedPosts } from '@/components/blog/RelatedPosts';
+import { BlogListAdapter } from '@/components/blog/BlogListAdapter';
 import { Button } from '@/components/ui/button';
 import { CalendarDays, Clock, ArrowRight, Share2 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
@@ -143,7 +143,7 @@ const BlogPostPage = () => {
           <div className="bg-black/80 border-t border-orange-500/10 py-12">
             <div className="container mx-auto px-4">
               <h2 className="text-2xl font-bold mb-8">You May Also Like</h2>
-              <RelatedPosts posts={relatedPosts} />
+              <BlogListAdapter posts={relatedPosts} />
             </div>
           </div>
         )}

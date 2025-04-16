@@ -13,7 +13,7 @@ export const BlogListAdapter: React.FC<{ posts: TypesBlogPost[] }> = ({ posts })
     author: typeof post.author === 'string' ? post.author : post.author.name,
     date: post.date,
     readTime: post.readTime,
-    category: post.category,
+    category: post.category.toString(),
     image: post.image,
     featured: post.featured,
     content: post.content
