@@ -22,7 +22,7 @@ export const useBlogPost = (postId: string | undefined) => {
         // Set page metadata
         if (fetchedPost) {
           // Use SEO title if available, otherwise fallback to post title
-         document.title = fetchedPost.metaTitle ?? `${fetchedPost.title} | GlowGrid Media Blog`;
+          document.title = (fetchedPost as any).metaTitle || `${fetchedPost.title} | GlowGrid Media Blog`;
           
           // Update meta tags
           updateMetaTags(fetchedPost as unknown as BlogPost);
@@ -51,39 +51,3 @@ export const useBlogPost = (postId: string | undefined) => {
 
   return { post, relatedPosts, loading };
 };
-
-useEffect(() => {
-  const controller = new AbortController();
-
-  const fetchPost = async () => {
-    if (!postId) return;
-    setLoading(true);
-    try {
-      const fetchedPost = await getBlogPostBySlug(postId);
-      if (!controller.signal.aborted && fetchedPost) {
-        setPost(fetchedPost);
-        updateMetaTags(fetchedPost);
-        document.title = fetchedPost.metaTitle ?? `${fetchedPost.title} | GlowGrid Media Blog`;
-
-        const related = await getRelatedBlogPosts(fetchedPost.category, postId);
-        if (!controller.signal.aborted) {
-          setRelatedPosts(related);
-        }
-      }
-    } catch (error) {
-      if (!controller.signal.aborted) {
-        console.error('Error fetching post:', error);
-      }
-    } finally {
-      if (!controller.signal.aborted) setLoading(false);
-    }
-  };
-
-  fetchPost();
-  window.scrollTo(0, 0);
-
-  return () => {
-    controller.abort();
-    removeMetaTags();
-  };
-}, [postId]);
