@@ -66,13 +66,13 @@ export const PhoneMockup = () => {
             </Button>
           </div>
           
-          {/* Right visual content - simplified clean image */}
+          {/* Right visual content - image that can be managed through Craft CMS */}
           <div className="lg:w-1/2 flex justify-center">
             <img 
-  src="https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png" 
-  alt="Digital Marketing Visual" 
-  className="w-64 md:w-80 h-auto shadow-lg rounded-md" 
-/>
+              src="https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png" 
+              alt="Digital Marketing Visual" 
+              className="w-64 md:w-80 h-auto shadow-lg rounded-md" 
+            />
           </div>
         </div>
       </div>

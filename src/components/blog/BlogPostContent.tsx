@@ -3,14 +3,18 @@ import React from 'react';
 import { Calendar, Clock, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { renderMarkdown } from '@/utils/markdownRenderer';
-import { BlogPost } from '@/components/blog/BlogList';
-import { Table, TableBody, TableHead, TableHeader } from '@/components/ui/table';
+import { BlogPost } from '@/types/blog';
 
 interface BlogPostContentProps {
   post: BlogPost;
 }
 
 export const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
+  // Get author name regardless of whether author is a string or object
+  const authorName = typeof post.author === 'string' 
+    ? post.author 
+    : (post.author.hidden ? 'GlowGrid Media' : post.author.name);
+
   return (
     <div className="container mx-auto px-4 -mt-20 relative">
       <div className="bg-black/90 border border-orange-400/20 rounded-lg p-6 md:p-10 max-w-4xl mx-auto backdrop-blur-sm">
@@ -30,7 +34,7 @@ export const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
             {post.readTime}
           </div>
           <div className="flex items-center gap-1">
-            <span className="text-orange-400">{post.author}</span>
+            <span className="text-orange-400">{authorName}</span>
           </div>
         </div>
         

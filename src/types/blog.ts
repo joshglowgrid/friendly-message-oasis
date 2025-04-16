@@ -1,5 +1,6 @@
 
-export type BlogCategory = 
+// Blog category string literal type
+export type BlogCategoryType = 
   | 'aesthetic-marketing' 
   | 'seo-strategy' 
   | 'wellness-brands' 
@@ -9,6 +10,16 @@ export type BlogCategory =
   | 'client-success' 
   | 'web-development'
   | 'general';
+
+// Blog category object interface
+export interface BlogCategoryModel {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  image?: string;
+  count?: number;
+}
 
 export interface Author {
   id: string;
@@ -29,20 +40,11 @@ export interface BlogPost {
   date: string;
   readTime: string;
   author: string | Author;
-  category: BlogCategory;
+  category: BlogCategoryType;
   tags?: string[];
   featured?: boolean;
   published?: boolean;
   metaTitle?: string;
   metaDescription?: string;
   publishDate?: string; // For scheduled posts
-}
-
-export interface BlogCategory {
-  id: string;
-  name: string;
-  slug: string;
-  description?: string;
-  image?: string;
-  count?: number;
 }
