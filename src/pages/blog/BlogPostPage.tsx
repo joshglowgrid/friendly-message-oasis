@@ -16,6 +16,33 @@ import { getBlogPosts } from '@/data/blogData';
 import { findPrevNextPosts, calculateReadingTime } from '@/utils/blogUtils';
 import { BlogPost } from '@/types/blog';
 
+import { Helmet } from 'react-helmet'; // install via: npm install react-helmet
+
+...
+
+{post && (
+  <Helmet>
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: post.metaTitle || post.title,
+        description: post.metaDescription,
+        datePublished: post.datePublished,
+        author: {
+          "@type": "Person",
+          name: post.authorName || "GlowGrid Media",
+        },
+        image: post.featuredImage,
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": window.location.href,
+        },
+      })}
+    </script>
+  </Helmet>
+)}
+
 const BlogPostPage = () => {
   const { postId } = useParams<{ postId: string }>();
   const { post, relatedPosts, loading } = useBlogPost(postId);
