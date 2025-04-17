@@ -32,35 +32,34 @@ export const BlogPostHero: React.FC<BlogPostHeroProps> = ({
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
       </div>
       
-    {/* Header Content - Positioned below image */}
-<div className="container mx-auto px-4 -mt-16 relative z-10">
-          {/* Category Badge */}
-          <Badge 
-            variant="outline" 
-            className="bg-orange-500 hover:bg-orange-600 text-white border-none mb-4"
-          >
-            {category}
-          </Badge>
-          
-          {/* Post Title */}
-          <h1 className="text-2xl md:text-4xl font-bold mb-4">{title}</h1>
-          
-          {/* Meta Information */}
-          <div className="flex flex-wrap items-center gap-4 text-white/60">
+      {/* Header Content - Positioned below image */}
+      <div className="container mx-auto px-4 -mt-16 relative z-10">
+        {/* Category Badge */}
+        <Badge 
+          variant="outline" 
+          className="bg-orange-500 hover:bg-orange-600 text-white border-none mb-4"
+        >
+          {category}
+        </Badge>
+        
+        {/* Post Title */}
+        <h1 className="text-2xl md:text-4xl font-bold mb-4">{title}</h1>
+        
+        {/* Meta Information */}
+        <div className="flex flex-wrap items-center gap-4 text-white/60">
+          <div className="flex items-center gap-1">
+            <CalendarDays className="w-4 h-4" />
+            <span>{date}</span>
+          </div>
+          {readTime && (
             <div className="flex items-center gap-1">
-              <CalendarDays className="w-4 h-4" />
-              <span>{date}</span>
+              <Clock className="w-4 h-4" />
+              <span>{readTime}</span>
             </div>
-            {readTime && (
-              <div className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                <span>{readTime}</span>
-              </div>
-            )}
-            <div className="flex items-center gap-1">
-              <FileText className="w-4 h-4" />
-              <span>{wordCount.toLocaleString()} words</span>
-            </div>
+          )}
+          <div className="flex items-center gap-1">
+            <FileText className="w-4 h-4" />
+            <span>{wordCount.toLocaleString()} words</span>
           </div>
         </div>
       </div>
