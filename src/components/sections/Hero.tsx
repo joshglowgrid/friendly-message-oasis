@@ -73,7 +73,7 @@ const Hero = () => {
         transition={{ duration: 0.8, delay: 0.8 }}
         className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-6 max-w-3xl"
       >
-        Precision-Driven Digital Presence for
+        Precision-Driven Digital Presence for<br></br>
         <span className="orange-gradient-text font-blink ml-2">Modern Healthcare Brands</span>
       </motion.h1>
       
