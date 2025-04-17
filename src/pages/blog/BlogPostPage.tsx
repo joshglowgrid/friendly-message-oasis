@@ -59,7 +59,6 @@ const BlogPostPage = () => {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       <main className="flex-grow pt-24">
-        <BlogPostHeader />
         <BlogPostHero 
           image={post.image} 
           title={post.title}
