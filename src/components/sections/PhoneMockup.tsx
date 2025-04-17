@@ -62,7 +62,6 @@ export const PhoneMockup = () => {
            <Button
   variant="outline"
   className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
-             whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
   asChild
 >
   <a href="/services">
