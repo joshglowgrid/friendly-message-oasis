@@ -78,7 +78,6 @@ export const PhoneMockup = () => {
     src="https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png" 
     alt="Digital Marketing Visual" 
 className="w-64 md:w-80 h-auto max-h-[500px] object-contain"
-    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
   />
 </div>
         </div>
