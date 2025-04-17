@@ -11,7 +11,6 @@ import { RelatedPostsSection } from '@/components/blog/RelatedPostsSection';
 import { PostNavigation } from '@/components/blog/PostNavigation';
 import { useBlogPost } from '@/hooks/useBlogPost';
 import { CalendarDays, Clock, FileText } from 'lucide-react';
-import { ShareButton } from '@/components/blog/ShareButton';
 import { getBlogPosts } from '@/data/blogData';
 import { findPrevNextPosts, calculateReadingTime } from '@/utils/blogUtils';
 import { BlogPost } from '@/types/blog';
@@ -61,12 +60,12 @@ const BlogPostPage = () => {
   
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
-      <main className="flex-grow pt-28">
+      <main className="flex-grow pt-24">
         <BlogPostHeader />
         <BlogPostHero image={post.image} title={post.title} />
         
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto -mt-16 relative z-10 bg-black/90 border border-orange-500/20 rounded-lg p-6 sm:p-8">
+        <div className="container mx-auto px-4 mt-4">
+          <div className="max-w-4xl mx-auto bg-black/90 border border-orange-500/20 rounded-lg p-6 sm:p-8 mb-8">
             {/* Category badge */}
             <a 
               href={`/blog/category/${post.category}`}
@@ -90,21 +89,19 @@ const BlogPostPage = () => {
                 <FileText className="w-4 h-4 mr-1" />
                 <span>{readingStats.wordCount.toLocaleString()} words</span>
               </div>
-              <ShareButton 
-                title={post.title} 
-                excerpt={post.excerpt}
-              />
             </div>
-          </div>
-          
-          <div className="max-w-4xl mx-auto my-8">
+            
             <BlogPostContent post={post} />
             
             {/* Post Navigation */}
-            <PostNavigation previous={navPosts.previous} next={navPosts.next} />
+            <div className="mt-12">
+              <PostNavigation previous={navPosts.previous} next={navPosts.next} />
+            </div>
             
             {/* CTA Section */}
-            <BlogPostCTA category={post.category} />
+            <div className="mt-12">
+              <BlogPostCTA category={post.category} />
+            </div>
           </div>
         </div>
         

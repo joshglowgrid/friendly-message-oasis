@@ -1,3 +1,4 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -47,11 +48,20 @@
   -ms-overflow-style: none;        /* IE & Edge */
 }
 .scrollbar-hidden::-webkit-scrollbar {
-  display: none;         
-  html,
+  display: none;                   /* Chrome, Safari */
+}
+
+html,
 body {
   overflow-y: auto;
   overflow-x: hidden;
-}/* Chrome, Safari */
 }
 
+/* Blog post specific styles */
+.blog-social-icons button {
+  transition: all 0.2s ease-in-out;
+}
+
+.blog-social-icons button:hover {
+  transform: translateY(-2px);
+}

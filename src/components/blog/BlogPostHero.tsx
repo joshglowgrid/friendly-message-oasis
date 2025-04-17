@@ -8,7 +8,7 @@ interface BlogPostHeroProps {
 
 export const BlogPostHero: React.FC<BlogPostHeroProps> = ({ image, title }) => {
   return (
-    <div className="w-full aspect-[21/9] max-h-[500px] relative overflow-hidden">
+    <div className="w-full aspect-[21/9] max-h-[500px] relative overflow-hidden mb-8">
       <img 
         src={image} 
         alt={title} 
