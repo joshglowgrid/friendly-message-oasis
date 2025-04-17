@@ -40,24 +40,7 @@ export const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
   return (
     <div className="container mx-auto px-4 relative z-10 -mt-6">
       <div className="bg-black/90 border border-orange-400/20 rounded-lg p-6 md:p-10 max-w-4xl mx-auto backdrop-blur-sm">
-        <span className="inline-block bg-orange-500 text-white text-xs px-3 py-1 rounded-full mb-4">
-          {post.category}
-        </span>
-        
-        <h1 className="text-2xl md:text-4xl font-bold mb-4">{post.title}</h1>
-        
-        <div className="flex flex-wrap items-center gap-4 text-white/60 mb-6">
-          <div className="flex items-center gap-1">
-            {post.date}
-          </div>
-          {post.readTime && (
-            <div className="flex items-center gap-1">
-              {post.readTime}
-            </div>
-          )}
-          <div className="flex items-center gap-1">
-            <span className="text-orange-400">{authorName}</span>
-          </div>
+       
         </div>
         
         <article 
