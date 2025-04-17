@@ -135,7 +135,7 @@ const BlogPage = () => {
           <Tabs defaultValue={activeCategory} className="w-full" onValueChange={handleCategoryChange}>
             <div className="border-b border-orange-500/20 mb-6">
               <h2 className="text-2xl font-semibold mb-4">Browse by Category</h2>
-        <TabsList className="overflow-x-auto flex pb-2 mb-0 bg-transparent scrollbar-hidden">
+ <TabsList className="overflow-x-auto flex pb-2 mb-0 bg-transparent scrollbar-hidden">
                 {blogCategories.map(category => (
                   <TabsTrigger 
                     key={category.id} 
