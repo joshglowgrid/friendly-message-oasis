@@ -39,7 +39,6 @@ export const BlogPostCTA: React.FC<BlogPostCTAProps> = ({ category }) => {
             >
      <Link to={`/services/${getServicePath()}`}>
                 Explore Our Services
-     </a>
           </Link>
         </Button>
       </div>
