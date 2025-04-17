@@ -58,16 +58,17 @@ export const PhoneMockup = () => {
                 </div>
               </div>
             </div>
-            
+            <div>
            <Button
   variant="outline"
   className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
   asChild
 >
-  <a href="#categories">
-    Browse by Category
+  <a href="/services">
+    Explore our Services
   </a>
 </Button>
+            </div>
           
           {/* Right visual content - image that can be managed through Craft CMS */}
           <div className="lg:w-1/2 flex justify-center">
