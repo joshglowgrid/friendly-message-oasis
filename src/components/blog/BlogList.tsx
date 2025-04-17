@@ -40,8 +40,11 @@ export const BlogList: React.FC<BlogListProps> = ({ posts, className }) => {
           </div>
           
           <CardHeader className="p-4 pb-2">
-            <CardTitle className="text-xl line-clamp-2">
-              <Link to={`/blog/${post.id}`} className="hover:text-orange-400 transition-colors">
+            <CardTitle className="text-xl">
+              <Link 
+                to={`/blog/${post.id}`} 
+                className="text-orange-400 hover:text-orange-500 font-semibold tracking-tight transition-colors duration-300"
+              >
                 {post.title}
               </Link>
             </CardTitle>
