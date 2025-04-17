@@ -62,6 +62,7 @@ export const PhoneMockup = () => {
            <Button
   variant="outline"
   className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+             whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
   asChild
 >
   <a href="/services">
@@ -70,14 +71,15 @@ export const PhoneMockup = () => {
 </Button>
             </div>
           
-          {/* Right visual content - image that can be managed through Craft CMS */}
-          <div className="lg:w-1/2 flex justify-center">
-            <img 
-              src="https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png" 
-              alt="Digital Marketing Visual" 
-              className="w-64 md:w-80 h-auto shadow-lg rounded-md" 
-            />
-          </div>
+        {/* Place this outside the left text content div */}
+<div className="lg:w-1/2 flex justify-center">
+  <img 
+    src="https://img.glowgridmedia.com/MedSpa%20Digital%20Marketing-HCard.png" 
+    alt="Digital Marketing Visual" 
+className="w-64 md:w-80 h-auto max-h-[500px] object-contain"
+    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+  />
+</div>
         </div>
       </div>
     </section>
