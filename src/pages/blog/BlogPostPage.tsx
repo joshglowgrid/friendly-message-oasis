@@ -10,11 +10,9 @@ import { BlogPostCTA } from '@/components/blog/BlogPostCTA';
 import { RelatedPostsSection } from '@/components/blog/RelatedPostsSection';
 import { PostNavigation } from '@/components/blog/PostNavigation';
 import { useBlogPost } from '@/hooks/useBlogPost';
-import { CalendarDays, Clock, FileText } from 'lucide-react';
 import { getBlogPosts } from '@/data/blogData';
 import { findPrevNextPosts, calculateReadingTime } from '@/utils/blogUtils';
 import { BlogPost } from '@/types/blog';
-
 
 const BlogPostPage = () => {
   const { postId } = useParams<{ postId: string }>();
@@ -62,46 +60,26 @@ const BlogPostPage = () => {
     <div className="min-h-screen bg-black text-white flex flex-col">
       <main className="flex-grow pt-24">
         <BlogPostHeader />
-        <BlogPostHero image={post.image} title={post.title} />
+        <BlogPostHero 
+          image={post.image} 
+          title={post.title}
+          category={post.category}
+          date={post.date}
+          readTime={readingStats.readingTime}
+          wordCount={readingStats.wordCount}
+        />
         
-        <div className="container mx-auto px-4 mt-4">
-          <div className="max-w-4xl mx-auto bg-black/90 border border-orange-500/20 rounded-lg p-6 sm:p-8 mb-8">
-            {/* Category badge */}
-            <a 
-              href={`/blog/category/${post.category}`}
-              className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-orange-500/10 text-orange-400 mb-4 hover:bg-orange-500/20 transition-colors"
-            >
-              {post.category.toString().replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-            </a>
-            
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4">{post.title}</h1>
-            
-            <div className="flex flex-wrap items-center text-sm text-white/60 gap-4 mb-6">
-              <div className="flex items-center">
-                <CalendarDays className="w-4 h-4 mr-1" />
-                <span>{post.date}</span>
-              </div>
-              <div className="flex items-center">
-                <Clock className="w-4 h-4 mr-1" />
-                <span>{readingStats.readingTime}</span>
-              </div>
-              <div className="flex items-center">
-                <FileText className="w-4 h-4 mr-1" />
-                <span>{readingStats.wordCount.toLocaleString()} words</span>
-              </div>
-            </div>
-            
-            <BlogPostContent post={post} />
-            
-            {/* Post Navigation */}
-            <div className="mt-12">
-              <PostNavigation previous={navPosts.previous} next={navPosts.next} />
-            </div>
-            
-            {/* CTA Section */}
-            <div className="mt-12">
-              <BlogPostCTA category={post.category} />
-            </div>
+        <div className="container mx-auto px-4 -mt-10 relative z-10">
+          <BlogPostContent post={post} />
+          
+          {/* Post Navigation */}
+          <div className="mt-12">
+            <PostNavigation previous={navPosts.previous} next={navPosts.next} />
+          </div>
+          
+          {/* CTA Section */}
+          <div className="mt-12">
+            <BlogPostCTA category={post.category} />
           </div>
         </div>
         
