@@ -60,10 +60,13 @@ export const PhoneMockup = () => {
             <div>
            <Button
   variant="outline"
-  className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+  className="border-orange-500/30 hover:bg-orange-500/10"
   asChild
 >
-  <a href="/services">
+  <a
+    href="/services"
+    className="text-orange-400 hover:text-orange-500"
+  >
     Explore our Services
   </a>
 </Button>
