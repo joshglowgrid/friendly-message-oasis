@@ -32,9 +32,14 @@ export const BlogPostCTA: React.FC<BlogPostCTAProps> = ({ category }) => {
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </Button>
-        <Button variant="outline" className="border-orange-500/30 hover:bg-orange-500/10" asChild>
-          <Link to={`/services/${getServicePath()}`}>
-            Explore Our Services
+           <Button 
+              variant="outline" 
+              className="border-orange-500/30 hover:bg-orange-500/10 text-orange-400" 
+              asChild
+            >
+     <Link to={`/services/${getServicePath()}`}>
+                Explore Our Services
+     </a>
           </Link>
         </Button>
       </div>
