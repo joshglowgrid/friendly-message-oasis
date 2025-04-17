@@ -47,5 +47,11 @@
   -ms-overflow-style: none;        /* IE & Edge */
 }
 .scrollbar-hidden::-webkit-scrollbar {
-  display: none;                   /* Chrome, Safari */
+  display: none;         
+  html,
+body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}/* Chrome, Safari */
 }
+
