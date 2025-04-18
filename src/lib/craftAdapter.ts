@@ -1,10 +1,6 @@
-
 import axios from 'axios';
 import { BlogPost, BlogCategoryModel, Author } from '@/types/blog';
-
-// Configuration for Craft CMS API
-const CRAFT_API_ENDPOINT = import.meta.env.VITE_CRAFT_API_ENDPOINT || '/api';
-const CRAFT_GRAPHQL_ENDPOINT = import.meta.env.VITE_CRAFT_GRAPHQL_ENDPOINT || '/api/graphql';
+import { craftConfig } from '@/config/craftConfig';
 
 /**
  * Fetch blog posts from Craft CMS
@@ -12,10 +8,10 @@ const CRAFT_GRAPHQL_ENDPOINT = import.meta.env.VITE_CRAFT_GRAPHQL_ENDPOINT || '/
 export async function fetchBlogPosts(): Promise<BlogPost[]> {
   try {
     // If using GraphQL
-    const response = await axios.post(CRAFT_GRAPHQL_ENDPOINT, {
+    const response = await axios.post(craftConfig.graphqlEndpoint, {
       query: `
         query BlogPosts {
-          entries(section: "blog", limit: 100) {
+          entries(section: "${craftConfig.sections.blog}", limit: 100) {
             id
             slug
             title
@@ -86,7 +82,7 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
  */
 export async function fetchBlogCategories(): Promise<BlogCategoryModel[]> {
   try {
-    const response = await axios.post(CRAFT_GRAPHQL_ENDPOINT, {
+    const response = await axios.post(craftConfig.graphqlEndpoint, {
       query: `
         query BlogCategories {
           categories(group: "blogCategories") {
@@ -114,10 +110,10 @@ export async function fetchBlogCategories(): Promise<BlogCategoryModel[]> {
  */
 export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
-    const response = await axios.post(CRAFT_GRAPHQL_ENDPOINT, {
+    const response = await axios.post(craftConfig.graphqlEndpoint, {
       query: `
         query BlogPost($slug: String!) {
-          entry(section: "blog", slug: $slug) {
+          entry(section: "${craftConfig.sections.blog}", slug: $slug) {
             id
             slug
             title
@@ -193,21 +189,21 @@ export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost | null
 function transformCraftBlogPost(craftPost: any): BlogPost {
   const author: Author = craftPost.author ? {
     id: craftPost.author.id,
-    name: craftPost.author.fullName,
-    bio: craftPost.author.biography,
-    avatar: craftPost.author.authorImage?.url,
-    role: craftPost.author.role,
-    hidden: craftPost.author.hidden
+    name: craftPost.author.fullName || 'GlowGrid Media',
+    bio: craftPost.author.biography || '',
+    avatar: craftPost.author.authorImage?.url || '/placeholder.svg',
+    role: craftPost.author.role || '',
+    hidden: craftPost.author.hidden || false
   } : { id: 'default', name: 'GlowGrid Media' };
 
   return {
-    id: craftPost.id,
-    slug: craftPost.slug,
-    title: craftPost.title,
-    excerpt: craftPost.excerpt,
-    content: craftPost.content,
+    id: craftPost.id || '',
+    slug: craftPost.slug || '',
+    title: craftPost.title || 'Untitled Post',
+    excerpt: craftPost.excerpt || 'No excerpt available',
+    content: craftPost.content || 'No content available',
     image: craftPost.postImage?.url || '/placeholder.svg',
-    date: craftPost.postDate,
+    date: craftPost.postDate || new Date().toLocaleDateString(),
     readTime: craftPost.readTime || '5 min read',
     author: author,
     category: craftPost.blogCategory?.slug || 'general',
@@ -215,16 +211,16 @@ function transformCraftBlogPost(craftPost: any): BlogPost {
     featured: Boolean(craftPost.featured),
     published: true,
     
-    // SEO fields
-    metaTitle: craftPost.seomatic?.metaTitleContainer,
-    metaDescription: craftPost.seomatic?.metaDescriptionContainer,
-    metaLinks: craftPost.seomatic?.metaLinkContainer,
-    metaJsonLd: craftPost.seomatic?.metaJsonLdContainer,
-    metaSiteVars: craftPost.seomatic?.metaSiteVarsContainer,
-    metaTags: craftPost.seomatic?.metaTagContainer,
-    canonicalUrl: craftPost.seomatic?.canonicalUrl,
-    twitter: craftPost.seomatic?.twitter,
-    facebook: craftPost.seomatic?.facebook
+    // SEO fields with fallbacks
+    metaTitle: craftPost.seomatic?.metaTitleContainer || craftPost.title || 'GlowGrid Media Blog',
+    metaDescription: craftPost.seomatic?.metaDescriptionContainer || craftPost.excerpt || 'GlowGrid Media blog post',
+    metaLinks: craftPost.seomatic?.metaLinkContainer || '',
+    metaJsonLd: craftPost.seomatic?.metaJsonLdContainer || '',
+    metaSiteVars: craftPost.seomatic?.metaSiteVarsContainer || '',
+    metaTags: craftPost.seomatic?.metaTagContainer || '',
+    canonicalUrl: craftPost.seomatic?.canonicalUrl || `https://www.glowgridmedia.com/blog/${craftPost.slug}`,
+    twitter: craftPost.seomatic?.twitter || {},
+    facebook: craftPost.seomatic?.facebook || {}
   };
 }
 
@@ -246,4 +242,37 @@ function transformCraftCategories(craftCategories: any[]): BlogCategoryModel[] {
     description: category.description || '',
     image: category.categoryImage?.url
   }));
+}
+
+/**
+ * Generate JSON-LD structured data for blog posts
+ */
+export function generateBlogJsonLd(post: BlogPost): string {
+  const articleData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": post.image,
+    "author": {
+      "@type": "Person",
+      "name": typeof post.author === 'string' ? post.author : post.author.name
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GlowGrid Media",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.glowgridmedia.com/logo.png"
+      }
+    },
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": post.canonicalUrl || `https://www.glowgridmedia.com/blog/${post.slug}`
+    }
+  };
+
+  return JSON.stringify(articleData);
 }

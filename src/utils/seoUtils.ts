@@ -16,26 +16,25 @@ export const updateMetaTags = (post: BlogPost) => {
   document.title = post.metaTitle || `${post.title} | GlowGrid Media Blog`;
   
   // Set meta description
-  if (post.metaDescription) {
-    setMetaTag('description', post.metaDescription);
+  if (post.metaDescription || post.excerpt) {
+    setMetaTag('description', post.metaDescription || post.excerpt);
   }
   
   // Set robots meta if available
   if (post.robots) {
     setMetaTag('robots', post.robots);
+  } else {
+    // Default robots meta
+    setMetaTag('robots', 'index, follow');
   }
   
   // Set canonical URL
   if (post.canonicalUrl) {
-    const existingCanonical = document.querySelector('link[rel="canonical"]');
-    if (existingCanonical) {
-      (existingCanonical as HTMLLinkElement).href = post.canonicalUrl;
-    } else {
-      const canonicalLink = document.createElement('link');
-      canonicalLink.rel = 'canonical';
-      canonicalLink.href = post.canonicalUrl;
-      document.head.appendChild(canonicalLink);
-    }
+    setCanonicalLink(post.canonicalUrl);
+  } else {
+    // Create a default canonical URL
+    const siteUrl = window.location.origin;
+    setCanonicalLink(`${siteUrl}/blog/${post.slug}`);
   }
   
   // Set Twitter Card data
@@ -46,6 +45,14 @@ export const updateMetaTags = (post: BlogPost) => {
         setMetaTag(`twitter:${key}`, value);
       }
     });
+  } else {
+    // Set default Twitter card data
+    setMetaTag('twitter:card', 'summary_large_image');
+    setMetaTag('twitter:title', post.title);
+    setMetaTag('twitter:description', post.excerpt);
+    if (post.image) {
+      setMetaTag('twitter:image', post.image.startsWith('http') ? post.image : window.location.origin + post.image);
+    }
   }
   
   // Set Facebook/Open Graph data
@@ -56,6 +63,16 @@ export const updateMetaTags = (post: BlogPost) => {
         setOpenGraphTag(`og:${key}`, value);
       }
     });
+  } else {
+    // Set default Open Graph data
+    setOpenGraphTag('og:type', 'article');
+    setOpenGraphTag('og:title', post.title);
+    setOpenGraphTag('og:description', post.excerpt);
+    setOpenGraphTag('og:url', window.location.href);
+    if (post.image) {
+      setOpenGraphTag('og:image', post.image.startsWith('http') ? post.image : window.location.origin + post.image);
+    }
+    setOpenGraphTag('og:site_name', 'GlowGrid Media');
   }
   
   // Add JSON-LD structured data
@@ -131,6 +148,25 @@ const setOpenGraphTag = (property: string, content: string) => {
 };
 
 /**
+ * Helper function to set canonical link
+ */
+const setCanonicalLink = (url: string) => {
+  // Check if canonical link already exists
+  const existingCanonical = document.querySelector('link[rel="canonical"]');
+  
+  if (existingCanonical) {
+    // Update existing link
+    (existingCanonical as HTMLLinkElement).href = url;
+  } else {
+    // Create new link
+    const canonicalLink = document.createElement('link');
+    canonicalLink.rel = 'canonical';
+    canonicalLink.href = url;
+    document.head.appendChild(canonicalLink);
+  }
+};
+
+/**
  * Add JSON-LD structured data to the document
  */
 const addJsonLd = (jsonLdString: string) => {
@@ -168,4 +204,35 @@ export const removeMetaTags = () => {
   
   // We don't remove all custom meta tags to avoid removing essential ones
   // that might be required by the site globally
+};
+
+/**
+ * Generate dynamic sitemap data for blog posts
+ * @param posts Array of blog posts
+ * @returns XML sitemap string
+ */
+export const generateBlogSitemap = (posts: BlogPost[]): string => {
+  const baseUrl = window.location.origin;
+  let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+  
+  // Add blog index page
+  sitemap += '  <url>\n';
+  sitemap += `    <loc>${baseUrl}/blog</loc>\n`;
+  sitemap += '    <changefreq>daily</changefreq>\n';
+  sitemap += '    <priority>0.8</priority>\n';
+  sitemap += '  </url>\n';
+  
+  // Add individual blog posts
+  posts.forEach(post => {
+    sitemap += '  <url>\n';
+    sitemap += `    <loc>${baseUrl}/blog/${post.slug}</loc>\n`;
+    sitemap += `    <lastmod>${new Date(post.date).toISOString().split('T')[0]}</lastmod>\n`;
+    sitemap += '    <changefreq>monthly</changefreq>\n';
+    sitemap += '    <priority>0.6</priority>\n';
+    sitemap += '  </url>\n';
+  });
+  
+  sitemap += '</urlset>';
+  return sitemap;
 };

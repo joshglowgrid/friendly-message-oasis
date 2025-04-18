@@ -4,17 +4,13 @@ import { Facebook, Linkedin, Twitter } from 'lucide-react';
 import { renderMarkdown } from '@/utils/markdownRenderer';
 import { BlogPost } from '@/types/blog';
 import { cn } from '@/lib/utils';
+import { BlogPostCTA } from './BlogPostCTA';
 
 interface BlogPostContentProps {
   post: BlogPost;
 }
 
 export const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
-  // Get author name regardless of whether author is a string or object
-  const authorName = typeof post.author === 'string' 
-    ? post.author 
-    : (post.author.hidden ? 'GlowGrid Media' : post.author.name);
-    
   const handleShare = (platform: 'facebook' | 'twitter' | 'linkedin') => {
     const url = encodeURIComponent(window.location.href);
     const title = encodeURIComponent(post.title);
@@ -40,9 +36,6 @@ export const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
   return (
     <div className="container mx-auto px-4 relative z-10 -mt-6">
       <div className="bg-black/90 border border-orange-400/20 rounded-lg p-6 md:p-10 max-w-4xl mx-auto backdrop-blur-sm">
-       
-        </div>
-        
         <article 
           className="prose prose-lg prose-invert max-w-none"
           dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
@@ -89,4 +82,4 @@ export const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
       </div>
     </div>
   );
-};
+}
