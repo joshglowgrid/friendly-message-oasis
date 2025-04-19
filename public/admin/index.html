@@ -1,25 +1,17 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>GlowGrid Media Content Manager</title>
+    <title>GlowGrid Media CMS</title>
+
+    <!-- Tell Decap where the CMS config is -->
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url">
+
+    <!-- Load Decap CMS -->
+    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
   </head>
   <body>
-    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
-    <script>
-      // Use environment variables from Cloudflare Pages
-      if (window.location.hostname !== 'localhost') {
-        window.CMS_ENV = {
-          GITHUB_CLIENT_ID: window.ENV.GITHUB_CLIENT_ID,
-          GITHUB_CLIENT_SECRET: window.ENV.GITHUB_CLIENT_SECRET,
-          GITHUB_APP_ID: window.ENV.GITHUB_APP_ID,
-          GITHUB_PRIVATE_KEY: window.ENV.GITHUB_PRIVATE_KEY
-        };
-      }
-    </script>
   </body>
 </html>
