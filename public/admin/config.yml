@@ -1,0 +1,41 @@
+
+backend:
+  name: github
+  repo: your-github-username/your-repo-name # You'll need to replace this
+  branch: main
+  base_url: https://api.netlify.com # You'll need to set up GitHub OAuth
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Slug", name: "slug", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Featured Image", name: "image", widget: "image"}
+      - {label: "Category", name: "category", widget: "select", options: ["aesthetic-marketing", "client-success", "wellness-brands", "content-marketing", "social-media", "email-marketing"]}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "SEO Title", name: "metaTitle", widget: "string"}
+      - {label: "SEO Description", name: "metaDescription", widget: "text"}
+      - {label: "Excerpt", name: "excerpt", widget: "text"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "pages"
+    label: "Pages"
+    folder: "content/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Slug", name: "slug", widget: "string"}
+      - {label: "Featured Image", name: "image", widget: "image"}
+      - {label: "SEO Title", name: "metaTitle", widget: "string"}
+      - {label: "SEO Description", name: "metaDescription", widget: "text"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
