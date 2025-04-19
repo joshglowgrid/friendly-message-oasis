@@ -1,14 +1,7 @@
-
 backend:
-  name: github
-  repo: joshglowgrid/friendly-message-oasis # You'll need to replace this
+  name: git-gateway
   branch: main
-  auth_type: github-app
-  app_id: ${GITHUB_APP_ID}
-  private_key: ${GITHUB_PRIVATE_KEY}
-
-local_backend: true # Enable local backend for development
-media_folder: "public/uploads"
+media_folder: "static/uploads"
 public_folder: "/uploads"
 
 collections:
