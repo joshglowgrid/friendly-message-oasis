@@ -1,9 +1,6 @@
 backend:
   name: git-gateway
   branch: main
-  site_domain: glowgridmedia.com
-  base_url: https://glowgridmedia.com/admin
-  auth_endpoint: api/auth
 
 media_folder: "public/uploads" # Where uploaded files go inside repo
 public_folder: "/uploads"      # How the site accesses them
