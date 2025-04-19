@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { getBlogPosts } from '@/data/blogData';
 import { generateBlogSitemap } from '@/utils/sitemapGenerator';
-import { BlogPost } from '@/types/blog';
 import { Button } from '@/components/ui/button';
 import { FileDown } from 'lucide-react';
 
