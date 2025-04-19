@@ -1,40 +1,47 @@
+
 backend:
   name: git-gateway
-  branch: main
+  branch: main # Branch to update
 
-media_folder: "public/uploads" # Where uploaded files go inside repo
-public_folder: "/uploads"      # How the site accesses them
-
-publish_mode: editorial_workflow
+media_folder: "public/uploads" # Media files will be stored here
+public_folder: "/uploads" # The src attribute for uploaded media
 
 collections:
   - name: "blog"
     label: "Blog Posts"
-    folder: "src/content/blog" # Adjust if your posts are elsewhere
+    folder: "content/blog"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string", hint: "Usually auto-generated from title" }
+      - { label: "Slug", name: "slug", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Category", name: "category", widget: "string" }
-      - { label: "Tags", name: "tags", widget: "list", default: [] }
+      - { label: "Cover Image", name: "image", widget: "image" }
       - { label: "Excerpt", name: "excerpt", widget: "text" }
-      - { label: "Featured Image", name: "image", widget: "image" }
       - { label: "Body", name: "body", widget: "markdown" }
-      - { label: "SEO Title", name: "metaTitle", widget: "string", required: false }
-      - { label: "SEO Description", name: "metaDescription", widget: "text", required: false }
-      - { label: "Canonical URL", name: "canonicalUrl", widget: "string", required: false }
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        collapsed: true
+        fields:
+          - { label: "SEO Title", name: "title", widget: "string", required: false }
+          - { label: "SEO Description", name: "description", widget: "text", required: false }
+          - { label: "Canonical URL", name: "canonical", widget: "string", required: false }
 
   - name: "pages"
     label: "Pages"
-    folder: "src/content/pages" # If you have landing pages or static pages
+    folder: "content/pages"
     create: true
     slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Slug", name: "slug", widget: "string" }
       - { label: "Body", name: "body", widget: "markdown" }
-      - { label: "SEO Title", name: "metaTitle", widget: "string", required: false }
-      - { label: "SEO Description", name: "metaDescription", widget: "text", required: false }
-      - { label: "Canonical URL", name: "canonicalUrl", widget: "string", required: false }
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        collapsed: true
+        fields:
+          - { label: "SEO Title", name: "title", widget: "string", required: false }
+          - { label: "SEO Description", name: "description", widget: "text", required: false }
+          - { label: "Canonical URL", name: "canonical", widget: "string", required: false }

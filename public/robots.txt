@@ -1,4 +1,8 @@
 
+User-agent: *
+Allow: /
+Disallow: /admin/
+
 User-agent: Googlebot
 Allow: /
 Disallow: /admin/
@@ -12,9 +16,5 @@ Allow: /
 Disallow: /admin/
 
 User-agent: facebookexternalhit
-Allow: /
-Disallow: /admin/
-
-User-agent: *
 Allow: /
 Disallow: /admin/
