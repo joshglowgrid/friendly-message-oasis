@@ -1,7 +1,7 @@
 
 backend:
   name: github
-  repo: your-github-username/your-repo-name # You'll need to replace this
+  repo: joshglowgrid/friendly-message-oasis # You'll need to replace this
   branch: main
   base_url: https://api.netlify.com # You'll need to set up GitHub OAuth
 
