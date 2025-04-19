@@ -81,7 +81,7 @@ export default function PostEditorPage() {
         if (error) throw error;
         
         if (data) {
-          // Set form values
+          // Set form values - handle the meta fields safely
           form.reset({
             title: data.title || '',
             slug: data.slug || '',
@@ -90,8 +90,8 @@ export default function PostEditorPage() {
             category: data.category || '',
             tags: Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags || ''),
             published: data.published || false,
-            meta_title: data.meta_title || '',
-            meta_description: data.meta_description || '',
+            meta_title: data.meta_title || '',  // Safely access possibly undefined field
+            meta_description: data.meta_description || '',  // Safely access possibly undefined field
           });
           
           // Set featured image
