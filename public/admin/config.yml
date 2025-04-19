@@ -3,10 +3,11 @@ backend:
   name: github
   repo: joshglowgrid/friendly-message-oasis # You'll need to replace this
   branch: main
-  site_domain: glowgridmedia.com
-  app_id: 1222439
-  base_url: https://api.netlify.com # You'll need to set up GitHub OAuth
+  auth_type: github-app
+  app_id: ${GITHUB_APP_ID}
+  private_key: ${GITHUB_PRIVATE_KEY}
 
+local_backend: true # Enable local backend for development
 media_folder: "public/uploads"
 public_folder: "/uploads"
 
@@ -21,11 +22,8 @@ collections:
       - {label: "Slug", name: "slug", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
       - {label: "Featured Image", name: "image", widget: "image"}
-      - {label: "Category", name: "category", widget: "select", options: ["aesthetic-marketing", "client-success", "wellness-brands", "content-marketing", "social-media", "email-marketing"]}
-      - {label: "Tags", name: "tags", widget: "list"}
       - {label: "SEO Title", name: "metaTitle", widget: "string"}
       - {label: "SEO Description", name: "metaDescription", widget: "text"}
-      - {label: "Excerpt", name: "excerpt", widget: "text"}
       - {label: "Body", name: "body", widget: "markdown"}
 
   - name: "pages"
@@ -40,4 +38,3 @@ collections:
       - {label: "SEO Title", name: "metaTitle", widget: "string"}
       - {label: "SEO Description", name: "metaDescription", widget: "text"}
       - {label: "Body", name: "body", widget: "markdown"}
-
