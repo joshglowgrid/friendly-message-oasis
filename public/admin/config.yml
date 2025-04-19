@@ -3,6 +3,7 @@ backend:
   name: github
   repo: joshglowgrid/friendly-message-oasis # You'll need to replace this
   branch: main
+  site_domain: yoursite.com
   base_url: https://api.netlify.com # You'll need to set up GitHub OAuth
 
 media_folder: "public/uploads"
