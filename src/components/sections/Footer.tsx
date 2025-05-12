@@ -1,6 +1,7 @@
+
 import React from 'react';
 import Logo from '@/components/Logo';
-import { Instagram, ArrowUp } from 'lucide-react';
+import { Instagram, ArrowUp, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -54,6 +55,11 @@ const Footer = () => {
           <div className="md:col-span-3">
             <h3 className="text-white font-medium mb-3 text-sm uppercase tracking-wider">Contact</h3>
             <p className="text-sm mb-2">Los Angeles, California</p>
+            <p className="text-sm mb-2">
+              <a href="mailto:hello@glowgridmedia.com" className="hover:text-orange-400 transition-colors flex items-center gap-1">
+                <Mail size={14} /> hello@glowgridmedia.com
+              </a>
+            </p>
             <p className="text-sm mb-4">Serving clients nationwide</p>
             <button 
               onClick={scrollToTop}

@@ -8,7 +8,7 @@ interface SubmissionData {
 export const submitForm = async (
   data: SubmissionData,
   formType: 'contact_form' | 'call_request',
-  recipientEmail: string = 'josh@glowgridmedia.com'
+  recipientEmail: string = 'hello@glowgridmedia.com'
 ): Promise<boolean> => {
   try {
     // Create FormData object for submission

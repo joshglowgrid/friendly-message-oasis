@@ -46,7 +46,7 @@ const RequestCallForm = () => {
     setIsSubmitting(true);
 
     try {
-      const success = await submitForm(data, 'call_request');
+      const success = await submitForm(data, 'call_request', 'hello@glowgridmedia.com');
       
       if (!success) {
         throw new Error('Failed to submit form');

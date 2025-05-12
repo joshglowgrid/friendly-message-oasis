@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cn } from '@/lib/utils';
-import { Send } from 'lucide-react';
+import { Send, Mail } from 'lucide-react';
 import { toast } from 'sonner';
 import { contactFormSchema, type ContactFormData } from '@/utils/formSchemas';
 import { submitForm } from '@/utils/submissionService';
@@ -101,6 +101,9 @@ const ContactForm = ({ className }: ContactFormProps) => {
           <div className="text-center space-y-2">
             <p className="text-xs text-white/60">
               Serving Los Angeles, The San Gabriel Valley, the surrounding areas and businesses across the United States.
+            </p>
+            <p className="text-xs flex items-center justify-center gap-1 text-white/80">
+              <Mail size={12} /> <a href="mailto:hello@glowgridmedia.com" className="hover:text-orange-400 transition-colors">hello@glowgridmedia.com</a>
             </p>
           </div>
         </form>

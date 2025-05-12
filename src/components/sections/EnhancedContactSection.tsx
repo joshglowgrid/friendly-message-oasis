@@ -49,10 +49,16 @@ export const EnhancedContactSection = () => {
             </div>
             
             <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl">
-              <h3 className="text-xl font-semibold mb-4 text-white">Market Presence</h3>
-              <p className="text-white/80">
-                Los Angeles Metropolitan, San Gabriel Valley, Orange County, and nationwide digital implementation.
-              </p>
+              <h3 className="text-xl font-semibold mb-4 text-white">Contact Information</h3>
+              <div className="space-y-3">
+                <p className="text-white/80 flex items-center gap-2">
+                  <Mail className="text-orange-400" size={18} />
+                  <a href="mailto:hello@glowgridmedia.com" className="hover:text-orange-400 transition-colors">hello@glowgridmedia.com</a>
+                </p>
+                <p className="text-white/80">
+                  Los Angeles Metropolitan, San Gabriel Valley, Orange County, and nationwide digital implementation.
+                </p>
+              </div>
             </div>
           </div>
           
