@@ -14,16 +14,18 @@ export const submitForm = async (
     
     // Add all data fields to formData
     Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value || 'Not provided');
+      if (key !== 'website') { // Skip honeypot field
+        formData.append(key, value || 'Not provided');
+      }
     });
     
     // Add metadata
-    formData.append('form_type', formType);
-    formData.append('recipient', recipientEmail);
+    formData.append('form_name', formType === 'contact_form' ? 'GlowGrid Contact Form' : 'GlowGrid Call Request');
+    formData.append('_subject', formType === 'contact_form' ? 'New Contact Form Submission' : 'New Call Request Submission');
     formData.append('timestamp', new Date().toISOString());
     
-    // Send email using Formspree
-    const response = await fetch('https://formspree.io/f/mnndrlvj', {
+    // Send email using FormSubmit
+    const response = await fetch(`https://formsubmit.co/${recipientEmail}`, {
       method: 'POST',
       body: formData,
       headers: {
@@ -31,7 +33,6 @@ export const submitForm = async (
       }
     });
     
-    const result = await response.json();
     return response.ok;
   } catch (error) {
     console.error('Error submitting form:', error);

@@ -60,10 +60,10 @@ const ContactForm = ({ className }: ContactFormProps) => {
       });
       
       // Add metadata
-      formData.append('form_type', 'contact_form');
-      formData.append('recipient', 'hello@glowgridmedia.com');
+      formData.append('form_name', 'GlowGrid Contact Form');
+      formData.append('_subject', 'New Contact Form Submission');
       
-      const response = await fetch('https://formspree.io/f/mnndrlvj', {
+      const response = await fetch('https://formsubmit.co/hello@glowgridmedia.com', {
         method: 'POST',
         body: formData,
         headers: {
@@ -79,12 +79,7 @@ const ContactForm = ({ className }: ContactFormProps) => {
         setIsSuccess(true);
         reset();
       } else {
-        const data = await response.json();
-        if (data && data.errors) {
-          setStatus(data.errors.map((error: any) => error.message).join(", "));
-        } else {
-          setStatus("There was a problem submitting your form");
-        }
+        setStatus("There was a problem submitting your form");
         toast.error("Failed to send message", {
           description: "Please try again later or contact us directly.",
           duration: 5000,

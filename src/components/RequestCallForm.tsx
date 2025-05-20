@@ -57,10 +57,10 @@ const RequestCallForm = () => {
       });
       
       // Add metadata
-      formData.append('form_type', 'call_request');
-      formData.append('recipient', 'hello@glowgridmedia.com');
+      formData.append('form_name', 'GlowGrid Call Request');
+      formData.append('_subject', 'New Call Request Submission');
       
-      const response = await fetch('https://formspree.io/f/mnndrlvj', {
+      const response = await fetch('https://formsubmit.co/hello@glowgridmedia.com', {
         method: 'POST',
         body: formData,
         headers: {
@@ -79,12 +79,7 @@ const RequestCallForm = () => {
         // Reset form after successful submission
         reset();
       } else {
-        const data = await response.json();
-        if (data && data.errors) {
-          setStatus(data.errors.map((error: any) => error.message).join(", "));
-        } else {
-          setStatus("There was a problem submitting your form");
-        }
+        setStatus("There was a problem submitting your form");
         
         toast({
           title: 'Error',
