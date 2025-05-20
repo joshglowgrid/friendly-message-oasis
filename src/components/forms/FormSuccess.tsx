@@ -24,7 +24,7 @@ const FormSuccess = ({
         <Button
           variant="outline"
           onClick={onReset}
-          className="mt-4"
+          className="mt-4 text-orange-400 hover:text-orange-500 border-orange-400 hover:border-orange-500"
         >
           {buttonText}
         </Button>
