@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils';
 import { Send, Mail } from 'lucide-react';
 import { toast } from 'sonner';
 import { contactFormSchema, type ContactFormData } from '@/utils/formSchemas';
-import { submitForm } from '@/utils/submissionService';
 import ContactFormFields from '@/components/forms/ContactFormFields';
 import FormSuccess from '@/components/forms/FormSuccess';
 
@@ -17,6 +16,7 @@ interface ContactFormProps {
 const ContactForm = ({ className }: ContactFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [status, setStatus] = useState('');
 
   const {
     register,
@@ -47,24 +47,52 @@ const ContactForm = ({ className }: ContactFormProps) => {
     }
 
     setIsSubmitting(true);
+    setStatus('');
 
     try {
-      const success = await submitForm(data, 'contact_form');
+      const formData = new FormData();
       
-      if (!success) {
-        throw new Error('Failed to submit form');
-      }
-      
-      toast.success("Message sent successfully", {
-        description: "We'll get back to you as soon as possible.",
-        duration: 5000,
+      // Add form fields to formData
+      Object.entries(data).forEach(([key, value]) => {
+        if (key !== 'website') { // Skip honeypot field
+          formData.append(key, value || 'Not provided');
+        }
       });
       
-      setIsSuccess(true);
-      reset();
+      // Add metadata
+      formData.append('form_type', 'contact_form');
+      formData.append('recipient', 'hello@glowgridmedia.com');
       
+      const response = await fetch('https://formspree.io/f/mnndrlvj', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        toast.success("Message sent successfully", {
+          description: "We'll get back to you as soon as possible.",
+          duration: 5000,
+        });
+        setIsSuccess(true);
+        reset();
+      } else {
+        const data = await response.json();
+        if (data && data.errors) {
+          setStatus(data.errors.map((error: any) => error.message).join(", "));
+        } else {
+          setStatus("There was a problem submitting your form");
+        }
+        toast.error("Failed to send message", {
+          description: "Please try again later or contact us directly.",
+          duration: 5000,
+        });
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
+      setStatus("There was a problem submitting your form");
       toast.error("Failed to send message", {
         description: "Please try again later or contact us directly.",
         duration: 5000,
@@ -97,6 +125,8 @@ const ContactForm = ({ className }: ContactFormProps) => {
             {isSubmitting ? "Sending..." : "Send"}
             {!isSubmitting && <Send size={18} />}
           </button>
+          
+          {status && <p className="text-sm text-red-400 text-center">{status}</p>}
           
           <div className="text-center space-y-2">
             <p className="text-xs text-white/60">

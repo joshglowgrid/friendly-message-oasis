@@ -7,12 +7,12 @@ import { useToast } from '@/hooks/use-toast';
 import FormSuccess from '@/components/forms/FormSuccess';
 import RequestCallFormFields from '@/components/forms/RequestCallFormFields';
 import { requestCallFormSchema, type RequestCallFormData } from '@/utils/formSchemas';
-import { submitForm } from '@/utils/submissionService';
 
 const RequestCallForm = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [status, setStatus] = useState('');
 
   const {
     register,
@@ -44,26 +44,57 @@ const RequestCallForm = () => {
     }
 
     setIsSubmitting(true);
+    setStatus('');
 
     try {
-      const success = await submitForm(data, 'call_request', 'hello@glowgridmedia.com');
+      const formData = new FormData();
       
-      if (!success) {
-        throw new Error('Failed to submit form');
-      }
-      
-      // Show success message
-      setIsSuccess(true);
-      toast({
-        title: 'Request sent!',
-        description: 'We will contact you soon to schedule a call.',
+      // Add form fields to formData
+      Object.entries(data).forEach(([key, value]) => {
+        if (key !== 'website') { // Skip honeypot field
+          formData.append(key, value || 'Not provided');
+        }
       });
       
-      // Reset form after successful submission
-      reset();
+      // Add metadata
+      formData.append('form_type', 'call_request');
+      formData.append('recipient', 'hello@glowgridmedia.com');
       
+      const response = await fetch('https://formspree.io/f/mnndrlvj', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        // Show success message
+        setIsSuccess(true);
+        toast({
+          title: 'Request sent!',
+          description: 'We will contact you soon to schedule a call.',
+        });
+        
+        // Reset form after successful submission
+        reset();
+      } else {
+        const data = await response.json();
+        if (data && data.errors) {
+          setStatus(data.errors.map((error: any) => error.message).join(", "));
+        } else {
+          setStatus("There was a problem submitting your form");
+        }
+        
+        toast({
+          title: 'Error',
+          description: 'There was an error sending your message. Please try again.',
+          variant: 'destructive',
+        });
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
+      setStatus("There was a problem submitting your form");
       toast({
         title: 'Error',
         description: 'There was an error sending your message. Please try again.',
@@ -83,6 +114,8 @@ const RequestCallForm = () => {
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <RequestCallFormFields register={register} errors={errors} />
+          
+          {status && <p className="text-sm text-red-400 text-center">{status}</p>}
           
           <div className="pt-4">
             <Button
