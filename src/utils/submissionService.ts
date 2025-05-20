@@ -14,13 +14,18 @@ export const submitForm = async (
     // Create FormData object for submission
     const formData = new FormData();
     
+    // Add access key for Web3Forms - this is their public key format
+    formData.append('access_key', '4a1b7b14-f470-402e-9a79-4a74f43e6bee');
+    
     // Add all data fields to formData
     Object.entries(data).forEach(([key, value]) => {
       formData.append(key, value || 'Not provided');
     });
     
     // Add metadata
-    formData.append('recipient', recipientEmail);
+    formData.append('from_name', 'GlowGrid Media Website');
+    formData.append('subject', `New ${formType.replace('_', ' ')} submission`);
+    formData.append('to_email', recipientEmail);
     formData.append('form_type', formType);
     formData.append('timestamp', new Date().toISOString());
     
@@ -30,13 +35,14 @@ export const submitForm = async (
       timestamp: new Date().toISOString()
     });
     
-    // Send email using FormSubmit service
-    const response = await fetch(`https://formsubmit.co/${recipientEmail}`, {
+    // Send email using Web3Forms service
+    const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       body: formData
     });
     
-    return response.ok;
+    const result = await response.json();
+    return result.success;
   } catch (error) {
     console.error('Error submitting form:', error);
     return false;
