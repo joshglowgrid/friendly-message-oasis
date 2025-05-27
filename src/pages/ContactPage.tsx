@@ -2,7 +2,7 @@
 import React from 'react';
 import ContactForm from '@/components/ContactForm';
 import { motion } from 'framer-motion';
-import { Mail, Phone } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 const ContactPage = () => {
   return (

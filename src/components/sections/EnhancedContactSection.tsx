@@ -2,9 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import ContactForm from '@/components/ContactForm';
-import RequestCallForm from '@/components/RequestCallForm';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Mail, Phone } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 export const EnhancedContactSection = () => {
   return (
@@ -63,30 +61,8 @@ export const EnhancedContactSection = () => {
           </div>
           
           <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 lg:p-8 border border-white/10">
-            <Tabs defaultValue="form" className="w-full">
-              <TabsList className="w-full mb-6 orange-gradient-bg bg-opacity-90 border-2 border-orange-400/30">
-                <TabsTrigger 
-                  value="form" 
-                  className="w-full text-white font-medium data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200"
-                >
-                  <Mail className="mr-2 h-4 w-4" /> Message
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="call" 
-                  className="w-full text-white font-medium data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200"
-                >
-                  <Phone className="mr-2 h-4 w-4" /> Schedule Consultation
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="form" className="mt-0">
-                <ContactForm />
-              </TabsContent>
-              
-              <TabsContent value="call" className="mt-0">
-                <RequestCallForm />
-              </TabsContent>
-            </Tabs>
+            <h2 className="text-2xl font-semibold mb-6 text-white">Send Us a Message</h2>
+            <ContactForm />
           </div>
         </div>
       </div>
