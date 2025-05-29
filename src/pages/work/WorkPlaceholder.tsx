@@ -35,28 +35,6 @@ const WorkPlaceholder = () => {
     'Client Acquisition Metrics'
   ];
   
-  // Project showcase items
-  const showcaseProjects = [
-    {
-      title: "Clarity Dental Social Content",
-      description: "Elevated practice visibility with targeted content that drove new patient inquiries up 38%",
-      metrics: ["38% New Patients", "64% Engagement", "4.2x ROI"],
-      image: "https://images.unsplash.com/photo-1609921212029-bb5a28e60960?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-      title: "MedSpa Email Campaign",
-      description: "Strategic email sequences with personalized content that boosted treatment bookings",
-      metrics: ["42% Open Rate", "28% Conversion", "115% Revenue"],
-      image: "https://images.unsplash.com/photo-1581467725792-e40ad28abc23?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-      title: "Wellness Brand TikTok",
-      description: "Viral short-form video strategy that expanded reach and drove product sales",
-      metrics: ["500K+ Views", "12K Followers", "3.8x Sales"],
-      image: "https://images.unsplash.com/photo-1600443299762-7a1c3851bd14?q=80&w=800&auto=format&fit=crop"
-    }
-  ];
-  
   return (
     <div className="pt-24 min-h-screen">
       {/* Hero Section */}
@@ -106,69 +84,6 @@ const WorkPlaceholder = () => {
               </motion.div>
             ))}
           </div>
-        </div>
-      </div>
-      
-      {/* Project Showcase */}
-      <div className="max-w-7xl mx-auto px-4 py-20">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-          <div>
-            <h2 className="text-3xl md:text-4xl orange-gradient-text font-blink mb-3">Featured Projects</h2>
-            <p className="text-white/70">Transformative digital solutions for healthcare and wellness brands</p>
-          </div>
-          <Button variant="outline" className="mt-4 md:mt-0 border-orange-400/30 text-orange-400">
-            View All Projects <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {showcaseProjects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 * index }}
-              className="bg-black/20 border border-white/5 rounded-xl overflow-hidden group hover:border-orange-400/20 transition-all duration-300"
-            >
-              <div className="relative h-52 overflow-hidden">
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60"></div>
-                <div className="absolute top-4 right-4 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                  Featured
-                </div>
-              </div>
-              
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-orange-400 transition-colors">{project.title}</h3>
-                <p className="text-white/70 text-sm mb-4">{project.description}</p>
-                
-                <div className="space-y-2">
-                  {project.metrics.map((metric, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm">
-                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/10 flex items-center justify-center">
-                        <Check size={12} className="text-orange-400" />
-                      </span>
-                      <span className="text-white/80">{metric}</span>
-                    </div>
-                  ))}
-                </div>
-                
-                <Button 
-                  variant="link" 
-                  className="mt-4 p-0 text-orange-400 hover:text-orange-500"
-                  asChild
-                >
-                  <a href={`/work/${index}`}>
-                    View Case Study <ArrowRight className="ml-1 h-4 w-4" />
-                  </a>
-                </Button>
-              </div>
-            </motion.div>
-          ))}
         </div>
       </div>
       

@@ -95,7 +95,7 @@ const RequestCallForm = () => {
           </div>
 
           {/* Display general form errors */}
-          {state.errors && state.errors.length > 0 && (
+          {state.errors && Object.keys(state.errors).length > 0 && (
             <div className="text-red-400 text-sm">
               Something went wrong. Please try again.
             </div>
